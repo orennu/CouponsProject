@@ -1,0 +1,25 @@
+.jumbotron {
+    padding-top: 2rem !important;
+    border: 0.6em double blue;
+}
+
+.about-links {
+    text-decoration: none;
+}
+
+.h1-about {
+    font-size: 3rem;
+    background-color: dodgerblue;
+    color: whitesmoke;
+    text-align: center;
+    padding: 2%;
+    margin: 2%;
+}
+
+a:hover {
+    color: #343a40 !important;
+}
+
+.border {
+    border: 0.6em double blue !important;
+}

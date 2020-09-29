@@ -1,0 +1,61 @@
+<nav 
+    class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a 
+        class="navbar-brand" 
+        routerLink="/home">
+        <img 
+            src="../../../assets/logo.png" 
+            alt="Coupons Menia logo"
+            class="img-responsive"
+            style="max-height: 45px;">
+    </a>
+    <button 
+        class="navbar-toggler" 
+        type="button" 
+        (click)="collapsed = !collapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div 
+        class="collapse navbar-collapse" 
+        id="navbarSupportedContent" 
+        [class.collapse]="collapsed" 
+        (window:resize)="collapsed = true">
+      <ul 
+        *ngIf="getUrl() !== '/not-found'"
+        class="navbar-nav ml-auto">
+        <li 
+            class="nav-item">
+            <a 
+                class="nav-link" 
+                routerLink="/home"
+                routerLinkActive="active">
+                Home
+            </a>
+        </li>
+        <li 
+            class="nav-item">
+            <a 
+                class="nav-link" 
+                routerLink="/about"
+                routerLinkActive="active">
+                About</a>
+        </li>
+        <li 
+            class="nav-item">
+            <a 
+                class="nav-link" 
+                routerLink="/contact"
+                routerLinkActive="active">
+                Contact</a>
+        </li>
+        <li 
+            class="nav-item">
+            <a 
+                class="nav-link" 
+                routerLink="/login"
+                routerLinkActive="active">
+                Login</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
