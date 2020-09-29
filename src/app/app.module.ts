@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LeadersComponent } from './components/leaders/leaders.component';
+import { ContactFormComponent } from './components/contact/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,14 @@ import { LeadersComponent } from './components/leaders/leaders.component';
     ContactComponent,
     LoginComponent,
     PageNotFoundComponent,
-    LeadersComponent
+    LeadersComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],

@@ -1,0 +1,76 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Contact us</h2>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form 
+                [formGroup]="formData"
+                (ngSubmit)="onFormSubmit(formData.value)">
+                <div class="form-group">
+                    <label 
+                        for="email">
+                        Email
+                    </label>
+                    <input 
+                        type="email" 
+                        class="form-control"
+                        name="email"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter email"
+                        formControlName="email"
+                    >
+                    <small 
+                        id="emailHelp" 
+                        class="form-text text-muted">
+                        We'll never share your email with anyone else.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="fullname">
+                        Full Name
+                    </label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        name="fullname"
+                        placeholder="Full Name"
+                        formControlName="fullName"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="comment">
+                        Comment
+                    </label>
+                    <textarea 
+                        name="comment" 
+                        class="form-control" 
+                        formControlName="comment">
+                    </textarea>
+                </div>
+                <div class="d-flex">
+                    <button 
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="!formData.valid">
+                        Submit
+                    </button>
+                    <div 
+                        *ngIf="formSubmitted">
+                        <div 
+                            class="text-success m-2" 
+                            style="font-size: smaller; font-weight: bolder;">
+                            We recived your request.
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="formSubmitFailure">
+                        <div 
+                            class="text-danger m-2" 
+                            style="font-size: smaller; font-weight: bolder;">
+                            Oops, something went wrong, please try again later.
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
