@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 
 imports: [
   HttpClientModule
@@ -15,7 +16,7 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
-  postForm(input: any) {
+  postForm(input: string) {
     return this.http.post(this.api, input, {responseType: 'text'}).pipe(
       map((response) => {
         if (response) {

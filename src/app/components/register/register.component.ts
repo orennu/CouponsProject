@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-register',
@@ -12,35 +13,33 @@ export class RegisterComponent implements OnInit {
   formSubmitted: boolean = false;
   formSubmitFailure = false;
 
-  constructor(private builder: FormBuilder) { }
+  constructor(private builder: FormBuilder, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.formData = this.builder.group({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      // email: new FormControl(
-      //   '', 
-      //   [
-      //     Validators.compose(
-      //       [
-      //         Validators.required, 
-      //         Validators.email
-      //       ]
-      //     )
-      //   ]
-      // ),
       user: new FormGroup({
-        email: new FormControl(''),
+        userName: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.compose([Validators.required, Validators.email])]),
         type: new FormControl('CUSTOMER'),
       }),
-      phone: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      birthDate: new FormControl('', [Validators.required]),
+      dateOfBirth: new FormControl('', [Validators.required]),
     });
   }
 
   onFormSubmit(formData: string) {
-    console.log(formData);
+    this.usersService.register(formData).subscribe(response => {
+      console.log(response);
+      this.formSubmitted = true;
+    }, error => {
+      console.warn(error.responseText);
+      console.log({ error });
+      this.formSubmitFailure = true;
+    });
   }
 
 }

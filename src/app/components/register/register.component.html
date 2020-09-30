@@ -4,14 +4,14 @@
         Welcome to 
         <span class="font-weight-bold font-italic">Coupons Menia</span>
     </h1>
-    <div class="row rounded p-5 m-0">
+    <div class="row rounded p-4 m-0">
         <div class="col-md-6 offset-md-3">
             <form
                 [formGroup]="formData"
                 (ngSubmit)="onFormSubmit(formData.value)">
                 <div class="d-flex">
-                    <div class="form-group m-1">
-                        <label for="firstname">
+                    <div class="form-group required m-1">
+                        <label class="control-label" for="firstname">
                             First Name
                         </label>
                         <input 
@@ -19,11 +19,10 @@
                             class="form-control"
                             name="firstname"
                             placeholder="First Name"
-                            formControlName="firstName"
-                        >
+                            formControlName="firstName">
                     </div>
-                    <div class="form-group m-1">
-                        <label for="lastname">
+                    <div class="form-group required m-1">
+                        <label class="control-label" for="lastname">
                             Last Name
                         </label>
                         <input 
@@ -31,14 +30,14 @@
                             class="form-control"
                             name="lastname"
                             placeholder="Last Name"
-                            formControlName="lastName"
-                        >
+                            formControlName="lastName">
                     </div>
                 </div>
                 <div 
-                    class="form-group" 
+                    class="form-group required" 
                     formGroupName="user">
                     <label 
+                        class="control-label"
                         for="email">
                         Email
                     </label>
@@ -47,24 +46,74 @@
                         class="form-control"
                         name="email"
                         placeholder="Enter email"
-                        formControlName="email"
-                    >
+                        formControlName="email">
                 </div>
-                <div class="form-group">
+                <div 
+                    class="form-group required" 
+                    formGroupName="user">
                     <label 
-                        for="phone">
-                        Phone
+                        class="control-label"
+                        for="username">
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        autocomplete="username"
+                        class="form-control"
+                        name="username"
+                        placeholder="Enter username"
+                        formControlName="userName">
+                </div>
+                <div class="d-flex">
+
+                    <div 
+                        class="form-group required m-1" 
+                        formGroupName="user">
+                        <label 
+                            class="control-label"
+                            for="password">
+                            Password
+                        </label>
+                        <input 
+                            type="password" 
+                            autocomplete="new-password"
+                            class="form-control"
+                            name="password"
+                            placeholder="Enter password"
+                            formControlName="password">
+                    </div>
+                    <div 
+                        class="form-group required m-1" 
+                        formGroupName="user">
+                        <label 
+                            class="control-label"
+                            for="passwordConfirm">
+                            Confirm Password
+                        </label>
+                        <input 
+                            type="password" 
+                            autocomplete="new-password"
+                            class="form-control"
+                            name="passwordConfirm"
+                            placeholder="Confirm password">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label 
+                        class="control-label"
+                        for="phoneNumber">
+                        Phone Number
                     </label>
                     <input 
                         type="tel" 
                         class="form-control"
-                        name="phone"
+                        name="phoneNumber"
                         placeholder="Enter phone number"
-                        formControlName="phone"
-                    >
+                        formControlName="phoneNumber">
                 </div>
-                <div class="form-group">
+                <div class="form-group required">
                     <label 
+                        class="control-label"
                         for="address">
                         Address
                     </label>
@@ -73,43 +122,42 @@
                         class="form-control"
                         name="address"
                         placeholder="Enter address"
-                        formControlName="address"
-                    >
+                        formControlName="address">
                 </div>
-                <div class="form-group">
+                <div class="form-group required">
                     <label 
-                        for="birthDate">
+                        class="control-label"
+                        for="dateOfBirth">
                         Date of birth
                     </label>
                     <input 
                         type="date" 
                         class="form-control"
-                        name="birthDate"
-                        formControlName="birthDate"
-                    >
+                        name="dateOfBirth"
+                        formControlName="dateOfBirth">
                 </div>
-                <div class="d-flex">
+                <div>
                     <button 
                         type="submit"
                         class="btn btn-primary"
                         [disabled]="!formData.valid">
                         Submit
                     </button>
+                </div>
+                <div 
+                    *ngIf="formSubmitted">
                     <div 
-                        *ngIf="formSubmitted">
-                        <div 
-                            class="text-success m-2" 
-                            style="font-size: smaller; font-weight: bolder;">
-                            We recived your request.
-                        </div>
+                        class="text-success m-2" 
+                        style="font-size: smaller; font-weight: bolder;">
+                        <span>&#10003;</span> Your account was created successfully.
                     </div>
-                    <div
-                        *ngIf="formSubmitFailure">
-                        <div 
-                            class="text-danger m-2" 
-                            style="font-size: smaller; font-weight: bolder;">
-                            Oops, something went wrong, please try again later.
-                        </div>
+                </div>
+                <div
+                    *ngIf="formSubmitFailure">
+                    <div 
+                        class="text-danger m-2" 
+                        style="font-size: smaller; font-weight: bolder;">
+                        <span>&#33;</span> Oops, something went wrong, please try again later.
                     </div>
                 </div>
             </form>

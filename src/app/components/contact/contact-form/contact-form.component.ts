@@ -41,7 +41,7 @@ export class ContactFormComponent implements OnInit {
       console.warn(error.responseText);
       console.log({ error });
       this.formSubmitFailure = true;
-    })
+    });
   }
 
 }
