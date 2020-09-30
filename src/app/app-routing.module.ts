@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LeadersComponent } from './components/leaders/leaders.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
     { path: 'leaders', component: LeadersComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' }
 ];

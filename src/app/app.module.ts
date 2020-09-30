@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LeadersComponent } from './components/leaders/leaders.component';
 import { ContactFormComponent } from './components/contact/contact-form/contact-form.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ContactFormComponent } from './components/contact/contact-form/contact-
     LoginComponent,
     PageNotFoundComponent,
     LeadersComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

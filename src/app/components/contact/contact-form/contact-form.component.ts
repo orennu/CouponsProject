@@ -30,7 +30,7 @@ export class ContactFormComponent implements OnInit {
         ]
       ),
       comment: new FormControl('', [Validators.required])
-    })
+    });
   }
 
   onFormSubmit(formData: string) {
