@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { UserLoginDetails } from '../models/UserLoginDetails';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,8 +19,17 @@ export class UsersService {
     return this.http.post(this.api + 'users/login', userLoginDetails);
   }
 
-  public register(input: string) {
-    return this.http.post(this.api + 'customers/register', input, {responseType: 'text'}).pipe(
+  public register(input: Object) {
+    console.log(input);
+    if (input['user']['passwords'] !== undefined && input['user']['passwords'] !== null) {
+      console.log(input['user']['passwords']);
+      delete input['user']['passwords']['confirmPassword'];
+      input['user']['password'] = input['user']['passwords']['password'];
+      delete input['user']['passwords'];
+
+    }
+    console.log(input);
+    return this.http.post(this.api + 'customers/register', input, {responseType: 'json'}).pipe(
       map((response) => {
         if (response) {
           return response;

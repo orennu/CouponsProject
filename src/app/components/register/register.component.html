@@ -13,7 +13,9 @@
                     <div 
                         class="form-group required" 
                         style="width: 45%;">
-                        <label class="control-label" for="firstname">
+                        <label 
+                            class="control-label" 
+                            for="firstname">
                             First Name
                         </label>
                         <input 
@@ -22,11 +24,23 @@
                             name="firstname"
                             placeholder="First Name"
                             formControlName="firstName">
+                        <span 
+                            *ngIf="isMissing(firstName)"
+                            class="text-danger">
+                            field is required.
+                        </span>
+                        <span 
+                            *ngIf="isInvalid(firstName)"
+                            class="text-danger">
+                            invalid input.
+                        </span>
                     </div>
                     <div 
                         class="form-group required"
                         style="width: 50%;">
-                        <label class="control-label" for="lastname">
+                        <label 
+                            class="control-label" 
+                            for="lastname">
                             Last Name
                         </label>
                         <input 
@@ -35,6 +49,16 @@
                             name="lastname"
                             placeholder="Last Name"
                             formControlName="lastName">
+                        <span 
+                            *ngIf="isMissing(lastName)"
+                            class="text-danger">
+                            field is required.
+                        </span>
+                        <span 
+                            *ngIf="isInvalid(lastName)"
+                            class="text-danger">
+                            invalid input.
+                        </span>
                     </div>
                 </div>
                 <div 
@@ -51,6 +75,16 @@
                         name="email"
                         placeholder="Enter email"
                         formControlName="email">
+                    <span 
+                        *ngIf="isMissing(email)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(email)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
                 <div 
                     class="form-group required" 
@@ -67,12 +101,22 @@
                         name="username"
                         placeholder="Enter username"
                         formControlName="userName">
+                    <span 
+                        *ngIf="isMissing(userName)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(userName)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="form-group d-flex justify-content-between" formGroupName="user">
                     <div 
                         class="form-group required" 
                         style="width: 48%;"
-                        formGroupName="user">
+                        formGroupName="passwords">
                         <label 
                             class="control-label"
                             for="password">
@@ -85,11 +129,21 @@
                             name="password"
                             placeholder="Enter password"
                             formControlName="password">
+                        <span 
+                            *ngIf="isMissing(password)"
+                            class="text-danger">
+                            field is required.
+                        </span>
+                        <span 
+                            *ngIf="isInvalid(password)"
+                            class="text-danger">
+                            invalid input.
+                        </span>
                     </div>
                     <div 
                         class="form-group required" 
                         style="width: 48%;"
-                        formGroupName="user">
+                        formGroupName="passwords">
                         <label 
                             class="control-label"
                             for="passwordConfirm">
@@ -99,9 +153,20 @@
                             type="password" 
                             autocomplete="new-password"
                             class="form-control"
+                            [class.ng-invalid]="isPasswordsMismatch(confirmPassword) || isMissing(confirmPassword)"
                             name="passwordConfirm"
                             placeholder="Confirm password"
                             formControlName="confirmPassword">
+                        <span 
+                            *ngIf="isPasswordsMismatch(confirmPassword)"
+                            class="text-danger">
+                            no match.
+                        </span>
+                        <span 
+                            *ngIf="isMissing(confirmPassword)"
+                            class="text-danger">
+                            field is required.
+                        </span>
                     </div>
                 </div>
                 <div class="form-group required">
@@ -116,6 +181,16 @@
                         name="phoneNumber"
                         placeholder="Enter phone number"
                         formControlName="phoneNumber">
+                    <span 
+                        *ngIf="isMissing(phoneNumber)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(phoneNumber)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
                 <div class="form-group">
                     <label 
@@ -128,6 +203,11 @@
                         name="address"
                         placeholder="Enter address"
                         formControlName="address">
+                    <span 
+                        *ngIf="isInvalid(address)"
+                        class="text-danger">
+                        {{ address.errors.minlength.requiredLength }}
+                    </span>
                 </div>
                 <div class="form-group required">
                     <label 
@@ -140,6 +220,16 @@
                         class="form-control"
                         name="dateOfBirth"
                         formControlName="dateOfBirth">
+                    <span 
+                        *ngIf="isMissing(dateOfBirth)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(dateOfBirth)"
+                        class="text-danger">
+                        {{ dateOfBirth.errors.value }}
+                    </span>
                 </div>
                 <div class="container pl-0">
                     <div class="d-flex justify-content-start">
@@ -178,7 +268,7 @@
                     <div 
                         class="text-danger m-2" 
                         style="font-size: smaller; font-weight: bolder;">
-                        <span>&#33;</span> Oops, something went wrong, please try again later.
+                        <span>&#33;</span> {{ formFailureReason }}.
                     </div>
                 </div>
             </form>
