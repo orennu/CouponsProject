@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
@@ -12,7 +12,6 @@ import { ValidationService } from 'src/app/services/validation.service';
 export class RegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
-  // confirmPasswordControl = new FormControl('', [Validators.required])
   formSubmitted: boolean = false;
   formSubmitFailure = false;
   formFailureReason: string;
@@ -34,15 +33,13 @@ export class RegisterComponent implements OnInit {
         [
           Validators.required, 
           Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/),
-          // this.validationService.whitespaceValidator
         ]
       ),
       lastName: new FormControl(
         '', 
         [
           Validators.required, 
-          Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/),
-          // this.validationService.whitespaceValidator
+          Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/)
         ]
       ),
       phoneNumber: new FormControl(
@@ -59,8 +56,7 @@ export class RegisterComponent implements OnInit {
         [
           Validators.minLength(2),
           Validators.maxLength(255),
-          Validators.pattern('[a-zA-Z0-9 .,]+'),
-          // this.validationService.whitespaceValidator
+          Validators.pattern(/^[a-zA-Z0-9\s\.,'-]*$/)
         ]
       ),
       dateOfBirth: new FormControl(
@@ -179,13 +175,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onFormSubmit() {
-    // reuse removeValidators() here
-    // this.registrationForm.get('user').clearValidators();
-    // this.registrationForm.get('user').updateValueAndValidity();
-    // (this.registrationForm.get('user') as FormGroup).removeControl('confirmPassword');
-    // console.log(this.registrationForm.value);
     this.usersService.register(this.registrationForm.value).subscribe(response => {
-      // console.log(response);
       this.formSubmitted = true;
       this.formSubmitFailure = false;
       setTimeout(() => {

@@ -6,13 +6,6 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   })
 export class ValidationService {
 
-    // whitespaceValidator(formControl: AbstractControl): { [key: string]: any } | null {
-    //     console.log(formControl.value);
-    //     const isWhitespace = (formControl.value).trim().length === 0 && formControl.value !== '';
-    //     const isValid = !isWhitespace;
-    //     return isValid ? null : { onlyWhite: { valid: false, value: 'value' } };
-    // }
-
     isPasswordsMatch(formGroup: FormGroup) {
         const password = formGroup.get('password').value;
         const confirmPassword = formGroup.get('confirmPassword').value;
