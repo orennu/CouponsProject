@@ -1,5 +1,7 @@
+import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +10,22 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  collapsed = true;
+  public collapsed: boolean = true;
+  public isLoggedIn: boolean;
 
-  constructor(private router: Router) { }
-
+  constructor(private router: Router, private usersService: UsersService) {
+    this.usersService.getLoginState.subscribe((state: boolean) => this.setState(state));
+  }
+  
   ngOnInit(): void {
   }
 
   getUrl() {
     return this.router.url;
+  }
+
+  public setState(state: boolean) {
+    this.isLoggedIn = state;
   }
 
 }

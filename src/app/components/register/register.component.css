@@ -6,7 +6,7 @@
  }
 
  .form-group, .form-control {
-     font-size: .7rem !important;
+     font-size: 1rem !important;
  }
 
  .ng-touched.ng-invalid:not(form):not(.form-group) {

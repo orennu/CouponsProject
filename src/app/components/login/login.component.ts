@@ -11,11 +11,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   public userLoginDetails: UserLoginDetails;
-  private usersService: UsersService;
 
-  constructor(usersService: UsersService, private router: Router) {
+  constructor(private usersService: UsersService, private router: Router) {
     this.userLoginDetails = new UserLoginDetails();
-    this.usersService = usersService;
   }
 
   ngOnInit(): void {
@@ -26,6 +24,7 @@ export class LoginComponent implements OnInit {
     observable.subscribe(successfulServerRequestData => {
       console.log(successfulServerRequestData);
       sessionStorage.setItem("token", successfulServerRequestData.token+"");
+      this.usersService.getLoginState.emit(true);
 
       if (successfulServerRequestData.type == "CUSTOMER") {
         this.router.navigate(["/customer"]);
@@ -38,6 +37,7 @@ export class LoginComponent implements OnInit {
       }
     }, serverErrorResponse => {
       console.log("Failed: Status " + serverErrorResponse.status + " Message " + serverErrorResponse.message);
+      this.usersService.getLoginState.emit(true);
     });
   }
 

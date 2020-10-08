@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { UserLoginDetails } from '../models/UserLoginDetails';
 import { Observable } from 'rxjs';
@@ -11,11 +11,13 @@ import { SuccessfulLoginServerResponse } from '../models/SuccessfulLoginServerRe
 export class UsersService {
 
   private api: string = 'http://localhost:8080/';
+  @Output() getLoginState: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
-    return this.http.post(this.api + 'users/login', userLoginDetails);
+    return this.http.post(this.api + 'users/login', userLoginDetails);;
   }
 
   public register(input: Object) {
@@ -35,4 +37,5 @@ export class UsersService {
       })
     )
   }
+
 }

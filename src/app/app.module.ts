@@ -14,6 +14,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LeadersComponent } from './components/leaders/leaders.component';
 import { ContactFormComponent } from './components/contact/contact-form/contact-form.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { RegisterComponent } from './components/register/register.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
