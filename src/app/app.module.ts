@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { DropdownDirective } from './directives/dropdown.directive';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,6 +20,7 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
 
 @NgModule({
   declarations: [
+    DropdownDirective,
     AppComponent,
     HeaderComponent,
     HomeComponent,

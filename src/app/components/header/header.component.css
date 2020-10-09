@@ -1,0 +1,18 @@
+.dropdown-menu {
+    margin: 0 -1rem 0;
+    background-color: #343a40!important;
+    border: none;
+    border-radius: 0%;
+}
+
+.dropdown-item {
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    color: black !important;
+}
+
+.dropdown-toggle {
+    padding: .7rem 1rem; 
+}

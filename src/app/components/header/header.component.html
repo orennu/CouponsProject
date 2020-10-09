@@ -18,8 +18,8 @@
     <div 
         class="collapse navbar-collapse" 
         id="navbarSupportedContent" 
-        [class.collapse]="collapsed" 
-        (window:resize)="collapsed = true">
+        [class.collapse]="collapsed">
+        <!-- (window:resize)="collapsed = true"> -->
       <ul 
         *ngIf="getUrl() !== '/not-found'"
         class="navbar-nav ml-auto">
@@ -69,7 +69,7 @@
                 Sign Up
             </a>
         </li>
-        <li 
+        <!-- <li 
             *ngIf="isLoggedIn"
             class="nav-item ml-2">
             <a 
@@ -77,13 +77,18 @@
                 routerLink="/home">
                 Logout
             </a>
-        </li>
+        </li> -->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <li 
             *ngIf="isLoggedIn"
-            class="nav-item ml-1">
+            appDropdown #r="appDropdown"
+            class="dropdown ml-1">
             <a 
                 class="nav-link dropdown-toggle"
-                routerLink="/profile">
+                role="button"
+                data-toggle="dropdown">
+                <!-- routerLink="/profile"> -->
                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="white" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
                     <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -91,6 +96,17 @@
                 </svg>
                  <span class="caret bg-white"></span>
             </a>
+            <ul class="dropdown-menu dropdown-menu-right" [ngClass]="{'show': r.isOpen}">
+                <li>
+                    <a class="dropdown-item" style="cursor: pointer;">Profile</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" style="cursor: pointer;">Setting</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" style="cursor: pointer;">Logout</a>
+                </li>
+            </ul>
         </li>
       </ul>
     </div>
