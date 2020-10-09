@@ -14,18 +14,25 @@ export class HeaderComponent implements OnInit {
   public isLoggedIn: boolean;
 
   constructor(private router: Router, private usersService: UsersService) {
-    this.usersService.getLoginState.subscribe((state: boolean) => this.setState(state));
+    this.usersService.setLoginState.subscribe((state: boolean) => this.setState(state));
   }
   
   ngOnInit(): void {
+    if (sessionStorage.getItem('token')) {
+      this.isLoggedIn = true;
+    }
   }
 
   getUrl() {
     return this.router.url;
   }
 
-  public setState(state: boolean) {
+  setState(state: boolean) {
     this.isLoggedIn = state;
+  }
+
+  onLogout() {
+    this.usersService.logout()
   }
 
 }

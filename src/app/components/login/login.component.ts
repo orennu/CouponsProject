@@ -23,21 +23,21 @@ export class LoginComponent implements OnInit {
     const observable = this.usersService.login(this.userLoginDetails);
     observable.subscribe(successfulServerRequestData => {
       console.log(successfulServerRequestData);
-      sessionStorage.setItem("token", successfulServerRequestData.token+"");
-      this.usersService.getLoginState.emit(true);
+      sessionStorage.setItem('token', successfulServerRequestData.token+'');
+      this.usersService.setLoginState.emit(true);
 
-      if (successfulServerRequestData.type == "CUSTOMER") {
-        this.router.navigate(["/customer"]);
+      if (successfulServerRequestData.type == 'CUSTOMER') {
+        this.router.navigate(['/customer']);
       }
-      if (successfulServerRequestData.type == "COMPANY") {
-        this.router.navigate(["/company"]);
+      if (successfulServerRequestData.type == 'COMPANY') {
+        this.router.navigate(['/company']);
       }
-      if (successfulServerRequestData.type == "ADMIN") {
-        this.router.navigate(["/admin"])
+      if (successfulServerRequestData.type == 'ADMIN') {
+        this.router.navigate(['/admin'])
       }
     }, serverErrorResponse => {
-      console.log("Failed: Status " + serverErrorResponse.status + " Message " + serverErrorResponse.message);
-      this.usersService.getLoginState.emit(true);
+      console.log('Failed: Status ' + serverErrorResponse.status + ' Message ' + serverErrorResponse.message);
+      this.usersService.setLoginState.emit(true);
     });
   }
 

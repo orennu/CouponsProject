@@ -11,13 +11,18 @@ import { SuccessfulLoginServerResponse } from '../models/SuccessfulLoginServerRe
 export class UsersService {
 
   private api: string = 'http://localhost:8080/';
-  @Output() getLoginState: EventEmitter<boolean> = new EventEmitter();
+  @Output() setLoginState: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private http: HttpClient) {
   }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
     return this.http.post(this.api + 'users/login', userLoginDetails);;
+  }
+
+  public logout() {
+    sessionStorage.removeItem('token');
+    this.setLoginState.emit(false);
   }
 
   public register(input: Object) {
