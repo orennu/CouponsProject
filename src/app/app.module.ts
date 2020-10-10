@@ -19,6 +19,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { CouponsComponent } from './components/coupons/coupons.component';
 import { AppConfig, APP_CONFIG } from './app.config';
+import { CouponListComponent } from './components/coupons/coupon-list/coupon-list.component';
+import { CouponItemComponent } from './components/coupons/coupon-list/coupon-item/coupon-item.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { AppConfig, APP_CONFIG } from './app.config';
     LeadersComponent,
     ContactFormComponent,
     RegisterComponent,
-    CouponsComponent
+    CouponsComponent,
+    CouponListComponent,
+    CouponItemComponent
   ],
   imports: [
     BrowserModule,

@@ -23,3 +23,9 @@ a:hover {
 .border {
     border: 0.6em double blue !important;
 }
+
+@media (max-width: 767px) {
+    .h1-about {
+        font-size: 1.5rem;
+    }
+}

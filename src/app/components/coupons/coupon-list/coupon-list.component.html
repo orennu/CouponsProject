@@ -1,0 +1,68 @@
+<div class="row justify-content-around">
+    <app-coupon-item
+        class="m-2 card-text card-links"
+        *ngFor="let couponElement of coupons; let i = index"
+        [coupon]="couponElement"
+        [index]="i">
+    </app-coupon-item>
+</div>
+<!-- <div class="container">
+    <div class="modal fade" id="couponModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        {{ this.selectedCoupon?.title }}
+                    </h4>
+                    <button 
+                        type="button" 
+                        class="close"
+                        data-dismiss="modal"
+                        (click)=[(showCoupons())]>
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img 
+                        [src]="this.selectedCoupon?.image" 
+                        alt="selected coupon image" 
+                        class="img-fluid card-img-top">
+                    <p>
+                        <span>
+                            <span 
+                                class="underline">
+                                Product Description
+                            </span>
+                            {{ ": " + this.selectedCoupon?.description }}
+                        </span><br>
+                        <span>
+                            <span 
+                                class="underline">
+                                Price
+                            </span>
+                            {{ ": " + this.selectedCoupon?.price + "$" }}
+                        </span><br>
+                        <span>
+                            <span 
+                                class="underline">
+                                Product Category
+                            </span>{{ ": " + this.selectedCoupon?.category }}
+                        </span><br>
+                        <span>
+                            <span 
+                                class="underline">
+                                Coupon will expire on
+                            </span>{{ ": " + this.selectedCoupon?.expirationDate }}
+                        </span><br>
+                        <span>
+                            <span 
+                                class="underline">
+                                Items left
+                            </span>{{ ": " + this.selectedCoupon?.quantity }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
