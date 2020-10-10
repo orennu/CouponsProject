@@ -1,0 +1,9 @@
+.modal-header {
+    background: #343a40;
+    color: white;
+}
+
+.close {
+    outline: none;
+    color: white;
+}

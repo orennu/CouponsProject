@@ -1,7 +1,5 @@
 <div class="card col" style="width: 18rem; cursor: pointer;"
-    (click)=[(showCoupon(coupon))]
-    data-toggle="modal"
-    data-target="#couponModal">
+    (click)=[(showCoupon(selectedCoupon))]>
     <div>
         <div class="card-header rounded">{{ coupon.title }}</div>
         <img [src]="coupon.image" class="img-fluid card-img-top" alt="...">
@@ -13,63 +11,57 @@
         </div>
     </div>
 </div>
-
-    <div class="modal fade" id="couponModal" role="dialog">
-        <div class="modal-dialod">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        {{ this.selectedCoupon?.title }}
-                    </h4>
-                    <button 
-                        type="button" 
-                        class="close"
-                        data-dismiss="modal"
-                        (click)=[(showCoupons())]>
-                        &times;
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img 
-                        [src]="this.selectedCoupon?.image" 
-                        alt="selected coupon image" 
-                        class="img-fluid card-img-top">
-                    <p>
-                        <span>
-                            <span 
-                                class="underline">
-                                Product Description
-                            </span>
-                            {{ ": " + this.selectedCoupon?.description }}
-                        </span><br>
-                        <span>
-                            <span 
-                                class="underline">
-                                Price
-                            </span>
-                            {{ ": " + this.selectedCoupon?.price + "$" }}
-                        </span><br>
-                        <span>
-                            <span 
-                                class="underline">
-                                Product Category
-                            </span>{{ ": " + this.selectedCoupon?.category }}
-                        </span><br>
-                        <span>
-                            <span 
-                                class="underline">
-                                Coupon will expire on
-                            </span>{{ ": " + this.selectedCoupon?.expirationDate }}
-                        </span><br>
-                        <span>
-                            <span 
-                                class="underline">
-                                Items left
-                            </span>{{ ": " + this.selectedCoupon?.quantity }}
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
+<ng-template #selectedCoupon let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ this.coupon?.title }}
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
     </div>
-<!-- </div> -->
+    <div class="modal-body">
+        <img 
+            [src]="this.coupon?.image" 
+            alt="selected coupon image" 
+            class="img-fluid card-img-top">
+        <hr>
+        <p>
+            <span>
+                <span 
+                    class="font-weight-bold">
+                    Product Description
+                </span>
+                {{ ": " + this.coupon?.description }}
+            </span><br>
+            <span>
+                <span 
+                    class="font-weight-bold">
+                    Price
+                </span>
+                {{ ": " + this.coupon?.price + "$" }}
+            </span><br>
+            <span>
+                <span 
+                    class="font-weight-bold">
+                    Product Category
+                </span>{{ ": " + this.coupon?.category }}
+            </span><br>
+            <span>
+                <span 
+                    class="font-weight-bold">
+                    Coupon will expire on
+                </span>{{ ": " + this.coupon?.expirationDate }}
+            </span><br>
+            <span>
+                <span 
+                    class="font-weight-bold">
+                    Items left
+                </span>{{ ": " + this.coupon?.quantity }}
+            </span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Add To Cart</button>
+    </div>
+</ng-template>
