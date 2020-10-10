@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
 import { Coupon } from 'src/app/models/coupon.model';
 import { CouponsService } from 'src/app/services/coupons.service';
 
@@ -20,13 +21,18 @@ export class CouponItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public showCoupon(coupon: Coupon) {
+  public showCoupon(couponModal: NgbModalRef) {
     console.log(this.coupon);
-    this.modalService.open(coupon, { centered: true }).result.then((result) => {
+    this.modalService.open(couponModal, { centered: true }).result.then((result) => {
       this.closeResult = `closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  public addCouponToCart(couponModal: NgbActiveModal) {
+    console.log(this.coupon);
+    couponModal.close(); // need to add to cart if user is logged in else redirect him to login
   }
 
   private getDismissReason(reason: any): string {
