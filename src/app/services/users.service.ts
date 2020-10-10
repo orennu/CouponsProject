@@ -1,23 +1,24 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { UserLoginDetails } from '../models/UserLoginDetails';
+import { UserLoginDetails } from '../models/userLoginDetails.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SuccessfulLoginServerResponse } from '../models/SuccessfulLoginServerResponse'
+import { SuccessfulLoginServerResponse } from '../models/successfulLoginServerResponse.model'
+import { APP_CONFIG, IAppConfig } from '../app.config';
+// import { AppRoutingModule } from '../app-routing.module';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  private api: string = 'http://localhost:8080/';
   @Output() setLoginState: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) {
   }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
-    return this.http.post(this.api + 'users/login', userLoginDetails);;
+    return this.http.post(this.config.apiBaseEndpoint + 'users/login', userLoginDetails);;
   }
 
   public logout() {
@@ -32,7 +33,7 @@ export class UsersService {
       delete input['user']['passwords'];
 
     }
-    return this.http.post(this.api + 'customers/register', input, {responseType: 'json'}).pipe(
+    return this.http.post(this.config.apiBaseEndpoint + 'customers/register', input, {responseType: 'json'}).pipe(
       map((response) => {
         if (response) {
           return response;

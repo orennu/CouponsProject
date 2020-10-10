@@ -17,6 +17,9 @@ import { LeadersComponent } from './components/leaders/leaders.component';
 import { ContactFormComponent } from './components/contact/contact-form/contact-form.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { CouponsComponent } from './components/coupons/coupons.component';
+import { AppConfig, APP_CONFIG } from './app.config';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
     PageNotFoundComponent,
     LeadersComponent,
     ContactFormComponent,
-    RegisterComponent
+    RegisterComponent,
+    CouponsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,10 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    { provide: APP_CONFIG, useValue: AppConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
