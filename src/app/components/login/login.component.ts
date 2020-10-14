@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   public userLoginDetails: UserLoginDetails;
+  public isLoginFailed: boolean;
 
   constructor(private usersService: UsersService, private router: Router) {
     this.userLoginDetails = new UserLoginDetails();
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
       }
     }, serverErrorResponse => {
       console.log('Failed: Status ' + serverErrorResponse.status + ' Message ' + serverErrorResponse.message);
-      this.usersService.setLoginState.emit(true);
+      this.isLoginFailed = true;
+      this.usersService.setLoginState.emit(false);
     });
   }
 

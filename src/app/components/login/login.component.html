@@ -7,7 +7,7 @@
 </head>
 <div class="container">
 	<div class="d-flex justify-content-center h-100 mt-2 mb-5">
-        <div class="card card-shadow">
+        <div class="card card-shadow mt-5">
 			<div class="card-header">
 				<h3>Sign In</h3>
 				<!-- <div class="d-flex justify-content-end social_icon">
@@ -50,6 +50,11 @@
 							class="btn float-right login_btn" 
 							(click)="login()" 
 							(keyup.enter)="login()">
+					</div>
+					<div 
+						*ngIf="isLoginFailed"
+						class="text-danger font-weight-bold">
+						login failed!
 					</div>
 				</form>
 			</div>
