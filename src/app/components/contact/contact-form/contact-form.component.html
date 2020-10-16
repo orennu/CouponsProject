@@ -7,6 +7,7 @@
                 (ngSubmit)="onFormSubmit(formData.value)">
                 <div class="form-group">
                     <label 
+                        class="h6 small font-weight-bold"
                         for="email">
                         Email
                     </label>
@@ -16,8 +17,7 @@
                         name="email"
                         aria-describedby="emailHelp"
                         placeholder="Enter email"
-                        formControlName="email"
-                    >
+                        formControlName="email">
                     <small 
                         id="emailHelp" 
                         class="form-text text-muted">
@@ -25,7 +25,9 @@
                     </small>
                 </div>
                 <div class="form-group">
-                    <label for="fullname">
+                    <label 
+                        class="h6 small font-weight-bold"
+                        for="fullname">
                         Full Name
                     </label>
                     <input 
@@ -33,17 +35,18 @@
                         class="form-control"
                         name="fullname"
                         placeholder="Full Name"
-                        formControlName="fullName"
-                    >
+                        formControlName="fullName">
                 </div>
-                <div class="form-group">
+                <div 
+                    class="form-group h6 small font-weight-bold">
                     <label for="comment">
                         Comment
                     </label>
                     <textarea 
                         name="comment" 
                         class="form-control" 
-                        formControlName="comment">
+                        formControlName="comment"
+                        rows="4">
                     </textarea>
                 </div>
                 <div class="d-flex">

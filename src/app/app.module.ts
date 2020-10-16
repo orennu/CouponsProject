@@ -22,6 +22,7 @@ import { CouponsComponent } from './components/coupons/coupons.component';
 import { AppConfig, APP_CONFIG } from './app.config';
 import { CouponListComponent } from './components/coupons/coupon-list/coupon-list.component';
 import { CouponItemComponent } from './components/coupons/coupon-list/coupon-item/coupon-item.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { CouponItemComponent } from './components/coupons/coupon-list/coupon-ite
     RegisterComponent,
     CouponsComponent,
     CouponListComponent,
-    CouponItemComponent
+    CouponItemComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

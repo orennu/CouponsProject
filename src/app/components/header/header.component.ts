@@ -1,6 +1,6 @@
 import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -13,7 +13,8 @@ export class HeaderComponent implements OnInit {
   public collapsed: boolean = true;
   public isLoggedIn: boolean;
 
-  constructor(private router: Router, private usersService: UsersService) {
+  constructor(private router: Router, private route: ActivatedRoute, 
+              private usersService: UsersService) {
     this.usersService.setLoginState.subscribe((state: boolean) => this.setState(state));
   }
   
@@ -32,7 +33,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.usersService.logout()
+    this.usersService.logout();
+    this.router.navigate(['home'], { relativeTo: this.route })
   }
 
 }

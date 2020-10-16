@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LeadersComponent } from './components/leaders/leaders.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 
 
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
     { path: 'contact', component: ContactComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'profile', component: ProfileComponent },
     { path: 'customer', redirectTo: '/home' },
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' }
