@@ -63,17 +63,6 @@ export class UsersService {
     )
   }
 
-  // public getUserByUserName(userName: string) {
-  //   let params = new HttpParams().set('userName', userName);
-  //   return this.http.get<UserProfile>(this.config.apiBaseEndpoint + 'users/search?', { params: params, responseType: 'json' }).pipe(
-  //     map((data) => {
-  //       return data.id;
-  //     }, (error: any) => {
-  //       return error;
-  //     })
-  //   )
-  // }
-
   getUserProfile(userId: string) {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
       map((data): any => {
