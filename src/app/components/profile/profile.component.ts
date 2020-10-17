@@ -22,29 +22,24 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usersService.getUserByUserName('orennu').subscribe(
-      (id) => {
-        this.userId = id;
-        this.usersService.getUserProfile(this.userId).subscribe(
-          () => {
-            this.userProfile = this.usersService.getProfile();
-            this.profile.firstName = this.userProfile.firstName;
-            this.profile.lastName = this.userProfile.lastName;
-            this.profile.address = this.userProfile.address;
-            this.profile.phoneNumber = this.userProfile.phoneNumber;
-            this.profile.dateOfBirth = this.userProfile.dateOfBirth;
-            this.profileForm.patchValue({ firstName: this.profile.firstName,
-                                          lastName: this.profile.lastName,
-                                          address: this.profile.address,
-                                          phoneNumber: this.profile.phoneNumber
-                                        });
-            console.log(this.profileForm.value);
-            this.profile.userName = this.userProfile.userName;
-            this.profile.email = this.userProfile.email;
-          }
-        )
+    const id = sessionStorage.getItem('id');
+    this.usersService.getUserProfile(id).subscribe(
+      () => {
+        this.userProfile = this.usersService.getProfile();
+        this.profile.firstName = this.userProfile.firstName;
+        this.profile.lastName = this.userProfile.lastName;
+        this.profile.address = this.userProfile.address;
+        this.profile.phoneNumber = this.userProfile.phoneNumber;
+        this.profile.dateOfBirth = this.userProfile.dateOfBirth;
+        this.profileForm.patchValue({ firstName: this.profile.firstName,
+                                      lastName: this.profile.lastName,
+                                      address: this.profile.address,
+                                      phoneNumber: this.profile.phoneNumber
+                                    });
+        console.log(this.profileForm.value);
+        this.profile.userName = this.userProfile.userName;
+        this.profile.email = this.userProfile.email;
       }
-      
     )
     this.profileForm = this.createFormGroup()
   }

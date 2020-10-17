@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     const observable = this.usersService.login(this.userLoginDetails);
     observable.subscribe(successfulServerRequestData => {
       console.log(successfulServerRequestData);
+      sessionStorage.setItem('id', successfulServerRequestData.id+'');
       sessionStorage.setItem('token', successfulServerRequestData.token+'');
       this.usersService.setLoginState.emit(true);
 

@@ -18,9 +18,8 @@ export class UsersService {
   userProfile: UserProfile = new UserProfile();
   
   
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) {
-  }
-  
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) { }
+
   public getUserId() {
     return this.userId;
   }
@@ -43,6 +42,7 @@ export class UsersService {
 
   public logout() {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('id');
     this.setLoginState.emit(false);
   }
 
@@ -63,18 +63,18 @@ export class UsersService {
     )
   }
 
-  public getUserByUserName(userName: string) {
-    let params = new HttpParams().set('userName', userName);
-    return this.http.get<UserProfile>(this.config.apiBaseEndpoint + 'users/search?', { params: params, responseType: 'json' }).pipe(
-      map((data) => {
-        return data.id;
-      }, (error: any) => {
-        return error;
-      })
-    )
-  }
+  // public getUserByUserName(userName: string) {
+  //   let params = new HttpParams().set('userName', userName);
+  //   return this.http.get<UserProfile>(this.config.apiBaseEndpoint + 'users/search?', { params: params, responseType: 'json' }).pipe(
+  //     map((data) => {
+  //       return data.id;
+  //     }, (error: any) => {
+  //       return error;
+  //     })
+  //   )
+  // }
 
-  getUserProfile(userId: number) {
+  getUserProfile(userId: string) {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
       map((data): any => {
         this.userProfile.firstName = data.firstName;
