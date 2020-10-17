@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   public collapsed: boolean = true;
   public isLoggedIn: boolean;
+  private routesToLogout = ['/profile'];
 
   constructor(private router: Router, private route: ActivatedRoute, 
               private usersService: UsersService) {
@@ -34,7 +35,9 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.usersService.logout();
-    this.router.navigate(['home'], { relativeTo: this.route })
+    if (this.routesToLogout.indexOf(this.router.url) !== -1) {
+      this.router.navigate(['home'], { relativeTo: this.route });
+    }
   }
 
 }

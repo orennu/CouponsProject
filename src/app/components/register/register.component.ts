@@ -19,7 +19,6 @@ export class RegisterComponent implements OnInit {
   constructor(private validationService: ValidationService, 
               private usersService: UsersService,
               private router: Router) {
-    // this.registrationForm = this.createFormGroup();
   }
 
   ngOnInit(): void {

@@ -2,10 +2,10 @@
     <h1>Profile Settings</h1>
     <div class="row rounded p-4 m-0">
         <div class="col-md-5">
-            <form>
-                <!-- [formGroup]="registrationForm"
-                (ngSubmit)="onFormSubmit()"> -->
-                <div class="mb-3">
+            <form
+                [formGroup]="profileForm"
+                (ngSubmit)="onFormSubmit()">
+                <div class="form-group required mb-3">
                     <label 
                         class="control-label h6 small font-weight-bold" 
                         for="firstname">
@@ -15,9 +15,20 @@
                         type="text" 
                         class="form-control"
                         name="firstname"
-                        value="{{ profile?.firstName }}">
+                        value="{{ profile?.firstName }}"
+                        formControlName="firstName">
+                    <span 
+                        *ngIf="isMissing(firstName)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(firstName)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
-                <div class="mb-3">
+                <div class="form-group required mb-3">
                     <label 
                         class="control-label h6 small font-weight-bold" 
                         for="lastname">
@@ -27,7 +38,18 @@
                         type="text" 
                         class="form-control"
                         name="lastname"
-                        value="{{ profile?.lastName }}">
+                        value="{{ profile?.lastName }}"
+                        formControlName="lastName">
+                    <span
+                        *ngIf="isMissing(lastName)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(lastName)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
                 <div class="mb-3">
                     <label 
@@ -55,7 +77,7 @@
                         name="email"
                         value="{{ profile?.email }}">
                 </div>
-                <div class="mb-3">
+                <div class="form-group required mb-3">
                     <label 
                         class="control-label h6 small font-weight-bold" 
                         for="address">
@@ -65,9 +87,20 @@
                         type="text" 
                         class="form-control"
                         name="address"
-                        value="{{ profile?.address }}">
+                        value="{{ profile?.address }}"
+                        formControlName="address">
+                    <span
+                        *ngIf="isMissing(address)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(address)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
-                <div class="mb-3">
+                <div class="form-group required mb-3">
                     <label 
                         class="control-label h6 small font-weight-bold" 
                         for="phoneNumber">
@@ -77,7 +110,18 @@
                         type="text" 
                         class="form-control"
                         name="phoneNumber"
-                        value="{{ profile?.phoneNumber }}">
+                        value="{{ profile?.phoneNumber }}"
+                        formControlName="phoneNumber">
+                    <span
+                        *ngIf="isMissing(phoneNumber)"
+                        class="text-danger">
+                        field is required.
+                    </span>
+                    <span 
+                        *ngIf="isInvalid(phoneNumber)"
+                        class="text-danger">
+                        invalid input.
+                    </span>
                 </div>
                 <div class="mb-3">
                     <label 
@@ -91,6 +135,14 @@
                         class="form-control"
                         name="dateOfBirth"
                         value="{{ profile?.dateOfBirth | date: 'dd/MM/yyyy' }}">
+                </div>
+                <div class="container pl-0">
+                    <button 
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="!profileForm.valid || profileForm.pristine">
+                        Submit
+                    </button>
                 </div>
             </form>
         </div>

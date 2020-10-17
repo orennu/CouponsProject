@@ -1,7 +1,7 @@
 import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { UserLoginDetails } from '../models/userLoginDetails.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SuccessfulLoginServerResponse } from '../models/successfulLoginServerResponse.model'
 import { APP_CONFIG, IAppConfig } from '../app.config';
@@ -17,9 +17,10 @@ export class UsersService {
   userId: number;
   userProfile: UserProfile = new UserProfile();
   
+  
   constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) {
   }
-
+  
   public getUserId() {
     return this.userId;
   }
@@ -50,7 +51,6 @@ export class UsersService {
       delete input['user']['passwords']['confirmPassword'];
       input['user']['password'] = input['user']['passwords']['password'];
       delete input['user']['passwords'];
-
     }
     return this.http.post(this.config.apiBaseEndpoint + 'customers/register', input, { responseType: 'json' }).pipe(
       map((response) => {
@@ -67,27 +67,16 @@ export class UsersService {
     let params = new HttpParams().set('userName', userName);
     return this.http.get<UserProfile>(this.config.apiBaseEndpoint + 'users/search?', { params: params, responseType: 'json' }).pipe(
       map((data) => {
-        this.setUserId(data.id);
+        return data.id;
       }, (error: any) => {
         return error;
       })
     )
   }
 
-  // getUserProfile(userId: number) {
-  //   return this.http.get<UserProfile>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
-  //     map((data) => {
-  //       this.setProfile(data);
-  //       // this.userProfile = data;
-  //     }, (error: any) => {
-  //       return error;
-  //     })
-  //   )
-  // }
-
   getUserProfile(userId: number) {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
-      map((data) => {
+      map((data): any => {
         this.userProfile.firstName = data.firstName;
         this.userProfile.lastName = data.lastName;
         this.userProfile.email = data.user.email;
@@ -100,6 +89,5 @@ export class UsersService {
       })
     )
   }
-
 
 }
