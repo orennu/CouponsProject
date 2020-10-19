@@ -41,9 +41,15 @@ export class UsersService {
   }
 
   public logout() {
+    const token = sessionStorage.getItem('token');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('id');
     this.setLoginState.emit(false);
+    this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
+      console.log(data);
+    }, error => {
+      console.log(error);
+    });
   }
 
   public register(input: Object) {
