@@ -34,6 +34,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   onFormSubmit(formData: string) {
+    this.contactService.email = 'orennu.cloud@gmail.com';
     this.contactService.postForm(formData).subscribe(response => {
       console.log(response);
       this.formSubmitted = true;

@@ -63,7 +63,19 @@ export class UsersService {
     )
   }
 
-  getUserProfile(userId: string) {
+  public updateUserProfile(input: Object) {
+    return this.http.put(this.config.apiBaseEndpoint + 'customers', input, { responseType: 'json' }).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        }
+      }, (error: any) => {
+        return error;
+      })
+    )
+  }
+
+  public getUserProfile(userId: string) {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
       map((data): any => {
         this.userProfile.firstName = data.firstName;

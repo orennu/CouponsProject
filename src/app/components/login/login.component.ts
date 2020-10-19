@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   public userLoginDetails: UserLoginDetails;
   public isLoginFailed: boolean;
+  public formFailureReason: string;
 
   constructor(private usersService: UsersService, private router: Router) {
     this.userLoginDetails = new UserLoginDetails();
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
       console.log('Failed: Status ' + serverErrorResponse.status + ' Message ' + serverErrorResponse.message);
       this.isLoginFailed = true;
       this.usersService.setLoginState.emit(false);
+      this.formFailureReason = serverErrorResponse.error.errorDescription;
     });
   }
 

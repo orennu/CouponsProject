@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 const appRoutes: Routes = [
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
     { path: 'leaders', component: LeadersComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'customer', redirectTo: '/home' },

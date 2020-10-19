@@ -144,6 +144,22 @@
                         Submit
                     </button>
                 </div>
+                <div 
+                    *ngIf="formSubmitted">
+                    <div 
+                        class="text-success m-2" 
+                        style="font-weight: bolder;">
+                        <span>&#10003;</span> Your profile was saved successfully.
+                    </div>
+                </div>
+                <div
+                    *ngIf="formSubmitFailure">
+                    <div 
+                        class="text-danger m-2" 
+                        style="font-weight: bolder;">
+                        <span>&#33;</span> {{ formFailureReason }}.
+                    </div>
+                </div>
             </form>
         </div>
     </div>

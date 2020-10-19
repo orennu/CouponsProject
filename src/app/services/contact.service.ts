@@ -11,12 +11,15 @@ imports: [
 })
 export class ContactService {
 
-  private api = 'https://api.slapform.com/orennu.cloud@gmail.com'
+  public email: string;
+  private api = 'https://api.slapform.com/';
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {
+  }
+  
   postForm(input: string) {
-    return this.http.post(this.api, input, {responseType: 'text'}).pipe(
+    console.log(this.email);
+    return this.http.post(this.api + this.email, input, {responseType: 'text'}).pipe(
       map((response) => {
         if (response) {
           return response;
@@ -26,4 +29,5 @@ export class ContactService {
       })
     )
   }
+
 }
