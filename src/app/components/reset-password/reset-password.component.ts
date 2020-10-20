@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ContactService } from 'src/app/services/contact.service';
+import { UsersService } from 'src/app/services/users.service';
 
 
 @Component({
@@ -15,10 +16,13 @@ export class ResetPasswordComponent implements OnInit {
   resetPassForm: FormGroup;
   formSubmitted: boolean = false;
   formSubmitFailure = false;
+  userEmail: string;
   emailTemplate: string;
+  resetPassCode: string;
 
   constructor(private builder: FormBuilder, 
               private contactService: ContactService, 
+              private usersService: UsersService, 
               private activeRoute: ActivatedRoute, 
               private http: HttpClient) {
                 activeRoute.queryParams.subscribe((params) => {
@@ -45,21 +49,37 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onFormSubmit() {
-    this.contactService.email = this.resetPassForm.get('email').value;
+    this.userEmail = this.resetPassForm.get('email').value;
+    this.contactService.email = this.userEmail;
+    this.createPassCode();
+    console.log(this.resetPassCode);
     this.createEmailTemplate();
+    this.addResetPassCode();
+  }
+
+  private sendMailToUser() {
     this.contactService.postForm(this.emailTemplate).subscribe(response => {
-      console.log(response);
-      this.formSubmitted = true;
-    }, error => {
-      console.warn(error.responseText);
-      console.log({ error });
-      this.formSubmitFailure = true;
+        console.log(response);
+        this.formSubmitted = true;
+      }, error => {
+        console.warn(error.responseText);
+        console.log({ error });
+        this.formSubmitFailure = true;
     });
   }
 
-  private randomString(): string {
+  private addResetPassCode() {
+    const resetPassCodeDetails = { email: this.userEmail, code: this.resetPassCode }
+    this.usersService.createResetPassCode(resetPassCodeDetails).subscribe(response => {
+      console.log(response);
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  private createPassCode() {
     const rand = [...Array(256)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
-    return rand;
+    this.resetPassCode = btoa(rand);
   }
 
   private createEmailTemplate() {
@@ -68,7 +88,7 @@ export class ResetPasswordComponent implements OnInit {
         data => {
             let re = /resetPassCode/gi;
             let htmlContent = data;
-            this.emailTemplate = htmlContent.replace(re, btoa(this.randomString()));
+            this.emailTemplate = htmlContent.replace(re, this.resetPassCode);
         },
         error => {
             console.log(error);

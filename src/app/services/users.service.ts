@@ -52,6 +52,10 @@ export class UsersService {
     });
   }
 
+  public createResetPassCode(resetPassCodeDetails: Object) {
+    return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password', resetPassCodeDetails);
+  }
+
   public register(input: Object) {
     if (input['user']['passwords'] !== undefined && input['user']['passwords'] !== null) {
       delete input['user']['passwords']['confirmPassword'];
