@@ -72,8 +72,10 @@ export class ResetPasswordComponent implements OnInit {
     const resetPassCodeDetails = { email: this.userEmail, code: this.resetPassCode }
     this.usersService.createResetPassCode(resetPassCodeDetails).subscribe(response => {
       console.log(response);
+      this.formSubmitted = true;
     }, error => {
       console.error(error);
+      this.formSubmitFailure = true;
     });
   }
 
