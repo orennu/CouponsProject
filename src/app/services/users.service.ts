@@ -12,18 +12,18 @@ import { UserProfile } from '../models/userProfile.model';
   providedIn: 'root'
 })
 export class UsersService {
-  
+
   @Output() setLoginState: EventEmitter<boolean> = new EventEmitter();
   userId: number;
   userProfile: UserProfile = new UserProfile();
-  
-  
+
+
   constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) { }
 
   public getUserId() {
     return this.userId;
   }
-  
+
   private setUserId(userId: number) {
     this.userId = userId;
   }
@@ -53,7 +53,15 @@ export class UsersService {
   }
 
   public createResetPassCode(resetPassCodeDetails: Object) {
-    return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password', resetPassCodeDetails);
+    return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password/code', resetPassCodeDetails);
+  }
+
+  public verifyResetPassCode(resetPassCode: string) {
+    return this.http.get(this.config.apiBaseEndpoint + 'users/reset-password/code/' + resetPassCode);
+  }
+
+  public resetPassword(resetPasswordDetails: Object) {
+    return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password', resetPasswordDetails);
   }
 
   public register(input: Object) {
