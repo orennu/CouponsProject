@@ -10,9 +10,12 @@ export class PurchasesService {
 
   constructor() { }
 
-  public setItemNum(num: number) {
+  public setItemNum(num: number): void {
     this.itemNum.emit(num);
-    console.log(this.itemNum);
+  }
+
+  public getItemNum(): number {
+    return +(localStorage.getItem('itemsInCart'));
   }
 
 }

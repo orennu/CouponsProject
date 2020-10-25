@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    localStorage.getItem('token')
     this.usersService.loginState.subscribe((state: boolean) => this.setState(state));
     this.purchasesService.itemNum.subscribe((num: number) => this.setNum(num));
     if (this.usersService.getLoginState()) {
@@ -40,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
   private setNum(num: number): void {
     this.num = this.num + num;
-    localStorage.setItem('itemsInCart', this.num+"");
+    localStorage.setItem('itemsInCart', this.num+'');
   }
 
   public onLogout(): void {

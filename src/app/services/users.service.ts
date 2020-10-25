@@ -23,15 +23,15 @@ export class UsersService {
                                   private purchasesService: PurchasesService) { }
 
   public getUserToken(): string {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
                                   public getUserId(): number {
-    return +(localStorage.getItem('id'));
+    return +(sessionStorage.getItem('id'));
   }
 
   private setUserId(userId: number): void {
-    localStorage.setItem('id', userId+'');
+    sessionStorage.setItem('id', userId+'');
   }
 
   public getProfile(): UserProfile {
@@ -43,12 +43,12 @@ export class UsersService {
   }
 
   public getLoginState(): boolean {
-    return localStorage.getItem('token') !== null;
+    return sessionStorage.getItem('token') !== null;
   }
 
   public setLoginState(token: string, id: string): void {
-    localStorage.setItem('id', id);
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('id', id);
+    sessionStorage.setItem('token', token);
   }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
@@ -56,7 +56,7 @@ export class UsersService {
   }
 
   public logout(): void {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const numItem = +localStorage.getItem('itemsInCart');
     if (numItem > 0) {
       if (confirm('There are items in your cart, are you sure you want to logout?')) {
@@ -127,8 +127,8 @@ export class UsersService {
   }
 
   private doLogout(token: string): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('id');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('id');
     this.loginState.emit(false);
     this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
       console.log('user logged out');
