@@ -8,7 +8,7 @@ export class Coupon {
     public startDate?: string;
     public expirationDate?: string;
 
-    constructor(title?: string, description?: string, image?: string, price?: number, 
+    constructor(title?: string, description?: string, image?: string, price?: number,
                 category?: string, quantity?: number, startDate?: string, expirationDate?: string) {
             this.title = title;
             this.description = description;
@@ -18,5 +18,6 @@ export class Coupon {
             this.quantity = quantity;
             this.startDate = startDate;
             this.expirationDate = expirationDate;
-        }
+    }
+
 }
