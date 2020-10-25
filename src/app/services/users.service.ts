@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { SuccessfulLoginServerResponse } from '../models/successfulLoginServerResponse.model'
 import { APP_CONFIG, IAppConfig } from '../app.config';
 import { UserProfile } from '../models/userProfile.model';
+import { PurchasesService } from './purchases.service';
 
 
 @Injectable({
@@ -18,7 +19,9 @@ export class UsersService {
   userProfile: UserProfile = new UserProfile();
 
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+                                  private http: HttpClient,
+                                  private purchasesService: PurchasesService) { }
 
   public getUserId() {
     return this.userId;
@@ -45,11 +48,18 @@ export class UsersService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('id');
     this.setLoginState.emit(false);
-    this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
-      console.log(data);
-    }, error => {
-      console.log(error);
-    });
+    const numItem = +localStorage.getItem('itemsInCart');
+    if (numItem > 0) {
+      if (confirm('There are items in your cart, are you sure you want to logout?')) {
+        this.purchasesService.setItemNum(-numItem);
+        localStorage.removeItem('itemsInCart');
+        this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
+          console.log(data);
+        }, error => {
+          console.log(error);
+        });
+      }
+    }
   }
 
   public createResetPassCode(resetPassCodeDetails: Object) {

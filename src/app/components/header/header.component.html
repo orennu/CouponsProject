@@ -1,100 +1,108 @@
-<nav 
+<nav
     class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a 
-        class="navbar-brand" 
+    <a
+        class="navbar-brand"
         routerLink="/home">
-        <img 
-            src="../../../assets/logo.png" 
+        <img
+            src="../../../assets/logo.png"
             alt="Coupons Menia logo"
             class="img-responsive"
             style="max-height: 45px;">
     </a>
-    <button 
-        class="navbar-toggler" 
-        type="button" 
+    <button
+        class="navbar-toggler"
+        type="button"
         (click)="collapsed = !collapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div 
-        class="collapse navbar-collapse" 
-        id="navbarSupportedContent" 
+    <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
         [class.collapse]="collapsed">
         <!-- (window:resize)="collapsed = true"> -->
-      <ul 
+      <ul
         *ngIf="getUrl() !== '/not-found'"
         class="navbar-nav ml-auto">
-        <li 
+        <li
             class="nav-item ml-2">
-            <a 
-                class="nav-link mt-1" 
+            <a
+                class="nav-link mt-1"
                 routerLink="/home"
                 routerLinkActive="active">
                 Home
             </a>
         </li>
-        <li 
+        <li
             class="nav-item ml-2">
-            <a 
-                class="nav-link mt-1" 
+            <a
+                class="nav-link mt-1"
                 routerLink="/about"
                 routerLinkActive="active">
                 About</a>
         </li>
-        <li 
+        <li
             class="nav-item ml-2">
-            <a 
-                class="nav-link mt-1" 
+            <a
+                class="nav-link mt-1"
                 routerLink="/contact"
                 routerLinkActive="active">
                 Contact</a>
         </li>
-        <li 
+        <li
             *ngIf="!isLoggedIn"
             class="nav-item ml-2">
-            <a 
-                class="nav-link mt-1" 
+            <a
+                class="nav-link mt-1"
                 routerLink="/login"
                 routerLinkActive="active">
                 Login
             </a>
         </li>
-        <li 
+        <li
             *ngIf="!isLoggedIn"
             class="nav-item bg-primary rounded px-2"
             style="max-width: fit-content;">
-            <a 
-                class="nav-link mt-1" 
+            <a
+                class="nav-link mt-1"
                 routerLink="/register"
                 routerLinkActive="active">
                 Sign Up
             </a>
         </li>
-        <!-- <li 
-            *ngIf="isLoggedIn"
-            class="nav-item ml-2">
-            <a 
-                class="nav-link mt-1" 
-                routerLink="/home">
-                Logout
-            </a>
-        </li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li 
+        <li
+          *ngIf="isLoggedIn"
+          class="d-flex align-items-center ml-1">
+          <a
+            role="button">
+            <!-- <div
+              class="text-white"
+              style="font-size: 2.2em;">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+              </svg>
+            </div> -->
+            <span class="fa-stack fa-2x has-badge" [attr.data-count]="num > 0 ? num : null">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+        <li
             *ngIf="isLoggedIn"
             appDropdown #r="appDropdown"
             class="dropdown ml-1">
-            <a 
+            <a
                 class="nav-link dropdown-toggle"
                 role="button"
                 data-toggle="dropdown">
-                <!-- routerLink="/profile"> -->
-                <svg 
-                    width="2em" 
-                    height="2em" 
-                    viewBox="0 0 16 16" 
-                    class="bi bi-person-circle" 
-                    fill="white" 
+                <svg
+                    width="2em"
+                    height="2em"
+                    viewBox="0 0 16 16"
+                    class="bi bi-person-circle"
+                    fill="white"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
                     <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>

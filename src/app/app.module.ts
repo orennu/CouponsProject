@@ -25,6 +25,7 @@ import { CouponItemComponent } from './components/coupons/coupon-list/coupon-ite
 import { ProfileComponent } from './components/profile/profile.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ResetPasswordEditComponent } from './components/reset-password/reset-password-edit/reset-password-edit.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ResetPasswordEditComponent } from './components/reset-password/reset-pa
     CouponItemComponent,
     ProfileComponent,
     ResetPasswordComponent,
-    ResetPasswordEditComponent
+    ResetPasswordEditComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
