@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { ValidationService } from 'src/app/services/validation.service';
@@ -15,43 +16,45 @@ export class RegisterComponent implements OnInit {
   formSubmitted: boolean = false;
   formSubmitFailure = false;
   formFailureReason: string;
-  
-  constructor(private validationService: ValidationService, 
+
+  constructor(private validationService: ValidationService,
               private usersService: UsersService,
-              private router: Router) {
+              private router: Router,
+              private title: Title) {
+                this.title.setTitle('registration');
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.registrationForm = this.createFormGroup();
   }
 
-  createFormGroup(): FormGroup {
+  private createFormGroup(): FormGroup {
     return new FormGroup({
       firstName: new FormControl(
-        '', 
+        '',
         [
-          Validators.required, 
+          Validators.required,
           Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/),
         ]
       ),
       lastName: new FormControl(
-        '', 
+        '',
         [
-          Validators.required, 
+          Validators.required,
           Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/)
         ]
       ),
       phoneNumber: new FormControl(
-        '', 
+        '',
         [
-          Validators.required, 
+          Validators.required,
           Validators.pattern('^\\+?(?:[0-9] ?){6,14}[0-9]$'),
-          Validators.minLength(6), 
+          Validators.minLength(6),
           Validators.maxLength(14),
         ]
       ),
       address: new FormControl(
-        '', 
+        '',
         [
           Validators.minLength(2),
           Validators.maxLength(255),
@@ -59,7 +62,7 @@ export class RegisterComponent implements OnInit {
         ]
       ),
       dateOfBirth: new FormControl(
-        '', 
+        '',
         [
           Validators.required,
           this.validationService.ageValidator
@@ -67,9 +70,9 @@ export class RegisterComponent implements OnInit {
       ),
       user: new FormGroup({
         userName: new FormControl(
-          '', 
+          '',
           [
-            Validators.required, 
+            Validators.required,
             Validators.minLength(2),
             Validators.maxLength(20),
             Validators.pattern('^[a-z][a-z0-9]*$')
@@ -77,7 +80,7 @@ export class RegisterComponent implements OnInit {
         ),
         passwords: new FormGroup({
           password: new FormControl(
-            '', 
+            '',
             [
               Validators.required,
               Validators.minLength(10),
@@ -86,7 +89,7 @@ export class RegisterComponent implements OnInit {
             ]
           ),
           confirmPassword: new FormControl(
-            '', 
+            '',
             [
               Validators.required
             ]
@@ -99,9 +102,9 @@ export class RegisterComponent implements OnInit {
         }
         ),
         email: new FormControl(
-          '', 
+          '',
           [
-            Validators.required, 
+            Validators.required,
             Validators.email
           ]
         ),
@@ -110,70 +113,70 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  get firstName() {
+  public get firstName(): AbstractControl {
     return this.registrationForm.get('firstName');
   }
 
-  get lastName() {
+  public get lastName(): AbstractControl {
     return this.registrationForm.get('lastName');
   }
 
-  get phoneNumber() {
+  public get phoneNumber(): AbstractControl {
     return this.registrationForm.get('phoneNumber');
   }
 
-  get address() {
+  public get address(): AbstractControl {
     return this.registrationForm.get('address');
   }
 
-  get dateOfBirth() {
+  public get dateOfBirth(): AbstractControl {
     return this.registrationForm.get('dateOfBirth');
   }
 
-  get userName() {
+  public get userName(): AbstractControl {
     return this.registrationForm.get('user').get('userName');
   }
 
-  get password() {
+  public get password(): AbstractControl {
     return this.registrationForm.get('user').get('passwords').get('password');
   }
 
-  get confirmPassword() {
+  public get confirmPassword(): AbstractControl {
     return this.registrationForm.get('user').get('passwords').get('confirmPassword');
   }
 
-  get email() {
+  public get email(): AbstractControl {
     return this.registrationForm.get('user').get('email');
   }
 
-  isMissing(control: AbstractControl): boolean {
+  public isMissing(control: AbstractControl): boolean {
     return (control.dirty || control.touched) && control.invalid && control.errors.required;
   }
 
-  isInvalid(control: AbstractControl): boolean {
+  public isInvalid(control: AbstractControl): boolean {
     return (control.dirty || control.touched) && control.invalid && !control.errors.required;
   }
 
-  isPasswordsMismatch(control: AbstractControl): boolean {
-    return (control.dirty || control.touched) 
+  public isPasswordsMismatch(control: AbstractControl): boolean {
+    return (control.dirty || control.touched)
             && this.registrationForm.get('user').get('passwords').hasError('passwordsNotMatch')
             && control.errors === null;
   }
-  
-  private removeValidators(formGroup: FormGroup) {
+
+  private removeValidators(formGroup: FormGroup): void {
     for (const key in formGroup.controls) {
       formGroup.get(key).clearValidators();
       formGroup.get(key).updateValueAndValidity();
     }
   }
 
-  onRevert() {
+  public onRevert(): void {
     this.removeValidators(this.registrationForm);
     this.registrationForm.reset();
     this.registrationForm = this.createFormGroup();
   }
 
-  onFormSubmit() {
+  public onFormSubmit(): void {
     this.usersService.register(this.registrationForm.value).subscribe(response => {
       this.formSubmitted = true;
       this.formSubmitFailure = false;

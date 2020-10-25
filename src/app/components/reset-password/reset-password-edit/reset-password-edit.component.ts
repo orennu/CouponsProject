@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { ValidationService } from 'src/app/services/validation.service';
@@ -19,15 +20,18 @@ export class ResetPasswordEditComponent implements OnInit {
 
   constructor(private router: Router,
               private usersService: UsersService,
-              private validationService: ValidationService) { }
+              private validationService: ValidationService,
+              private title: Title) {
+                this.title.setTitle('reset password');
+              }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.resetPassForm = this.createFormGroup();
     const urlArray = this.router.url.split('/');
     this.resetPassCode = urlArray[urlArray.length -1];
   }
 
-  createFormGroup(): FormGroup {
+  private createFormGroup(): FormGroup {
     return new FormGroup({
       password: new FormControl(
         '',
@@ -60,17 +64,17 @@ export class ResetPasswordEditComponent implements OnInit {
     )
   }
 
-  isMissing(control: AbstractControl): boolean {
+  public isMissing(control: AbstractControl): boolean {
     return (control.dirty || control.touched) && control.invalid && control.errors.required;
   }
 
-  isPasswordsMismatch(control: AbstractControl): boolean {
+  public isPasswordsMismatch(control: AbstractControl): boolean {
     return (control.dirty || control.touched)
             && this.resetPassForm.hasError('passwordsNotMatch')
             && control.errors === null;
   }
 
-  onFormSubmit() {
+  public onFormSubmit(): void {
     const password = this.resetPassForm.get('password').value;
     const resetPasswordData = { password: password, code: this.resetPassCode }
     console.log(resetPasswordData);

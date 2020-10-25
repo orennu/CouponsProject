@@ -5,6 +5,7 @@ import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
 import { Coupon } from 'src/app/models/coupon.model';
 import { CouponsService } from 'src/app/services/coupons.service';
 import { PurchasesService } from 'src/app/services/purchases.service';
+import { UsersService } from 'src/app/services/users.service';
 
 
 @Component({
@@ -21,12 +22,13 @@ export class CouponItemComponent implements OnInit {
   constructor(private couponsService: CouponsService,
               private modalService: NgbModal,
               private purchasesService: PurchasesService,
+              private usersService: UsersService,
               private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  public showCoupon(couponModal: NgbModalRef) {
+  public showCoupon(couponModal: NgbModalRef): void {
     console.log(this.coupon);
     this.modalService.open(couponModal, { centered: true }).result.then((result) => {
       this.closeResult = `closed with: ${result}`;
@@ -35,10 +37,10 @@ export class CouponItemComponent implements OnInit {
     });
   }
 
-  public addCouponToCart(couponModal: NgbActiveModal) {
+  public addCouponToCart(couponModal: NgbActiveModal): void {
     console.log(this.coupon);
     couponModal.close(); // need to add to cart if user is logged in else redirect him to login
-    if (sessionStorage.getItem('token')) {
+    if (this.usersService.getLoginState) {
       console.log('add to cart: ' + this.coupon.title);
       this.purchasesService.setItemNum(1);
     } else {

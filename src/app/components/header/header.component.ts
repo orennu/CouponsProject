@@ -19,30 +19,31 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute,
               private usersService: UsersService,
               private purchasesService: PurchasesService) {
-    this.usersService.setLoginState.subscribe((state: boolean) => this.setState(state));
-    this.purchasesService.itemNum.subscribe((num: number) => this.setNum(num));
   }
 
-  ngOnInit(): void {
-    if (sessionStorage.getItem('token')) {
+  public ngOnInit(): void {
+    localStorage.getItem('token')
+    this.usersService.loginState.subscribe((state: boolean) => this.setState(state));
+    this.purchasesService.itemNum.subscribe((num: number) => this.setNum(num));
+    if (this.usersService.getLoginState()) {
       this.isLoggedIn = true;
     }
   }
 
-  getUrl() {
+  public getUrl(): string {
     return this.router.url;
   }
 
-  setState(state: boolean) {
+  private setState(state: boolean): void {
     this.isLoggedIn = state;
   }
 
-  setNum(num: number) {
+  private setNum(num: number): void {
     this.num = this.num + num;
     localStorage.setItem('itemsInCart', this.num+"");
   }
 
-  onLogout() {
+  public onLogout(): void {
     this.usersService.logout();
     if (this.routesToLogout.indexOf(this.router.url) !== -1) {
       this.router.navigate(['home'], { relativeTo: this.route });

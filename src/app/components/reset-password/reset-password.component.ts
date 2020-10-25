@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 import { ContactService } from 'src/app/services/contact.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -14,7 +16,7 @@ export class ResetPasswordComponent implements OnInit {
 
   getPassCodeForm: FormGroup;
   formSubmitted: boolean = false;
-  formSubmitFailure = false;
+  formSubmitFailure: boolean = false;
   userEmail: string;
   emailTemplate: string;
   resetPassCode: string;
@@ -22,9 +24,12 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private builder: FormBuilder,
               private contactService: ContactService,
               private usersService: UsersService,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private title: Title) {
+                this.title.setTitle('reset password');
+              }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.formSubmitted = false;
     this.getPassCodeForm = this.builder.group({
       email: new FormControl(
@@ -41,14 +46,14 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-  onFormSubmit() {
+  public onFormSubmit(): void {
     this.userEmail = this.getPassCodeForm.get('email').value;
     this.contactService.email = this.userEmail;
     this.createPassCode();
     this.addResetPassCode();
   }
 
-  private sendMailToUser() {
+  private sendMailToUser(): void {
     this.contactService.postForm(this.emailTemplate).subscribe(response => {
         console.log(response);
       }, error => {
@@ -58,7 +63,7 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-  private addResetPassCode() {
+  private addResetPassCode(): void {
     const resetPassCodeDetails = { email: this.userEmail, code: this.resetPassCode }
     this.usersService.createResetPassCode(resetPassCodeDetails).subscribe(response => {
       this.verifyPassCode(resetPassCodeDetails.code);
@@ -69,16 +74,16 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-  private createPassCode() {
+  private createPassCode(): void {
     const rand = [...Array(256)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
     this.resetPassCode = btoa(rand).replace(/\=+$/, '');
   }
 
-  private createEmailTemplate(passCode: string) {
+  private createEmailTemplate(passCode: string): Observable<any> {
     return this.http.get('../../assets/emailTemplate.html', {responseType: 'text'});
   }
 
-  private verifyPassCode(passCode: string) {
+  private verifyPassCode(passCode: string): void {
     this.usersService.verifyResetPassCode(passCode).subscribe(response => {
       console.log(passCode);
       this.createEmailTemplate(passCode).subscribe(data => {

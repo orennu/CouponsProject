@@ -15,7 +15,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token: string;
-    token = sessionStorage.getItem('token');
+    token = this.usersService.getUserToken();
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -23,7 +23,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         }
       });
     }
-    
+
     return next.handle(request);
   }
 }

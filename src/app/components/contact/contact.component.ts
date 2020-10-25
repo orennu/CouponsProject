@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  constructor(private title: Title) {
+    this.title.setTitle('contact us');
+  }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }

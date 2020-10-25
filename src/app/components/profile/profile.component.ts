@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { Observable } from 'rxjs';
@@ -21,12 +22,13 @@ export class ProfileComponent implements OnInit {
   formSubmitFailure = false;
   formFailureReason: string;
 
-  constructor(private usersService: UsersService, private router: Router) {
-    
+  constructor(private usersService: UsersService, private router: Router,
+              private title: Title) {
+                this.title.setTitle('profile');
   }
 
-  ngOnInit(): void {
-    const id = sessionStorage.getItem('id');
+  public ngOnInit(): void {
+    const id = this.usersService.getUserId()+'';
     this.usersService.getUserProfile(id).subscribe(
       () => {
         this.userProfile = this.usersService.getProfile();
@@ -48,34 +50,34 @@ export class ProfileComponent implements OnInit {
     this.profileForm = this.createFormGroup()
   }
 
-  createFormGroup(): FormGroup {
+  private createFormGroup(): FormGroup {
     return new FormGroup({
       id: new FormControl(),
       firstName: new FormControl(
-        '', 
+        '',
         [
-          Validators.required, 
+          Validators.required,
           Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/),
         ]
       ),
       lastName: new FormControl(
-        '', 
+        '',
         [
-          Validators.required, 
+          Validators.required,
           Validators.pattern(/^[a-zA-Z]+[ \'\-]?[a-zA-Z]+$/),
         ]
       ),
       phoneNumber: new FormControl(
-        '', 
+        '',
         [
-          Validators.required, 
+          Validators.required,
           Validators.pattern('^\\+?(?:[0-9] ?){6,14}[0-9]$'),
-          Validators.minLength(6), 
+          Validators.minLength(6),
           Validators.maxLength(14),
         ]
       ),
       address: new FormControl(
-        '', 
+        '',
         [
           Validators.minLength(2),
           Validators.maxLength(255),
@@ -91,34 +93,34 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  get firstName() {
+  public get firstName(): AbstractControl {
     return this.profileForm.get('firstName');
   }
-  
-  get lastName() {
+
+  public get lastName(): AbstractControl {
     return this.profileForm.get('lastName');
   }
 
-  get address() {
+  public get address(): AbstractControl {
     return this.profileForm.get('address');
   }
 
-  get phoneNumber() {
+  public get phoneNumber(): AbstractControl {
     return this.profileForm.get('phoneNumber');
   }
-  
-  isMissing(control: AbstractControl): boolean {
+
+  public isMissing(control: AbstractControl): boolean {
     return (control.dirty || control.touched) && control.invalid && control.errors.required;
   }
 
-  isInvalid(control: AbstractControl): boolean {
+  public isInvalid(control: AbstractControl): boolean {
     return (control.dirty || control.touched) && control.invalid && !control.errors.required;
   }
 
-  onFormSubmit() {
+  public onFormSubmit(): void {
     console.log(this.profile);
-    const id = sessionStorage.getItem('id');
-    this.profileForm.patchValue({ id: +id, 
+    const id = this.usersService.getUserId();
+    this.profileForm.patchValue({ id: +id,
                                   dateOfBirth: this.profile.dateOfBirth,
                                   user: { id: +id } });
     console.log(this.profileForm.value);

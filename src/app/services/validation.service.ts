@@ -6,13 +6,13 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   })
 export class ValidationService {
 
-    isPasswordsMatch(formGroup: FormGroup) {
+    public isPasswordsMatch(formGroup: FormGroup): Object | null {
         const password = formGroup.get('password').value;
         const confirmPassword = formGroup.get('confirmPassword').value;
         return password === confirmPassword ? null : { passwordsNotMatch: { valid: false, message: 'passwords mismatch' } };
     }
 
-    ageValidator(formControl: AbstractControl) {
+    public ageValidator(formControl: AbstractControl): Object | null {
         const dateOfBirth = formControl.value;
         let birthday = +new Date(dateOfBirth);
         const age = ~~((Date.now() - birthday) / (31557600000));

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 imports: [
   HttpClientModule
@@ -16,8 +17,8 @@ export class ContactService {
 
   constructor(private http: HttpClient) {
   }
-  
-  postForm(input: string) {
+
+  public postForm(input: string): Observable<any> {
     console.log(this.email);
     return this.http.post(this.api + this.email, input, {responseType: 'text'}).pipe(
       map((response) => {

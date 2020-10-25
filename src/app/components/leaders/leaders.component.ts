@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-leaders',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeadersComponent implements OnInit {
 
-  constructor() { }
+  constructor(private title: Title) {
+    this.title.setTitle('our leaders');
+  }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }

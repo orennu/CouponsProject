@@ -1,7 +1,7 @@
 import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { UserLoginDetails } from '../models/userLoginDetails.model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SuccessfulLoginServerResponse } from '../models/successfulLoginServerResponse.model'
 import { APP_CONFIG, IAppConfig } from '../app.config';
@@ -14,67 +14,74 @@ import { PurchasesService } from './purchases.service';
 })
 export class UsersService {
 
-  @Output() setLoginState: EventEmitter<boolean> = new EventEmitter();
+  @Output() loginState: EventEmitter<boolean> = new EventEmitter();
   userId: number;
   userProfile: UserProfile = new UserProfile();
-
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
                                   private http: HttpClient,
                                   private purchasesService: PurchasesService) { }
 
-  public getUserId() {
-    return this.userId;
+  public getUserToken(): string {
+    return localStorage.getItem('token');
   }
 
-  private setUserId(userId: number) {
-    this.userId = userId;
+                                  public getUserId(): number {
+    return +(localStorage.getItem('id'));
   }
 
-  public getProfile() {
+  private setUserId(userId: number): void {
+    localStorage.setItem('id', userId+'');
+  }
+
+  public getProfile(): UserProfile {
     return this.userProfile;
   }
 
-  private setProfile(profile: UserProfile) {
+  private setProfile(profile: UserProfile): void {
     this.userProfile = profile;
+  }
+
+  public getLoginState(): boolean {
+    return localStorage.getItem('token') !== null;
+  }
+
+  public setLoginState(token: string, id: string): void {
+    localStorage.setItem('id', id);
+    localStorage.setItem('token', token);
   }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
     return this.http.post(this.config.apiBaseEndpoint + 'users/login', userLoginDetails);
   }
 
-  public logout() {
-    const token = sessionStorage.getItem('token');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('id');
-    this.setLoginState.emit(false);
+  public logout(): void {
+    const token = localStorage.getItem('token');
     const numItem = +localStorage.getItem('itemsInCart');
     if (numItem > 0) {
       if (confirm('There are items in your cart, are you sure you want to logout?')) {
         this.purchasesService.setItemNum(-numItem);
         localStorage.removeItem('itemsInCart');
-        this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
-          console.log(data);
-        }, error => {
-          console.log(error);
-        });
+        this.doLogout(token);
       }
-    }
+    } else {
+        this.doLogout(token);
+      }
   }
 
-  public createResetPassCode(resetPassCodeDetails: Object) {
+  public createResetPassCode(resetPassCodeDetails: Object): Observable<any> {
     return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password/code', resetPassCodeDetails);
   }
 
-  public verifyResetPassCode(resetPassCode: string) {
+  public verifyResetPassCode(resetPassCode: string): Observable<any> {
     return this.http.get(this.config.apiBaseEndpoint + 'users/reset-password/code/' + resetPassCode);
   }
 
-  public resetPassword(resetPasswordDetails: Object) {
+  public resetPassword(resetPasswordDetails: Object): Observable<any> {
     return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password', resetPasswordDetails);
   }
 
-  public register(input: Object) {
+  public register(input: Object): Observable<any> {
     if (input['user']['passwords'] !== undefined && input['user']['passwords'] !== null) {
       delete input['user']['passwords']['confirmPassword'];
       input['user']['password'] = input['user']['passwords']['password'];
@@ -91,7 +98,7 @@ export class UsersService {
     )
   }
 
-  public updateUserProfile(input: Object) {
+  public updateUserProfile(input: Object): Observable<any> {
     return this.http.put(this.config.apiBaseEndpoint + 'customers', input, { responseType: 'json' }).pipe(
       map((response) => {
         if (response) {
@@ -103,7 +110,7 @@ export class UsersService {
     )
   }
 
-  public getUserProfile(userId: string) {
+  public getUserProfile(userId: string): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
       map((data): any => {
         this.userProfile.firstName = data.firstName;
@@ -117,6 +124,17 @@ export class UsersService {
         return error;
       })
     )
+  }
+
+  private doLogout(token: string): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    this.loginState.emit(false);
+    this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
+      console.log('user logged out');
+    }, error => {
+      console.log(error.error);
+    });
   }
 
 }
