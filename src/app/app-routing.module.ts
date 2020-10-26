@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ResetPasswordEditComponent } from './components/reset-password/reset-password-edit/reset-password-edit.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 
 const appRoutes: Routes = [
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
     { path: 'reset-password/:code', component: ResetPasswordEditComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
+    { path: 'shopping-cart', component: ShoppingCartComponent },
     { path: 'customer', redirectTo: '/home' },
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' }

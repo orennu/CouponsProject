@@ -29,7 +29,6 @@ export class CouponItemComponent implements OnInit {
   }
 
   public showCoupon(couponModal: NgbModalRef): void {
-    console.log(this.coupon);
     this.modalService.open(couponModal, { centered: true }).result.then((result) => {
       this.closeResult = `closed with: ${result}`;
     }, (reason) => {
@@ -38,8 +37,7 @@ export class CouponItemComponent implements OnInit {
   }
 
   public addCouponToCart(couponModal: NgbActiveModal): void {
-    console.log(this.coupon);
-    couponModal.close(); // need to add to cart if user is logged in else redirect him to login
+    couponModal.close();
     if (this.usersService.getLoginState()) {
       console.log('add to cart: ' + this.coupon.title);
       this.purchasesService.setItemNum(1);
