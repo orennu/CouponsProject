@@ -1,4 +1,11 @@
-<ng-template #shoppingCart let-modal>
-  <div>bla</div>
-</ng-template>
-
+<div class="container">
+  <div *ngFor="let item of cartItems; let i = index">
+    <li>{{ item?.title }}</li>
+    <hr *ngIf="i < (cartItems.length - 1)">
+  </div>
+  <div *ngIf="cartItems === null">
+    <span>
+      No items in shopping cart
+    </span>
+  </div>
+</div>

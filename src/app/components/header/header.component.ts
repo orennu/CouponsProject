@@ -5,6 +5,7 @@ import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-boo
 import { PurchasesService } from 'src/app/services/purchases.service';
 import { UsersService } from 'src/app/services/users.service';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

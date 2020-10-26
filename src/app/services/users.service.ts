@@ -7,6 +7,7 @@ import { SuccessfulLoginServerResponse } from '../models/successfulLoginServerRe
 import { APP_CONFIG, IAppConfig } from '../app.config';
 import { UserProfile } from '../models/userProfile.model';
 import { PurchasesService } from './purchases.service';
+import { ShoppingService } from './shopping.service';
 
 
 @Injectable({
@@ -20,7 +21,8 @@ export class UsersService {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
                                   private http: HttpClient,
-                                  private purchasesService: PurchasesService) { }
+                                  private purchasesService: PurchasesService,
+                                  private shoppingService: ShoppingService) { }
 
   public getUserToken(): string {
     return sessionStorage.getItem('token');
@@ -62,6 +64,7 @@ export class UsersService {
       if (confirm('There are items in your cart, are you sure you want to logout?')) {
         this.purchasesService.setItemNum(-numItem);
         localStorage.removeItem('itemsInCart');
+        this.shoppingService.removeCoupons();
         this.doLogout(token);
       }
     } else {
