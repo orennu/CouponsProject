@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Purchase } from '../models/purchase.model';
 
 
 @Injectable({
@@ -7,6 +8,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 export class PurchasesService {
 
   @Output() itemNum: EventEmitter<number> = new EventEmitter();
+  purchases: Purchase[] = [];
 
   constructor() { }
 

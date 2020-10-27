@@ -1,11 +1,28 @@
 <div class="container">
   <div *ngFor="let item of cartItems; let i = index">
-    <li>{{ item?.title }}</li>
+    <div class="d-flex" >
+      <div class="mr-auto d-flex">
+        <div>{{ item?.title }}<span class="mx-3">x</span></div>
+        <div>{{ item?.quantity }}</div>
+      </div>
+      <div>{{ item?.price * item?.quantity | currency:'USD' }}</div>
+
+    </div>
     <hr *ngIf="i < (cartItems.length - 1)">
   </div>
   <div *ngIf="cartItems === null">
     <span>
       No items in shopping cart
     </span>
+  </div>
+  <hr>
+  <div class="row d-flex">
+    <div class="ml-auto font-weight-bold">{{ getSumPrice() | currency:'USD' }}</div>
+    <div class="ml-3"></div>
+  </div>
+  <hr>
+  <div class="row d-flex">
+    <button type="submit" class="btn btn-danger ml-auto">Clear</button>
+    <button type="submit" class="btn btn-primary ml-2">Buy</button>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CartItem } from 'src/app/models/cartItem.model';
 import { Coupon } from 'src/app/models/coupon.model';
 import { ShoppingService } from 'src/app/services/shopping.service';
 
@@ -10,12 +11,16 @@ import { ShoppingService } from 'src/app/services/shopping.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  cartItems: Coupon[] = [];
+  // cartItems: Coupon[] = [];
+  cartItems: CartItem[] = [];
 
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit(): void {
-    this.cartItems = this.shoppingService.getCoupons();
+    this.cartItems = this.shoppingService.getCartItems();
   }
 
+  public getSumPrice(): number {
+    return 100;
+  }
 }

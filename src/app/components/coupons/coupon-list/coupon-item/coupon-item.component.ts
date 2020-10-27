@@ -42,7 +42,7 @@ export class CouponItemComponent implements OnInit {
     couponModal.close();
     if (this.usersService.getLoginState()) {
       console.log('add to cart: ' + this.coupon.title);
-      this.shoppingService.addCoupon(this.coupon);
+      this.shoppingService.addCartItem(this.coupon);
       this.purchasesService.setItemNum(1);
     } else {
       this.router.navigate(['/login']);
