@@ -28,6 +28,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let index = 0; index < this.cartItems.length; index++) {
       sum = sum + (this.cartItems[index].quantity * this.cartItems[index].price);
     }
+    
     return sum;
   }
 

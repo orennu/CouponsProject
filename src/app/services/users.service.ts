@@ -63,7 +63,6 @@ export class UsersService {
     if (numItem > 0) {
       if (confirm('There are items in your cart, are you sure you want to logout?')) {
         this.purchasesService.setItemNum(-numItem);
-        // localStorage.removeItem('itemsInCart');
         this.shoppingService.removeCoupons();
         this.doLogout(token);
       }
