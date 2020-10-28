@@ -24,12 +24,21 @@ export class ShoppingService {
   //   console.log(this.coupons);
   // }
 
+  public getCartItemsCount(): number {
+    return +localStorage.getItem('itemsInCart');
+  }
+
   public getCartItems(): CartItem[] {
-    return JSON.parse(localStorage.getItem('shoppingCartItems'));
+    const cartItems = JSON.parse(localStorage.getItem('shoppingCartItems'));
+    if (cartItems === null) {
+      return [];
+    }
+    return cartItems;
   }
 
   public removeCoupons(): void {
     this.shoppingCartItems = [];
+    localStorage.removeItem('itemsInCart');
     localStorage.removeItem('shoppingCartItems');
   }
 
