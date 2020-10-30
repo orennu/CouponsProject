@@ -22,9 +22,46 @@
           <td class="d-flex justify-content-between">
             <button
               class="btn btn-primary"
-              type="submit">
+              type="submit"
+              (click)="[(viewCustomerDetails(customerDetails))]">
               View
             </button>
+            <ng-template #customerDetails let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  Customer Details
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div><strong>Id: </strong>{{ customer.id }}</div>
+                <hr>
+                <div><strong>Fullname: </strong>{{ customer.firstName + ' ' + customer.lastName }}</div>
+                <hr>
+                <div><strong>Email: </strong>{{ customer.email }}</div>
+                <hr>
+                <div><strong>Username: </strong>{{ customer.userName }}</div>
+                <hr>
+                <div><strong>Phone: </strong>{{ customer.phoneNumber }}</div>
+                <hr>
+                <div><strong>Address: </strong>{{ customer.address }}</div>
+                <hr>
+                <div><strong>Birth Date: </strong>{{ customer.dateOfBirth | date: 'dd/MM/yyyy' }}</div>
+                <hr>
+                <div><strong>Is locked: </strong>{{ customer.isLocked }}</div>
+                <hr>
+                <div class="d-flex">
+                  <button
+                    type="submit"
+                    class="btn btn-primary ml-auto"
+                    (click)="modal.dismiss('Close button click')">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </ng-template>
             <button
               *ngIf="!customer?.isLocked"
               class="btn btn-warning"
@@ -51,3 +88,4 @@
     </table>
   </div>
 </div>
+
