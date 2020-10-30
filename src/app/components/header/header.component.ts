@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
 
   public collapsed: boolean = true;
   public isLoggedIn: boolean;
+  public isAdmin: boolean;
+  public isCompany: boolean;
   private routesToLogout = ['/profile'];
   public num: number = +localStorage.getItem('itemsInCart');
   private closeResult: string;
@@ -28,8 +30,12 @@ export class HeaderComponent implements OnInit {
   public ngOnInit(): void {
     this.usersService.loginState.subscribe((state: boolean) => this.setState(state));
     this.purchasesService.itemNum.subscribe((num: number) => this.setNum(num));
+    this.usersService.userRole.subscribe((role: string) => this.setUserRole(role));
     if (this.usersService.getLoginState()) {
       this.isLoggedIn = true;
+    }
+    if (this.usersService.getUserRole() === 'ADMIN') {
+      this.isAdmin = true;
     }
   }
 
@@ -49,8 +55,9 @@ export class HeaderComponent implements OnInit {
   public onLogout(): void {
     this.usersService.logout();
     if (this.routesToLogout.indexOf(this.router.url) !== -1) {
-      this.router.navigate(['home'], { relativeTo: this.route });
+      this.router.navigate(['home']);
     }
+    this.router.navigate(['/home']);
   }
 
   public showCart(shoppingCart: NgbModalRef): void {
@@ -71,6 +78,19 @@ export class HeaderComponent implements OnInit {
     } else {
       console.log(`with: ${reason}`);
       return  `with: ${reason}`;
+    }
+  }
+
+  private setUserRole(role: string): void {
+    if (role.valueOf() === 'ADMIN') {
+      this.isAdmin = true;
+    }
+    if (role == 'COMPANY') {
+      this.isCompany = true;
+    }
+    if (role === '') {
+      this.isAdmin = false;
+      this.isCompany = false;
     }
   }
 

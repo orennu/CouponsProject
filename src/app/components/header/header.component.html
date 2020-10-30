@@ -24,6 +24,7 @@
         *ngIf="getUrl() !== '/not-found'"
         class="navbar-nav ml-auto">
         <li
+            *ngIf="!isAdmin"
             class="nav-item ml-2">
             <a
                 class="nav-link mt-1"
@@ -33,6 +34,7 @@
             </a>
         </li>
         <li
+            *ngIf="!isAdmin"
             class="nav-item ml-2">
             <a
                 class="nav-link mt-1"
@@ -41,6 +43,7 @@
                 About</a>
         </li>
         <li
+            *ngIf="!isAdmin"
             class="nav-item ml-2">
             <a
                 class="nav-link mt-1"
@@ -59,7 +62,7 @@
             </a>
         </li>
         <li
-            *ngIf="!isLoggedIn"
+            *ngIf="!isLoggedIn  && !isAdmin"
             class="nav-item bg-primary rounded px-2"
             style="max-width: fit-content;">
             <a
@@ -70,9 +73,49 @@
             </a>
         </li>
       </ul>
+      <ul
+          *ngIf="isAdmin"
+          class="navbar-nav ml-auto">
+          <li
+              class="nav-item">
+              <a
+                  class="nav-link"
+                  [routerLink]="['/admin/customers']"
+                  routerLinkActive="active">
+                  Customers
+                </a>
+          </li>
+          <li
+              class="nav-item">
+              <a
+                  class="nav-link"
+                  [routerLink]="['/admin/companies']"
+                  routerLinkActive="active">
+                  Companies
+                </a>
+          </li>
+          <li
+              class="nav-item">
+              <a
+                  class="nav-link"
+                  [routerLink]="['/admin/coupons']"
+                  routerLinkActive="active">
+                  Coupons
+                </a>
+          </li>
+          <li
+              class="nav-item">
+              <a
+                  class="nav-link"
+                  [routerLink]="['/admin/purchases']"
+                  routerLinkActive="active">
+                  Purchases
+                </a>
+          </li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li
-          *ngIf="isLoggedIn"
+          *ngIf="isLoggedIn && !isAdmin"
           class="d-flex align-items-center ml-1">
           <a
             role="button"
@@ -118,7 +161,7 @@
                  <span class="caret bg-white"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right" [ngClass]="{'show': r.isOpen}">
-                <li>
+                <li *ngIf="!isAdmin">
                     <a class="dropdown-item" style="cursor: pointer;" routerLink="/profile">Profile</a>
                 </li>
                 <li>

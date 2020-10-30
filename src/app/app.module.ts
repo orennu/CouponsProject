@@ -26,6 +26,11 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ResetPasswordEditComponent } from './components/reset-password/reset-password-edit/reset-password-edit.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { CustomersComponent } from './components/admin/customers/customers.component';
+import { CompaniesComponent } from './components/admin/companies/companies.component';
+import { PurchasesComponent } from './components/admin/purchases/purchases.component';
+import { UsersComponent } from './components/admin/users/users.component';
 
 
 @NgModule({
@@ -47,7 +52,12 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
     ProfileComponent,
     ResetPasswordComponent,
     ResetPasswordEditComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    AdminComponent,
+    CustomersComponent,
+    CompaniesComponent,
+    PurchasesComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ export class UserProfile {
         public address?: string,
         public phoneNumber?: string,
         public dateOfBirth?: string,
+        public isLocked?: boolean,
     ) { }
 
 }

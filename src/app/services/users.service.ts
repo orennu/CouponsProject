@@ -16,19 +16,19 @@ import { ShoppingService } from './shopping.service';
 export class UsersService {
 
   @Output() loginState: EventEmitter<boolean> = new EventEmitter();
+  @Output() userRole: EventEmitter<string> = new EventEmitter();
   userId: number;
   userProfile: UserProfile = new UserProfile();
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-                                  private http: HttpClient,
-                                  private purchasesService: PurchasesService,
-                                  private shoppingService: ShoppingService) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient, private purchasesService: PurchasesService,
+                                  private shoppingService: ShoppingService) {
+                                  }
 
   public getUserToken(): string {
     return sessionStorage.getItem('token');
   }
 
-                                  public getUserId(): number {
+  public getUserId(): number {
     return +(sessionStorage.getItem('id'));
   }
 
@@ -48,9 +48,14 @@ export class UsersService {
     return sessionStorage.getItem('token') !== null;
   }
 
-  public setLoginState(token: string, id: string): void {
+  public getUserRole(): string {
+    return sessionStorage.getItem('role');
+  }
+
+  public setLoginState(token: string, id: string, role: string): void {
     sessionStorage.setItem('id', id);
     sessionStorage.setItem('token', token);
+    sessionStorage.setItem('role', role);
   }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
@@ -128,10 +133,28 @@ export class UsersService {
     )
   }
 
+  public getAllCustomers(): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/', { responseType: 'json' });
+  }
+
+  public lockUser(id: number): Observable<any> {
+    return this.http.put(this.config.apiBaseEndpoint + 'users/' + id, null, { params: { lock: 'true' }});
+  }
+
+  public unlockUser(id: number): Observable<any> {
+    return this.http.put(this.config.apiBaseEndpoint + 'users/' + id, {}, { params: { lock: 'false' }});
+  }
+
+  public deleteCustomer(id: number): Observable<any> {
+    return this.http.delete(this.config.apiBaseEndpoint + 'customers/' + id);
+  }
+
   private doLogout(token: string): void {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('id');
+    sessionStorage.removeItem('role');
     this.loginState.emit(false);
+    this.userRole.emit('');
     this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
       console.log('user logged out');
     }, error => {

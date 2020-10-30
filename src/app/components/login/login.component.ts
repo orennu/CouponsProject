@@ -30,8 +30,10 @@ export class LoginComponent implements OnInit {
     const observable = this.usersService.login(this.userLoginDetails);
     observable.subscribe(successfulServerRequestData => {
       console.log(successfulServerRequestData);
-      this.usersService.setLoginState(successfulServerRequestData.token+'', successfulServerRequestData.id+'');
+      this.usersService.setLoginState(successfulServerRequestData.token+'', successfulServerRequestData.id+'',
+                                      successfulServerRequestData.type);
       this.usersService.loginState.emit(true);
+      this.usersService.userRole.emit(successfulServerRequestData.type);
 
       if (successfulServerRequestData.type == 'CUSTOMER') {
         this.router.navigate(['/customer']);
