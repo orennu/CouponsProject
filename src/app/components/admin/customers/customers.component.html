@@ -1,5 +1,12 @@
 <div class="container mt-3">
   <h3 class="text-center">Customers</h3>
+  <div class="d-flex justify-content-between font-weight-bold">
+    <div>
+      <span>Search: </span>
+      <input type="text" name="search" placeholder="search customers" [(ngModel)]="customerSearch">
+    </div>
+    <span>Total customers: {{ customersCount }}</span>
+  </div>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -12,7 +19,7 @@
           <th scope="col">Date of Birth</th>
           <th scope="col">Actions</th>
         </tr>
-        <tr *ngFor="let customer of customers; let i = index">
+        <tr *ngFor="let customer of customers | searchFilter:customerSearch; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ customer?.email }}</td>
           <td>{{ customer?.firstName }}</td>

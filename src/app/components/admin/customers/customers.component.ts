@@ -14,6 +14,8 @@ export class CustomersComponent implements OnInit {
 
   public customers: UserProfile[] = [];
   private customer: UserProfile;
+  public customersCount: number;
+  public customerSearch = "";
 
   constructor(private usersService: UsersService, private modalService: ModalService) { }
 
@@ -33,6 +35,7 @@ export class CustomersComponent implements OnInit {
         this.customer.isLocked = response[index]?.user.lockUser;
         this.customers.push(this.customer);
       }
+      this.customersCount = this.customers.length;
     }, (error) => {
       console.error(error.error);
     });

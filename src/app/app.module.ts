@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DropdownDirective } from './directives/dropdown.directive';
 
+import { SearchPipe } from './pipes/search.pipe';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
@@ -57,7 +59,8 @@ import { UsersComponent } from './components/admin/users/users.component';
     CustomersComponent,
     CompaniesComponent,
     PurchasesComponent,
-    UsersComponent
+    UsersComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
