@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
+import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Coupon } from 'src/app/models/coupon.model';
 import { CouponsService } from 'src/app/services/coupons.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { PurchasesService } from 'src/app/services/purchases.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -18,10 +18,9 @@ export class CouponItemComponent implements OnInit {
 
   @Input() coupon: Coupon;
   @Input() index: number;
-  closeResult: string;
 
   constructor(private couponsService: CouponsService,
-              private modalService: NgbModal,
+              private modalService: ModalService,
               private purchasesService: PurchasesService,
               private usersService: UsersService,
               private shoppingService: ShoppingService,
@@ -31,11 +30,7 @@ export class CouponItemComponent implements OnInit {
   }
 
   public showCoupon(couponModal: NgbModalRef): void {
-    this.modalService.open(couponModal, { centered: true }).result.then((result) => {
-      this.closeResult = `closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.showModal(couponModal);
   }
 
   public addCouponToCart(couponModal: NgbActiveModal): void {
@@ -46,19 +41,6 @@ export class CouponItemComponent implements OnInit {
       this.purchasesService.setItemNum(1);
     } else {
       this.router.navigate(['/login']);
-    }
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      console.log('by pressing ESC');
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      console.log('by clicking on a backdrop');
-      return 'by clicking on a backdrop';
-    } else {
-      console.log(`with: ${reason}`);
-      return  `with: ${reason}`;
     }
   }
 

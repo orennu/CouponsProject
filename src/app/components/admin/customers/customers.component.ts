@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfile } from 'src/app/models/userProfile.model';
+import { ModalService } from 'src/app/services/modal.service';
 import { UsersService } from 'src/app/services/users.service';
 
 
@@ -13,9 +14,8 @@ export class CustomersComponent implements OnInit {
 
   public customers: UserProfile[] = [];
   private customer: UserProfile;
-  private closeResult: string;
 
-  constructor(private usersService: UsersService, private modalService: NgbModal) { }
+  constructor(private usersService: UsersService, private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.usersService.getAllCustomers().subscribe((response) => {
@@ -39,24 +39,7 @@ export class CustomersComponent implements OnInit {
   }
 
   public viewCustomerDetails(customer: NgbModalRef): void {
-    this.modalService.open(customer, { centered: false }).result.then((result) => {
-      this.closeResult = `closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      console.log('by pressing ESC');
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      console.log('by clicking on a backdrop');
-      return 'by clicking on a backdrop';
-    } else {
-      console.log(`with: ${reason}`);
-      return  `with: ${reason}`;
-    }
+    this.modalService.showModal(customer);
   }
 
   public lockUser(id: number): void {
