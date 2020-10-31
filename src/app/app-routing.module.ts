@@ -6,6 +6,7 @@ import { CompaniesComponent } from './components/admin/companies/companies.compo
 import { CouponsComponent } from './components/admin/coupons/coupons.component';
 import { CustomersComponent } from './components/admin/customers/customers.component';
 import { PurchasesComponent } from './components/admin/purchases/purchases.component';
+import { UsersComponent } from './components/admin/users/users.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HomeComponent } from './components/home/home.component';
 import { LeadersComponent } from './components/leaders/leaders.component';
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     { path: 'shopping-cart', component: ShoppingCartComponent },
     { path: 'admin', component: AdminComponent, children: [
       { path: 'customers',component: CustomersComponent },
+      { path: 'users',component: UsersComponent },
       { path: 'companies',component: CompaniesComponent },
       { path: 'coupons',component: CouponsComponent },
       { path: 'purchases',component: PurchasesComponent }

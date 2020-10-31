@@ -137,6 +137,10 @@ export class UsersService {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/', { responseType: 'json' });
   }
 
+  public getAllUsers(): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + 'users/', { responseType: 'json' });
+  }
+
   public lockUser(id: number): Observable<any> {
     return this.http.put(this.config.apiBaseEndpoint + 'users/' + id, null, { params: { lock: 'true' }});
   }
@@ -147,6 +151,10 @@ export class UsersService {
 
   public deleteCustomer(id: number): Observable<any> {
     return this.http.delete(this.config.apiBaseEndpoint + 'customers/' + id);
+  }
+
+  public deleteUser(id: number): Observable<any> {
+    return this.http.delete(this.config.apiBaseEndpoint + 'users/' + id);
   }
 
   private doLogout(token: string): void {

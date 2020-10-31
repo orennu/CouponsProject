@@ -12,12 +12,14 @@ export class SearchPipe implements PipeTransform {
     }
     return value.filter((val) => {
       let rVal = (
-                    val.email.toLocaleLowerCase().includes(args) ||
-                    val.firstName.toLocaleLowerCase().includes(args) ||
-                    val.lastName.toLocaleLowerCase().includes(args) ||
-                    val.phoneNumber.toLocaleLowerCase().includes(args)
+                    val.email?.toLocaleLowerCase().includes(args) ||
+                    val.firstName?.toLocaleLowerCase().includes(args) ||
+                    val.lastName?.toLocaleLowerCase().includes(args) ||
+                    val.phoneNumber?.toLocaleLowerCase().includes(args) ||
+                    val.userName?.toLocaleLowerCase().includes(args) ||
+                    val.type?.toLocaleLowerCase().includes(args)
                   );
-                  
+
       return rVal;
     })
 

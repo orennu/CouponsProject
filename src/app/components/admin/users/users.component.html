@@ -1,13 +1,91 @@
-<div class="container">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">Type</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-  </table>
+<div class="container mt-3">
+  <h3 class="text-center">Users</h3>
+  <hr>
+  <div class="d-flex justify-content-between font-weight-bold mb-2">
+    <div>
+      <span>Search: </span>
+      <input type="text" name="search" placeholder="search users" [(ngModel)]="userSearch">
+    </div>
+    <span>Total users: {{ usersCount }}</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Email</th>
+          <th scope="col">userName</th>
+          <th scope="col">Type</th>
+          <th scope="col">Is Locked</th>
+          <th scope="col">Actions</th>
+        </tr>
+        <tr *ngFor="let user of users | searchFilter:userSearch; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user?.email }}</td>
+          <td>{{ user?.userName }}</td>
+          <td>{{ user?.type }}</td>
+          <td>{{ user?.isLocked }}</td>
+          <td class="d-flex justify-content-between">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              (click)="[(viewUserDetails(userDetails))]">
+              View
+            </button>
+            <ng-template #userDetails let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  User Details
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div><strong>Id: </strong>{{ user.id }}</div>
+                <hr>
+                <div><strong>Email: </strong>{{ user.email }}</div>
+                <hr>
+                <div><strong>Username: </strong>{{ user.userName }}</div>
+                <hr>
+                <div><strong>Type: </strong>{{ user.type }}</div>
+                <hr>
+                <div><strong>Is locked: </strong>{{ user.isLocked }}</div>
+                <hr>
+                <div class="d-flex">
+                  <button
+                    type="submit"
+                    class="btn btn-primary ml-auto"
+                    (click)="modal.dismiss('Close button click')">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+            <button
+              *ngIf="!user?.isLocked"
+              class="btn btn-warning"
+              type="submit"
+              (click)="lockUser(user?.id)">
+              Block
+            </button>
+            <button
+              *ngIf="user?.isLocked"
+              class="btn btn-success"
+              type="submit"
+              (click)="unlockUser(user?.id)">
+              Release
+            </button>
+            <button
+              class="btn btn-danger"
+              type="submit"
+              (click)="deleteUser(user?.id, i)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
 </div>
+
