@@ -17,7 +17,9 @@ export class SearchPipe implements PipeTransform {
                     val.lastName?.toLocaleLowerCase().includes(args) ||
                     val.phoneNumber?.toLocaleLowerCase().includes(args) ||
                     val.userName?.toLocaleLowerCase().includes(args) ||
-                    val.type?.toLocaleLowerCase().includes(args)
+                    val.type?.toLocaleLowerCase().includes(args) ||
+                    val.name?.toLocaleLowerCase().includes(args) ||
+                    val.industry?.toLocaleLowerCase().includes(args)
                   );
 
       return rVal;

@@ -45,11 +45,11 @@ export class CustomersComponent implements OnInit {
     this.modalService.showModal(customer);
   }
 
-  public lockUser(id: number): void {
-    this.usersService.lockUser(id).subscribe(
+  public lockUser(customerId: number): void {
+    this.usersService.lockUser(customerId).subscribe(
       response => {
         for (let index = 0; index < this.customers.length; index++) {
-          if (this.customers[index]?.id === id) {
+          if (this.customers[index]?.id === customerId) {
             this.customers[index].isLocked = true;
           }
         }
@@ -58,11 +58,11 @@ export class CustomersComponent implements OnInit {
       })
   }
 
-  public unlockUser(id: number): void {
-    this.usersService.unlockUser(id).subscribe(
+  public unlockUser(customerId: number): void {
+    this.usersService.unlockUser(customerId).subscribe(
       response => {
         for (let index = 0; index < this.customers.length; index++) {
-          if (this.customers[index]?.id === id) {
+          if (this.customers[index]?.id === customerId) {
             this.customers[index].isLocked = false;
           }
         }
@@ -71,9 +71,9 @@ export class CustomersComponent implements OnInit {
       })
   }
 
-  public deleteCustomer(id: number, index: number): void {
+  public deleteCustomer(customerId: number, index: number): void {
     if (confirm("This action is irreversible, are you sure you want to delete the customer?")) {
-      this.usersService.deleteCustomer(id).subscribe(
+      this.usersService.deleteCustomer(customerId).subscribe(
         response => {
           this.customers.splice(index, 1);
         }, error => {

@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 export class UserProfile {
     public constructor(
         public id?: number,
