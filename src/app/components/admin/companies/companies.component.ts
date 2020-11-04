@@ -25,9 +25,7 @@ export class CompaniesComponent implements OnInit {
   public isCompanyNew: boolean;
   public companyState: string;
 
-  constructor(private companiesService: CompaniesService, private modalService: ModalService) {
-    // this.companyForm = this.createFormGroup();
-  }
+  constructor(private companiesService: CompaniesService, private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.companiesService.getAllCompanies().subscribe(
@@ -157,11 +155,6 @@ export class CompaniesComponent implements OnInit {
     company.address = this.companyForm.get('address').value;
     company.industry = this.companyForm.get('industry').value;
     this.updateCompany(company, companyIndex);
-    // this.companies[companyIndex].name = this.companyForm.get('name').value;
-    // this.companies[companyIndex].email = this.companyForm.get('email').value;
-    // this.companies[companyIndex].phoneNumber = this.companyForm.get('phoneNumber').value;
-    // this.companies[companyIndex].address = this.companyForm.get('address').value;
-    // this.companies[companyIndex].industry = this.companyForm.get('industry').value;
   }
 
   public updateCompanyModal(company: Company, companyRef: NgbModalRef): void {
@@ -181,11 +174,6 @@ export class CompaniesComponent implements OnInit {
         this.companies[companyIndex] = company;
         this.isFormSubmitted = true;
         this.companyState = 'updated';
-        // for (let index = 0; index < this.companies.length; index++) {
-        //   if (this.companies[index].id === company.id) {
-        //     this.companies[index] = company;
-        //   }
-        // }
       }, (error) => {
         console.error(error.error);
         this.isSubmitFailed = true;
@@ -205,10 +193,6 @@ export class CompaniesComponent implements OnInit {
         }
       )
     }
-  }
-
-  public onFormSubmit() {
-
   }
 
 }
