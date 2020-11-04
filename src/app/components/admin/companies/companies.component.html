@@ -4,7 +4,7 @@
   <div class="d-flex justify-content-between font-weight-bold mb-2">
     <div>
       <span>Search: </span>
-      <input type="text" name="search" placeholder="search customers" [(ngModel)]="companySearch">
+      <input type="text" name="search" placeholder="search companies" [(ngModel)]="companySearch">
     </div>
     <button
       type="submit"
@@ -21,7 +21,6 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-
       <form
         [formGroup]="companyForm"
         (ngSubmit)="onFormSubmit()">
@@ -101,13 +100,41 @@
           </div>
         </div>
         <div class="modal-footer">
+          <div
+            *ngIf="isFormSubmitted"
+            class="mr-auto text-success"
+            style="font-weight: bolder;">
+            <span>&#10003;</span> Company was {{ companyState }} successfully.
+          </div>
+          <div
+            *ngIf="isSubmitFailed"
+            class="mr-auto text-danger"
+            style="font-weight: bolder;">
+            <span>&#33;</span> {{ formFailureReason }}.
+          </div>
           <div class="d-flex mt-2">
             <button
+              *ngIf="!isFormSubmitted && isCompanyNew"
               type="submit"
               class="btn btn-primary mr-2"
               [disabled]="!companyForm.valid"
-              (click)="addCompany()">
+              (click)="saveNewCompany()">
               Save
+            </button>
+            <button
+              *ngIf="!isFormSubmitted && !isCompanyNew"
+              type="submit"
+              class="btn btn-primary mr-2"
+              [disabled]="!companyForm.valid"
+              (click)="saveExistingCompany(companyIndex)">
+              Save
+            </button>
+            <button
+              *ngIf="isFormSubmitted"
+              type="submit"
+              class="btn btn-primary mr-2"
+              (click)="modal.dismiss('Close button click')">
+              Close
             </button>
             <button
               type="submit"
@@ -138,9 +165,9 @@
           <td>{{ company?.email }}</td>
           <td>{{ company?.phoneNumber }}</td>
           <td>{{ company?.industry }}</td>
-          <td class="d-flex justify-content-between">
+          <td class="d-flex">
             <button
-              class="btn btn-primary"
+              class="btn btn-primary mr-2"
               type="submit"
               (click)="[(viewCompanyDetails(companyDetails))]">
               View
@@ -178,9 +205,9 @@
               </div>
             </ng-template>
             <button
-              class="btn btn-success"
+              class="btn btn-success mr-2"
               type="submit"
-              (click)="updateCompany(company)">
+              (click)="updateCompanyModal(company, addCompanyForm)">
               Update
             </button>
             <button

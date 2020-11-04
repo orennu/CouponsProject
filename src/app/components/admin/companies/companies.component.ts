@@ -14,13 +14,19 @@ import { ModalService } from 'src/app/services/modal.service';
 export class CompaniesComponent implements OnInit {
 
   public companies: Company[] = [];
-  private company: Company;
+  public company: Company;
+  public companyIndex: number;
   public companiesCount: number;
   public companySearch = "";
-  companyForm: FormGroup;
+  public companyForm: FormGroup;
+  public isFormSubmitted: boolean = false;
+  public isSubmitFailed: boolean = false;
+  public formFailureReason: string;
+  public isCompanyNew: boolean;
+  public companyState: string;
 
   constructor(private companiesService: CompaniesService, private modalService: ModalService) {
-    this.companyForm = this.createFormGroup();
+    // this.companyForm = this.createFormGroup();
   }
 
   ngOnInit(): void {
@@ -96,40 +102,94 @@ export class CompaniesComponent implements OnInit {
     }
   }
 
+  private createCompany(): Company {
+    const company = new Company();
+    company.name = this.companyForm.get('name').value;
+    company.email = this.companyForm.get('email').value;
+    company.phoneNumber = this.companyForm.get('phoneNumber').value;
+    company.address = this.companyForm.get('address').value;
+    company.industry = this.companyForm.get('industry').value;
+
+    return company;
+  }
+
   public viewCompanyDetails(company: NgbModalRef): void {
     this.modalService.showModal(company);
   }
 
-  public openCompanyForm(company: NgbModalRef): void {
-    this.modalService.showModal(company);
+  public openCompanyForm(companyRef: NgbModalRef): void {
+    this.isCompanyNew = true;
+    this.companyForm = this.createFormGroup();
+    this.isFormSubmitted = false;
+    this.isSubmitFailed = false;
+    this.modalService.showModal(companyRef);
   }
 
   public clearForm(): void {
     this.removeValidators(this.companyForm);
     this.companyForm.reset();
+    this.isSubmitFailed = false;
     this.companyForm = this.createFormGroup();
   }
 
-  public addCompany(company: Company): void {
+  public saveNewCompany(): void {
+    const company = this.createCompany();
     this.companiesService.addCompany(company).subscribe(
       (response) => {
-        company.id = response.id;
+        company.id = response;
         this.companies.push(company);
+        this.isFormSubmitted = true;
+        this.companiesCount = this.companies.length;
+        this.companyState = 'created';
       }, (error) => {
         console.error(error.error);
+        this.isSubmitFailed = true;
+        this.formFailureReason = error.error.errorDescription;
       });
   }
 
-  public updateCompany(company: Company): void {
+  public saveExistingCompany(companyIndex: number): void {
+    const company = new Company();
+    company.id = this.companies[companyIndex].id;
+    company.name = this.companyForm.get('name').value;
+    company.email = this.companyForm.get('email').value;
+    company.phoneNumber = this.companyForm.get('phoneNumber').value;
+    company.address = this.companyForm.get('address').value;
+    company.industry = this.companyForm.get('industry').value;
+    this.updateCompany(company, companyIndex);
+    // this.companies[companyIndex].name = this.companyForm.get('name').value;
+    // this.companies[companyIndex].email = this.companyForm.get('email').value;
+    // this.companies[companyIndex].phoneNumber = this.companyForm.get('phoneNumber').value;
+    // this.companies[companyIndex].address = this.companyForm.get('address').value;
+    // this.companies[companyIndex].industry = this.companyForm.get('industry').value;
+  }
+
+  public updateCompanyModal(company: Company, companyRef: NgbModalRef): void {
+    this.isFormSubmitted = false;
+    this.companyIndex = this.companies.indexOf(company);
+    this.isCompanyNew = false;
+    this.companyForm = this.createFormGroup();
+    this.companyForm.setValue({ 'name': company.name, 'email': company.email,
+                                'phoneNumber': company.phoneNumber, 'address': company.address,
+                                'industry': company.industry });
+    this.modalService.showModal(companyRef);
+  }
+
+  private updateCompany(company: Company, companyIndex: number): void {
     this.companiesService.updateCompany(company).subscribe(
       (response) => {
-        for (let index = 0; index < this.companies.length; index++) {
-          if (this.companies[index].id === company.id) {
-            this.companies[index] = company;
-          }
-        }
+        this.companies[companyIndex] = company;
+        this.isFormSubmitted = true;
+        this.companyState = 'updated';
+        // for (let index = 0; index < this.companies.length; index++) {
+        //   if (this.companies[index].id === company.id) {
+        //     this.companies[index] = company;
+        //   }
+        // }
       }, (error) => {
         console.error(error.error);
+        this.isSubmitFailed = true;
+        this.formFailureReason = error.error.errorDescription;
       }
     )
   }
@@ -139,6 +199,7 @@ export class CompaniesComponent implements OnInit {
       this.companiesService.deleteCompany(companyId).subscribe(
         response => {
           this.companies.splice(index, 1);
+          this.companiesCount = this.companies.length;
         }, error => {
           console.error(error.error);
         }
