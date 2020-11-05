@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfile } from 'src/app/models/userProfile.model';
 import { ModalService } from 'src/app/services/modal.service';
@@ -16,6 +17,10 @@ export class UsersComponent implements OnInit {
   private user: UserProfile;
   public usersCount: number;
   public userSearch = "";
+  public isUserNew: boolean;
+  public userForm: FormGroup;
+  public isFormSubmitted: boolean;
+  public isSubmitFailed: boolean;
 
   constructor(private usersService: UsersService, private modalService: ModalService) { }
 
@@ -35,6 +40,18 @@ export class UsersComponent implements OnInit {
     }, (error) => {
       console.error(error.error);
     });
+  }
+
+  private createFormGroup(): FormGroup {
+    return new FormGroup({});
+  }
+
+  public openUserForm(userRef: NgbModalRef): void {
+    this.isUserNew = true;
+    this.userForm = this.createFormGroup();
+    this.isFormSubmitted = false;
+    this.isSubmitFailed = false;
+    this.modalService.showModal(userRef);
   }
 
   public viewUserDetails(user: NgbModalRef): void {

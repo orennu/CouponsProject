@@ -6,7 +6,25 @@
       <span>Search: </span>
       <input type="text" name="search" placeholder="search users" [(ngModel)]="userSearch">
     </div>
-    <span>Total users: {{ usersCount }}</span>
+    <button
+      type="submit"
+      class="btn btn-outline-primary btn-sm ml-2"
+      (click)="openUserForm(addUserForm)">
+      Add
+    </button>
+    <ng-template #addUserForm let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">
+          User Details
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body"></div> <!-- TODO modal body -->
+      <div class="modal-footer"></div> <!-- TODO modal footer -->
+    </ng-template>
+    <span class="ml-auto">Total users: {{ usersCount }}</span>
   </div>
   <div class="table-responsive">
     <table class="table">
@@ -63,20 +81,21 @@
               </div>
             </ng-template>
             <button
-              *ngIf="!user?.isLocked"
+              *ngIf="!user?.isLocked && user.userName != 'superadmin'"
               class="btn btn-warning"
               type="submit"
               (click)="lockUser(user?.id)">
               Block
             </button>
             <button
-              *ngIf="user?.isLocked"
+              *ngIf="user?.isLocked  && user.userName != 'superadmin'"
               class="btn btn-success"
               type="submit"
               (click)="unlockUser(user?.id)">
               Release
             </button>
             <button
+              *ngIf="user.userName != 'superadmin'"
               class="btn btn-danger"
               type="submit"
               (click)="deleteUser(user?.id, i)">
