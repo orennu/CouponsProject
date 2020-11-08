@@ -113,27 +113,20 @@
           </div>
           <div class="d-flex mt-2">
             <button
-              *ngIf="!isFormSubmitted && isCompanyNew"
+              *ngIf="isCompanyNew"
               type="submit"
               class="btn btn-primary mr-2"
               [disabled]="!companyForm.valid"
-              (click)="saveNewCompany()">
+              (click)="saveNewCompany(modal)">
               Save
             </button>
             <button
-              *ngIf="!isFormSubmitted && !isCompanyNew"
+              *ngIf="!isCompanyNew"
               type="submit"
               class="btn btn-primary mr-2"
               [disabled]="!companyForm.valid"
-              (click)="saveExistingCompany(companyIndex)">
+              (click)="saveExistingCompany(companyIndex, modal)">
               Save
-            </button>
-            <button
-              *ngIf="isFormSubmitted"
-              type="submit"
-              class="btn btn-primary mr-2"
-              (click)="modal.dismiss('Close button click')">
-              Close
             </button>
             <button
               type="submit"

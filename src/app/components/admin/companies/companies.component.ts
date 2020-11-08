@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Company } from 'src/app/models/company.model';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -28,24 +28,25 @@ export class CompaniesComponent implements OnInit {
   constructor(private companiesService: CompaniesService, private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.companiesService.getAllCompanies().subscribe(
-      (response) => {
-        console.log(response);
-        for (let index = 0; index < response.length; index++) {
-          this.company = new Company();
-          this.company.id = response[index]?.id;
-          this.company.name = response[index]?.name;
-          this.company.email = response[index]?.email;
-          this.company.phoneNumber = response[index]?.phoneNumber;
-          this.company.address = response[index]?.address;
-          this.company.industry = response[index]?.industry;
-          this.companies.push(this.company);
-        }
-        this.companiesCount = this.companies.length;
-      }, (error) => {
-        console.error(error.error);
-      }
-    );
+    this.getAllCompanies();
+    // this.companiesService.getAllCompanies().subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     for (let index = 0; index < response.length; index++) {
+    //       this.company = new Company();
+    //       this.company.id = response[index]?.id;
+    //       this.company.name = response[index]?.name;
+    //       this.company.email = response[index]?.email;
+    //       this.company.phoneNumber = response[index]?.phoneNumber;
+    //       this.company.address = response[index]?.address;
+    //       this.company.industry = response[index]?.industry;
+    //       this.companies.push(this.company);
+    //     }
+    //     this.companiesCount = this.companies.length;
+    //   }, (error) => {
+    //     console.error(error.error);
+    //   }
+    // );
   }
 
   private createFormGroup(): FormGroup {
@@ -111,6 +112,27 @@ export class CompaniesComponent implements OnInit {
     return company;
   }
 
+  public getAllCompanies() {
+    this.companiesService.getAllCompanies().subscribe(
+      (response) => {
+        console.log(response);
+        for (let index = 0; index < response.length; index++) {
+          this.company = new Company();
+          this.company.id = response[index]?.id;
+          this.company.name = response[index]?.name;
+          this.company.email = response[index]?.email;
+          this.company.phoneNumber = response[index]?.phoneNumber;
+          this.company.address = response[index]?.address;
+          this.company.industry = response[index]?.industry;
+          this.companies.push(this.company);
+        }
+        this.companiesCount = this.companies.length;
+      }, (error) => {
+        console.error(error.error);
+      }
+    );
+  }
+
   public viewCompanyDetails(company: NgbModalRef): void {
     this.modalService.showModal(company);
   }
@@ -130,7 +152,7 @@ export class CompaniesComponent implements OnInit {
     this.companyForm = this.createFormGroup();
   }
 
-  public saveNewCompany(): void {
+  public saveNewCompany(modalRef: NgbActiveModal): void {
     const company = this.createCompany();
     this.companiesService.addCompany(company).subscribe(
       (response) => {
@@ -139,6 +161,7 @@ export class CompaniesComponent implements OnInit {
         this.isFormSubmitted = true;
         this.companiesCount = this.companies.length;
         this.companyState = 'created';
+        modalRef.dismiss('save clicked');
       }, (error) => {
         console.error(error.error);
         this.isSubmitFailed = true;
@@ -146,7 +169,7 @@ export class CompaniesComponent implements OnInit {
       });
   }
 
-  public saveExistingCompany(companyIndex: number): void {
+  public saveExistingCompany(companyIndex: number, modalRef: NgbActiveModal): void {
     const company = new Company();
     company.id = this.companies[companyIndex].id;
     company.name = this.companyForm.get('name').value;
@@ -154,7 +177,7 @@ export class CompaniesComponent implements OnInit {
     company.phoneNumber = this.companyForm.get('phoneNumber').value;
     company.address = this.companyForm.get('address').value;
     company.industry = this.companyForm.get('industry').value;
-    this.updateCompany(company, companyIndex);
+    this.updateCompany(company, companyIndex, modalRef);
   }
 
   public updateCompanyModal(company: Company, companyRef: NgbModalRef): void {
@@ -168,12 +191,13 @@ export class CompaniesComponent implements OnInit {
     this.modalService.showModal(companyRef);
   }
 
-  private updateCompany(company: Company, companyIndex: number): void {
+  private updateCompany(company: Company, companyIndex: number, modalRef: NgbActiveModal): void {
     this.companiesService.updateCompany(company).subscribe(
       (response) => {
         this.companies[companyIndex] = company;
         this.isFormSubmitted = true;
         this.companyState = 'updated';
+        modalRef.dismiss('save clicked');
       }, (error) => {
         console.error(error.error);
         this.isSubmitFailed = true;

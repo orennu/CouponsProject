@@ -137,6 +137,10 @@ export class UsersService {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/', { responseType: 'json' });
   }
 
+  public addUser(input: object): Observable<any> {
+    return this.http.post(this.config.apiBaseEndpoint + 'users/register', input, { responseType: 'json' });
+  }
+
   public getAllUsers(): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'users/', { responseType: 'json' });
   }

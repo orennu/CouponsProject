@@ -2,6 +2,7 @@ export class UserProfile {
     public constructor(
         public id?: number,
         public userName?: string,
+        public password?: string,
         public email?: string,
         public type?: string,
         public firstName?: string,
@@ -10,6 +11,7 @@ export class UserProfile {
         public phoneNumber?: string,
         public dateOfBirth?: string,
         public isLocked?: boolean,
+        public company?: object,
     ) { }
 
 }

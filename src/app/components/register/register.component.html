@@ -1,7 +1,7 @@
 <div class="container mt-4">
-    <h1 
+    <h1
         class="h3 text-center text-primary font-weight-normal">
-        Welcome to 
+        Welcome to
         <span class="font-weight-bold font-italic">CouponsMenia</span>
     </h1>
     <div class="row rounded p-4 m-0">
@@ -10,159 +10,159 @@
                 [formGroup]="registrationForm"
                 (ngSubmit)="onFormSubmit()">
                 <div class="d-flex justify-content-between">
-                    <div 
-                        class="form-group required" 
+                    <div
+                        class="form-group required"
                         style="width: 45%;">
-                        <label 
-                            class="control-label h6 small font-weight-bold" 
+                        <label
+                            class="control-label h6 small font-weight-bold"
                             for="firstname">
                             First Name
                         </label>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             class="form-control"
                             name="firstname"
                             placeholder="First Name"
                             formControlName="firstName">
-                        <span 
+                        <span
                             *ngIf="isMissing(firstName)"
                             class="text-danger">
                             field is required.
                         </span>
-                        <span 
+                        <span
                             *ngIf="isInvalid(firstName)"
                             class="text-danger">
                             invalid input.
                         </span>
                     </div>
-                    <div 
+                    <div
                         class="form-group required"
                         style="width: 50%;">
-                        <label 
-                            class="control-label h6 small font-weight-bold" 
+                        <label
+                            class="control-label h6 small font-weight-bold"
                             for="lastname">
                             Last Name
                         </label>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             class="form-control"
                             name="lastname"
                             placeholder="Last Name"
                             formControlName="lastName">
-                        <span 
+                        <span
                             *ngIf="isMissing(lastName)"
                             class="text-danger">
                             field is required.
                         </span>
-                        <span 
+                        <span
                             *ngIf="isInvalid(lastName)"
                             class="text-danger">
                             invalid input.
                         </span>
                     </div>
                 </div>
-                <div 
-                    class="form-group required" 
+                <div
+                    class="form-group required"
                     formGroupName="user">
-                    <label 
+                    <label
                         class="control-label h6 small font-weight-bold"
                         for="email">
                         Email
                     </label>
-                    <input 
-                        type="email" 
+                    <input
+                        type="email"
                         class="form-control"
                         name="email"
                         placeholder="Enter email"
                         formControlName="email">
-                    <span 
+                    <span
                         *ngIf="isMissing(email)"
                         class="text-danger">
                         field is required.
                     </span>
-                    <span 
+                    <span
                         *ngIf="isInvalid(email)"
                         class="text-danger">
                         invalid input.
                     </span>
                 </div>
-                <div 
-                    class="form-group required" 
+                <div
+                    class="form-group required"
                     formGroupName="user">
-                    <label 
+                    <label
                         class="control-label h6 small font-weight-bold"
                         for="username">
                         Username
                     </label>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         autocomplete="username"
                         class="form-control"
                         name="username"
                         placeholder="Enter username"
                         formControlName="userName">
-                    <span 
+                    <span
                         *ngIf="isMissing(userName)"
                         class="text-danger">
                         field is required.
                     </span>
-                    <span 
+                    <span
                         *ngIf="isInvalid(userName)"
                         class="text-danger">
                         invalid input.
                     </span>
                 </div>
                 <div class="form-group d-flex justify-content-between" formGroupName="user">
-                    <div 
-                        class="form-group required" 
+                    <div
+                        class="form-group required"
                         style="width: 48%;"
                         formGroupName="passwords">
-                        <label 
+                        <label
                             class="control-label h6 small font-weight-bold"
                             for="password">
                             Password
                         </label>
-                        <input 
-                            type="password" 
+                        <input
+                            type="password"
                             autocomplete="new-password"
                             class="form-control"
                             name="password"
                             placeholder="Enter password"
                             formControlName="password">
-                        <span 
+                        <span
                             *ngIf="isMissing(password)"
                             class="text-danger">
                             field is required.
                         </span>
-                        <span 
+                        <span
                             *ngIf="isInvalid(password)"
                             class="text-danger">
                             invalid input.
                         </span>
                     </div>
-                    <div 
-                        class="form-group required" 
+                    <div
+                        class="form-group required"
                         style="width: 48%;"
                         formGroupName="passwords">
-                        <label 
+                        <label
                             class="control-label h6 small font-weight-bold"
                             for="passwordConfirm">
                             Confirm Password
                         </label>
-                        <input 
-                            type="password" 
+                        <input
+                            type="password"
                             autocomplete="new-password"
                             class="form-control"
                             [class.ng-invalid]="isPasswordsMismatch(confirmPassword) || isMissing(confirmPassword)"
                             name="passwordConfirm"
                             placeholder="Confirm password"
                             formControlName="confirmPassword">
-                        <span 
+                        <span
                             *ngIf="isPasswordsMismatch(confirmPassword)"
                             class="text-danger">
-                            no match.
+                            passwords don't match.
                         </span>
-                        <span 
+                        <span
                             *ngIf="isMissing(confirmPassword)"
                             class="text-danger">
                             field is required.
@@ -170,63 +170,63 @@
                     </div>
                 </div>
                 <div class="form-group required">
-                    <label 
+                    <label
                         class="control-label h6 small font-weight-bold"
                         for="phoneNumber">
                         Phone Number
                     </label>
-                    <input 
-                        type="tel" 
+                    <input
+                        type="tel"
                         class="form-control"
                         name="phoneNumber"
                         placeholder="Enter phone number"
                         formControlName="phoneNumber">
-                    <span 
+                    <span
                         *ngIf="isMissing(phoneNumber)"
                         class="text-danger">
                         field is required.
                     </span>
-                    <span 
+                    <span
                         *ngIf="isInvalid(phoneNumber)"
                         class="text-danger">
                         invalid input.
                     </span>
                 </div>
                 <div class="form-group">
-                    <label 
+                    <label
                         class="h6 small font-weight-bold"
                         for="address">
                         Address
                     </label>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         class="form-control"
                         name="address"
                         placeholder="Enter address"
                         formControlName="address">
-                    <span 
+                    <span
                         *ngIf="isInvalid(address)"
                         class="text-danger">
                         invalid input.
                     </span>
                 </div>
                 <div class="form-group required">
-                    <label 
+                    <label
                         class="control-label h6 small font-weight-bold"
                         for="dateOfBirth">
                         Date of birth
                     </label>
-                    <input 
-                        type="date" 
+                    <input
+                        type="date"
                         class="form-control"
                         name="dateOfBirth"
                         formControlName="dateOfBirth">
-                    <span 
+                    <span
                         *ngIf="isMissing(dateOfBirth)"
                         class="text-danger">
                         field is required.
                     </span>
-                    <span 
+                    <span
                         *ngIf="isInvalid(dateOfBirth)"
                         class="text-danger">
                         {{ dateOfBirth.errors.value }}
@@ -234,7 +234,7 @@
                 </div>
                 <div class="container pl-0">
                     <div class="d-flex justify-content-start">
-                        <button 
+                        <button
                             type="submit"
                             class="btn btn-primary"
                             [disabled]="!registrationForm.valid">
@@ -250,25 +250,25 @@
                         <div class="mx-2"></div>
                     </div>
                 </div>
-                <div 
+                <div
                     *ngIf="formSubmitted">
-                    <div 
-                        class="text-success m-2" 
+                    <div
+                        class="text-success m-2"
                         style="font-weight: bolder;">
                         <span>&#10003;</span> Your account was created successfully.
                     </div>
                 </div>
                 <div
                     *ngIf="formSubmitFailure">
-                    <div 
-                        class="text-danger m-2" 
+                    <div
+                        class="text-danger m-2"
                         style="font-weight: bolder;">
                         <span>&#33;</span> {{ formFailureReason }}.
                     </div>
                 </div>
             </form>
             <div class="mt-3">
-                <a 
+                <a
                     routerLink="/login">
                     Already have an account? sign-in
                 </a>

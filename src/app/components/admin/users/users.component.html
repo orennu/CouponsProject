@@ -21,8 +21,136 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body"></div> <!-- TODO modal body -->
-      <div class="modal-footer"></div> <!-- TODO modal footer -->
+      <form
+        [formGroup]="userForm">
+        <div class="modal-body">
+          <div>
+            <div
+              class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="email">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="email address"
+                formControlName="email">
+            </div>
+            <div
+              class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="username">
+                Username
+              </label>
+              <input
+                type="text"
+                name="username"
+                class="form-control"
+                placeholder="username"
+                formControlName="username">
+            </div>
+            <div
+              class="form-group required"
+              formGroupName="passwords">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="password">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="password"
+                formControlName="password">
+            </div>
+            <div
+              class="form-group required"
+              formGroupName="passwords">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="passwordConfirm">
+                Confirm password
+              </label>
+              <input
+                type="password"
+                name="passwordConfirm"
+                class="form-control"
+                placeholder="confirm password"
+                formControlName="confirmPassword">
+              <span
+                  *ngIf="isPasswordsMismatch(confirmPassword)"
+                  class="text-danger">
+                  passwords don't match.
+              </span>
+            </div>
+            <div
+              class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="type">
+                Select Type
+              </label>
+              <select
+                name="type"
+                class="form-control"
+                formControlName="type"
+                #type (change)="onTypeCompany($event, type.value)">
+                <option disabled selected></option>
+                <option>ADMIN</option>
+                <option>COMPANY</option>
+              </select>
+            </div>
+            <div
+              *ngIf="isCompany"
+              class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="company">
+                Select Company
+              </label>
+              <select
+                name="company"
+                class="form-control"
+                formControlName="companyName">
+                <option selected></option>
+                <option
+                  *ngFor="let company of companies">
+                  {{ company?.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <div
+            *ngIf="isFormSubmitted"
+            class="mr-auto text-success"
+            style="font-weight: bolder;">
+            <span>&#10003;</span> User was {{ userState }} successfully.
+          </div>
+          <div
+            *ngIf="isSubmitFailed"
+            class="mr-auto text-danger"
+            style="font-weight: bolder;">
+            <span>&#33;</span> {{ formFailureReason }}.
+          </div>
+          <div class="d-flex mt-2">
+            <button
+              *ngIf="!isFormSubmitted"
+              type="submit"
+              class="btn btn-primary mr-2"
+              [disabled]="!userForm.valid"
+              (click)="saveNewUser(modal)">
+              Save
+            </button>
+          </div>
+      </div>
     </ng-template>
     <span class="ml-auto">Total users: {{ usersCount }}</span>
   </div>
@@ -81,21 +209,21 @@
               </div>
             </ng-template>
             <button
-              *ngIf="!user?.isLocked && user.userName != 'superadmin'"
+              *ngIf="(!user?.isLocked && user.userName != 'superadmin') && (!user?.isLocked && user.id != userId)"
               class="btn btn-warning"
               type="submit"
               (click)="lockUser(user?.id)">
               Block
             </button>
             <button
-              *ngIf="user?.isLocked  && user.userName != 'superadmin'"
+              *ngIf="(user?.isLocked  && user.userName != 'superadmin') && (user?.isLocked && user.id != userId)"
               class="btn btn-success"
               type="submit"
               (click)="unlockUser(user?.id)">
               Release
             </button>
             <button
-              *ngIf="user.userName != 'superadmin'"
+              *ngIf="user.userName != 'superadmin' && user.id != userId"
               class="btn btn-danger"
               type="submit"
               (click)="deleteUser(user?.id, i)">
