@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit {
 
   private createFormGroup(profileType: string): FormGroup {
     if (profileType === 'CUSTOMER') {
-      console.log('in customer form');
+      console.log('in customer user form');
       return new FormGroup({
         id: new FormControl(),
         firstName: new FormControl(
@@ -156,6 +156,7 @@ export class ProfileComponent implements OnInit {
       })
     }
     if (profileType === 'ADMIN') {
+      console.log('in admin user form');
       return new FormGroup({
         id: new FormControl(),
         email: new FormControl(
@@ -174,7 +175,31 @@ export class ProfileComponent implements OnInit {
             Validators.pattern('^[a-z][a-z0-9]*$')
           ]
         ),
-        type: new FormControl('ADMIN')
+        type: new FormControl({ value: 'ADMIN', disabled: true })
+      })
+    }
+    if (profileType === 'COMPANY') {
+      console.log('in company user form');
+      return new FormGroup({
+        id: new FormControl(),
+        email: new FormControl(
+          '',
+          [
+            Validators.required,
+            Validators.email
+          ]
+        ),
+        userName: new FormControl(
+          '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(20),
+            Validators.pattern('^[a-z][a-z0-9]*$')
+          ]
+        ),
+        type: new FormControl({ value: 'COMPANY', disabled: true }),
+        company: new FormControl({ value: '', disabled: true })
       })
     }
   }

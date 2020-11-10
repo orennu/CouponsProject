@@ -118,6 +118,21 @@
                         formControlName="email">
                 </div>
                 <div
+                    *ngIf="role === 'ADMIN' || role === 'COMPANY'"
+                    class="form-group required mb-3">
+                    <label
+                        class="control-label h6 small font-weight-bold"
+                        for="type">
+                        Type
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="type"
+                        value="{{ profile?.type }}"
+                        formControlName="type">
+                </div>
+                <div
                     *ngIf="role === 'CUSTOMER'"
                     class="form-group required mb-3">
                     <label
