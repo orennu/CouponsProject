@@ -117,7 +117,7 @@ export class UsersService {
     )
   }
 
-  public getUserProfile(userId: string): Observable<any> {
+  public getCustomerUserProfile(userId: string): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
       map((data): any => {
         this.userProfile.firstName = data.firstName;
@@ -130,7 +130,20 @@ export class UsersService {
       }, (error: any) => {
         return error;
       })
-    )
+    );
+  }
+
+  public getAdminUserProfile(userId: string): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + 'users/' + userId, { responseType: 'json' }).pipe(
+      map((data): any => {
+        console.log(data);
+        this.userProfile.email = data.email;
+        this.userProfile.userName = data.userName;
+        this.userProfile.type = data.type;
+      }, (error: any) => {
+        return error;
+      })
+    );
   }
 
   public getAllCustomers(): Observable<any> {

@@ -32,6 +32,7 @@ const appRoutes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'shopping-cart', component: ShoppingCartComponent },
     { path: 'admin', component: AdminComponent, children: [
+      { path: 'profile',component: ProfileComponent },
       { path: 'customers',component: CustomersComponent },
       { path: 'users',component: UsersComponent },
       { path: 'companies',component: CompaniesComponent },
