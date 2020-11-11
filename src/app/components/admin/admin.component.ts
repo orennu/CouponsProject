@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    console.log(this.route);
     this.router.navigate(['customers'], { relativeTo: this.route });
   }
 

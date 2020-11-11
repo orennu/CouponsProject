@@ -17,7 +17,7 @@ export class CompaniesComponent implements OnInit {
   public company: Company;
   public companyIndex: number;
   public companiesCount: number;
-  public companySearch = "";
+  public companySearch: string = "";
   public companyForm: FormGroup;
   public isFormSubmitted: boolean = false;
   public isSubmitFailed: boolean = false;
@@ -112,7 +112,7 @@ export class CompaniesComponent implements OnInit {
     return company;
   }
 
-  public getAllCompanies() {
+  private getAllCompanies(): void {
     this.companiesService.getAllCompanies().subscribe(
       (response) => {
         console.log(response);

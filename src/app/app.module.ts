@@ -33,6 +33,8 @@ import { CustomersComponent } from './components/admin/customers/customers.compo
 import { CompaniesComponent } from './components/admin/companies/companies.component';
 import { PurchasesComponent } from './components/admin/purchases/purchases.component';
 import { UsersComponent } from './components/admin/users/users.component';
+import { CouponsAdminComponent } from './components/admin/coupons/coupons-admin.component';
+import { ForbiddenPageComponent } from './components/forbidden-page/forbidden-page.component';
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import { UsersComponent } from './components/admin/users/users.component';
     CompaniesComponent,
     PurchasesComponent,
     UsersComponent,
-    SearchPipe
+    CouponsAdminComponent,
+    SearchPipe,
+    ForbiddenPageComponent
   ],
   imports: [
     BrowserModule,

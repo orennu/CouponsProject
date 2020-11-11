@@ -1,0 +1,240 @@
+<div class="container mt-3">
+  <h3 class="text-center">Coupons</h3>
+  <hr>
+  <div class="d-flex justify-content-between font-weight-bold mb-2">
+    <div>
+      <span>Search: </span>
+      <input type="text" name="search" placeholder="search coupons" [(ngModel)]="couponSearch">
+    </div>
+    <button
+      type="submit"
+      class="btn btn-outline-primary btn-sm ml-2"
+      (click)="openCouponForm(addCouponForm)">
+      Add
+    </button>
+    <ng-template #addCouponForm let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">
+          Coupon Details
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form
+        [formGroup]="couponForm">
+        <div class="modal-body">
+          <div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="title">
+                Title
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                placeholder="coupon title"
+                formControlName="title">
+            </div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="description">
+                Description
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="description"
+                placeholder="coupon description"
+                formControlName="description">
+            </div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="price">
+                Price
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                name="price"
+                placeholder="coupon price"
+                formControlName="price">
+            </div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="quantity">
+                Quantity
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                name="quantity"
+                placeholder="coupon quantity"
+                formControlName="quantity">
+            </div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="startDate">
+                Start Date
+              </label>
+              <input
+                type="date"
+                class="form-control"
+                name="startDate"
+                formControlName="startDate">
+            </div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="expirationDate">
+                Expiration Date
+              </label>
+              <input
+                type="date"
+                class="form-control"
+                name="expirationDate"
+                formControlName="expirationDate">
+            </div>
+            <div class="form-group required">
+              <label
+                class="control-label h6 small font-weight-bold"
+                for="category">
+                Select Category
+              </label>
+              <select class="form-control" name="category" formControlName="category">
+                <option disabled selected>Select...</option>
+                <option>FOOD</option>
+                <option>TEXSTILE</option>
+                <option>TOURISM</option>
+                <option>ELECTRONICS</option>
+                <option>JEWLERY</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div
+            *ngIf="isFormSubmitted"
+            class="mr-auto text-success"
+            style="font-weight: bolder;">
+            <span>&#10003;</span> Coupon was {{ couponState }} successfully.
+          </div>
+          <div
+            *ngIf="isSubmitFailed"
+            class="mr-auto text-danger"
+            style="font-weight: bolder;">
+            <span>&#33;</span> {{ formFailureReason }}.
+          </div>
+          <div class="d-flex mt-2">
+            <button
+              *ngIf="isCouponNew"
+              type="submit"
+              class="btn btn-primary mr-2"
+              [disabled]="!couponForm.valid"
+              (click)="saveNewCoupon(modal)">
+              Save
+            </button>
+            <button
+              *ngIf="!isCouponNew"
+              type="submit"
+              class="btn btn-primary mr-2"
+              [disabled]="!couponForm.valid"
+              (click)="saveExistingCoupon(couponIndex, modal)">
+              Save
+            </button>
+            <button
+              type="submit"
+              class="btn btn-danger ml-auto"
+              (click)="clearForm()">
+              Clear
+            </button>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+    <span class="ml-auto">Total coupons: {{ couponsCount }}</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Expiration Date</th>
+          <th scope="col">Actions</th>
+        </tr>
+        <tr *ngFor="let coupon of coupons | searchFilter:couponSearch; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ coupon?.title }}</td>
+          <td>{{ coupon?.price }}</td>
+          <td>{{ coupon?.quantity }}</td>
+          <td>{{ coupon?.expirationDate }}</td>
+          <td class="d-flex">
+            <button
+              class="btn btn-primary mr-2"
+              type="submit"
+              (click)="[(viewCuponDetails(couponDetails))]">
+              View
+            </button>
+            <ng-template #couponDetails let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  Coupon Details
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div><strong>Id: </strong>{{ coupon.id }}</div>
+                <hr>
+                <div><strong>Title: </strong>{{ coupon.title }}</div>
+                <hr>
+                <div><strong>Description: </strong>{{ coupon.description }}</div>
+                <hr>
+                <div><strong>Price: </strong>{{ coupon.price }}</div>
+                <hr>
+                <div><strong>Category: </strong>{{ coupon.category }}</div>
+                <hr>
+                <div><strong>Quantity: </strong>{{ coupon.quantity }}</div>
+                <hr>
+                <div><strong>Start Date: </strong>{{ coupon.startDate }}</div>
+                <hr>
+                <div><strong>Expiration Date: </strong>{{ coupon.expirationDate }}</div>
+                <hr>
+                <div class="d-flex">
+                  <button
+                    type="submit"
+                    class="btn btn-primary ml-auto"
+                    (click)="modal.dismiss('Close button click')">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+            <button
+              class="btn btn-success mr-2"
+              type="submit"
+              (click)="updateCouponModal(coupon, addCouponForm)">
+              Update
+            </button>
+            <button
+              class="btn btn-danger"
+              type="submit"
+              (click)="deleteCoupon(coupon?.id, i)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>

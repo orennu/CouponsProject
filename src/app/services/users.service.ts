@@ -15,6 +15,8 @@ import { ShoppingService } from './shopping.service';
 })
 export class UsersService {
 
+  private customersEndpoint: string = 'customers/';
+  private usersEndpoint: string = 'users/';
   @Output() loginState: EventEmitter<boolean> = new EventEmitter();
   @Output() userRole: EventEmitter<string> = new EventEmitter();
   userId: number;
@@ -59,7 +61,7 @@ export class UsersService {
   }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
-    return this.http.post(this.config.apiBaseEndpoint + 'users/login', userLoginDetails);
+    return this.http.post(this.config.apiBaseEndpoint + this.usersEndpoint + 'login', userLoginDetails);
   }
 
   public logout(): void {
@@ -77,15 +79,15 @@ export class UsersService {
   }
 
   public createResetPassCode(resetPassCodeDetails: Object): Observable<any> {
-    return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password/code', resetPassCodeDetails);
+    return this.http.post(this.config.apiBaseEndpoint + this.usersEndpoint + 'reset-password/code', resetPassCodeDetails);
   }
 
   public verifyResetPassCode(resetPassCode: string): Observable<any> {
-    return this.http.get(this.config.apiBaseEndpoint + 'users/reset-password/code/' + resetPassCode);
+    return this.http.get(this.config.apiBaseEndpoint + this.usersEndpoint + 'reset-password/code/' + resetPassCode);
   }
 
   public resetPassword(resetPasswordDetails: Object): Observable<any> {
-    return this.http.post(this.config.apiBaseEndpoint + 'users/reset-password', resetPasswordDetails);
+    return this.http.post(this.config.apiBaseEndpoint + this.usersEndpoint + 'reset-password', resetPasswordDetails);
   }
 
   public register(input: Object): Observable<any> {
@@ -94,7 +96,7 @@ export class UsersService {
       input['user']['password'] = input['user']['passwords']['password'];
       delete input['user']['passwords'];
     }
-    return this.http.post(this.config.apiBaseEndpoint + 'customers/register', input, { responseType: 'json' }).pipe(
+    return this.http.post(this.config.apiBaseEndpoint + this.customersEndpoint + 'register', input, { responseType: 'json' }).pipe(
       map((response) => {
         if (response) {
           return response;
@@ -106,7 +108,7 @@ export class UsersService {
   }
 
   public updateUserProfile(input: Object): Observable<any> {
-    return this.http.put(this.config.apiBaseEndpoint + 'customers', input, { responseType: 'json' }).pipe(
+    return this.http.put(this.config.apiBaseEndpoint + this.customersEndpoint, input, { responseType: 'json' }).pipe(
       map((response) => {
         if (response) {
           return response;
@@ -118,7 +120,7 @@ export class UsersService {
   }
 
   public getCustomerUserProfile(userId: string): Observable<any> {
-    return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/' + userId, { responseType: 'json' }).pipe(
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.customersEndpoint + userId, { responseType: 'json' }).pipe(
       map((data): any => {
         this.userProfile.firstName = data.firstName;
         this.userProfile.lastName = data.lastName;
@@ -134,7 +136,7 @@ export class UsersService {
   }
 
   public getAdminUserProfile(userId: string): Observable<any> {
-    return this.http.get<any>(this.config.apiBaseEndpoint + 'users/' + userId, { responseType: 'json' }).pipe(
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint + userId, { responseType: 'json' }).pipe(
       map((data): any => {
         console.log(data);
         this.userProfile.email = data.email;
@@ -147,31 +149,31 @@ export class UsersService {
   }
 
   public getAllCustomers(): Observable<any> {
-    return this.http.get<any>(this.config.apiBaseEndpoint + 'customers/', { responseType: 'json' });
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.customersEndpoint, { responseType: 'json' });
   }
 
   public addUser(input: object): Observable<any> {
-    return this.http.post(this.config.apiBaseEndpoint + 'users/register', input, { responseType: 'json' });
+    return this.http.post(this.config.apiBaseEndpoint + this.usersEndpoint + 'register', input, { responseType: 'json' });
   }
 
   public getAllUsers(): Observable<any> {
-    return this.http.get<any>(this.config.apiBaseEndpoint + 'users/', { responseType: 'json' });
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint, { responseType: 'json' });
   }
 
   public lockUser(id: number): Observable<any> {
-    return this.http.put(this.config.apiBaseEndpoint + 'users/' + id, null, { params: { lock: 'true' }});
+    return this.http.put(this.config.apiBaseEndpoint + this.usersEndpoint + id, null, { params: { lock: 'true' }});
   }
 
   public unlockUser(id: number): Observable<any> {
-    return this.http.put(this.config.apiBaseEndpoint + 'users/' + id, {}, { params: { lock: 'false' }});
+    return this.http.put(this.config.apiBaseEndpoint + this.usersEndpoint + id, {}, { params: { lock: 'false' }});
   }
 
   public deleteCustomer(id: number): Observable<any> {
-    return this.http.delete(this.config.apiBaseEndpoint + 'customers/' + id);
+    return this.http.delete(this.config.apiBaseEndpoint + this.customersEndpoint + id);
   }
 
   public deleteUser(id: number): Observable<any> {
-    return this.http.delete(this.config.apiBaseEndpoint + 'users/' + id);
+    return this.http.delete(this.config.apiBaseEndpoint + this.usersEndpoint + id);
   }
 
   private doLogout(token: string): void {
@@ -180,7 +182,7 @@ export class UsersService {
     sessionStorage.removeItem('role');
     this.loginState.emit(false);
     this.userRole.emit('');
-    this.http.delete(this.config.apiBaseEndpoint + 'users/logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
+    this.http.delete(this.config.apiBaseEndpoint + this.usersEndpoint + 'logout/' + token, { headers: { Authorization: token } }).subscribe(data => {
       console.log('user logged out');
     }, error => {
       console.log(error.error);

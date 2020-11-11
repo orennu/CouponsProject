@@ -30,6 +30,9 @@ export class ProfileComponent implements OnInit {
 
   public ngOnInit(): void {
     const id = this.usersService.getUserId()+'';
+    if (id === '0') {
+      this.router.navigate(['forbidden']);
+    }
     const role = this.usersService.getUserRole();
     this.getUserProfile(id, role);
     // this.usersService.getUserProfile(id).subscribe(
