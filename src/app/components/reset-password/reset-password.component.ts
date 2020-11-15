@@ -54,6 +54,12 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   private sendMailToUser(): void {
+    /*
+    this part is not working, the free account I'm using don't allow sending the email template
+    and in addition they return the failure in 200 response (ugh).
+    to WA the process of reset password I'm logging to console the url with the OTP so simply
+    copy it and paste it in another tab.
+    */
     this.contactService.postForm(this.emailTemplate).subscribe(response => {
         console.log(response);
       }, error => {
@@ -80,7 +86,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   private createEmailTemplate(passCode: string): Observable<any> {
-    return this.http.get('../../assets/emailTemplate.html', {responseType: 'text'});
+    return this.http.get('../../assets/emailTemplate.html', { responseType: 'text' });
   }
 
   private verifyPassCode(passCode: string): void {
@@ -91,7 +97,7 @@ export class ResetPasswordComponent implements OnInit {
         let htmlContent = data;
         this.emailTemplate = htmlContent.replace(re, passCode);
         console.log(this.emailTemplate.substring(5007, 5386));
-        // this.sendMailToUser();
+        this.sendMailToUser();
       }, error => {
         console.log(error);
       })

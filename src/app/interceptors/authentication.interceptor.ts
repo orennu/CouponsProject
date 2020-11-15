@@ -39,11 +39,12 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     if (this.router.url.includes('reset-password')) {
       return next.handle(request);
     }
+    if (request.url.includes('logout')) {
+      return next.handle(request);
+    }
     else {
       console.log('forbidden');
       this.router.navigate(['forbidden']);
     }
-
-
   }
 }
