@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ResetPasswordEditComponent } from './components/reset-password/reset-password-edit/reset-password-edit.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { CompanyComponent } from './components/company/company.component';
 
 
 const appRoutes: Routes = [
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
       { path: 'coupons',component: CouponsAdminComponent },
       { path: 'purchases',component: PurchasesComponent }
     ] },
+    { path: 'company', component: CompanyComponent },
     { path: 'customer', redirectTo: '/home' },
     { path: 'not-found', component: PageNotFoundComponent },
     { path: 'forbidden', component:  ForbiddenPageComponent },

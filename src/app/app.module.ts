@@ -35,6 +35,7 @@ import { PurchasesComponent } from './components/admin/purchases/purchases.compo
 import { UsersComponent } from './components/admin/users/users.component';
 import { CouponsAdminComponent } from './components/admin/coupons/coupons-admin.component';
 import { ForbiddenPageComponent } from './components/forbidden-page/forbidden-page.component';
+import { CompanyComponent } from './components/company/company.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { ForbiddenPageComponent } from './components/forbidden-page/forbidden-pa
     UsersComponent,
     CouponsAdminComponent,
     SearchPipe,
-    ForbiddenPageComponent
+    ForbiddenPageComponent,
+    CompanyComponent
   ],
   imports: [
     BrowserModule,

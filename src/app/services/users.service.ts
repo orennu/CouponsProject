@@ -148,6 +148,19 @@ export class UsersService {
     );
   }
 
+  public getCompanyUserProfile(userId: string): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint + userId, { responseType: 'json' }).pipe(
+      map((data): any => {
+        console.log(data);
+        this.userProfile.email = data.email;
+        this.userProfile.userName = data.userName;
+        this.userProfile.type = data.type;
+      }, (error: any) => {
+        return error;
+      })
+    );
+  }
+
   public getAllCustomers(): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + this.customersEndpoint, { responseType: 'json' });
   }

@@ -4,6 +4,7 @@ import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Coupon } from 'src/app/models/coupon.model';
 import { CouponsService } from 'src/app/services/coupons.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { UsersService } from 'src/app/services/users.service';
 import { ValidationService } from 'src/app/services/validation.service';
 
 
@@ -25,12 +26,16 @@ export class CouponsAdminComponent implements OnInit {
   public isFormSubmitted: boolean = false;
   public isSubmitFailed: boolean = false;
   public formFailureReason: string;
+  public isCompanyUser: boolean = false;
 
   constructor(private couponsService: CouponsService, private modalService: ModalService,
-              private validationService: ValidationService) { }
+              private validationService: ValidationService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.getAllCoupons();
+    if (this.usersService.getUserRole() == 'COMPANY') {
+      this.isCompanyUser = true;
+    }
   }
 
   private createFormGroup(): FormGroup {

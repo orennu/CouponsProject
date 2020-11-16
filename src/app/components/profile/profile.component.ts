@@ -68,7 +68,9 @@ export class ProfileComponent implements OnInit {
       this.profileForm = this.createFormGroup(role);
     }
     if (role === 'COMPANY') {
+      this.role = role;
       this.getCompanyUserProfile(id);
+      this.profileForm = this.createFormGroup(role);
     }
   }
 
@@ -111,7 +113,20 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  private getCompanyUserProfile(id: string): void {}
+  private getCompanyUserProfile(id: string): void {
+    this.usersService.getCompanyUserProfile(id).subscribe(
+      () => {
+        this.userProfile = this.usersService.getProfile();
+        this.profile.email = this.userProfile.email;
+        this.profile.userName = this.userProfile.userName;
+        this.profile.type = this.userProfile.type;
+        this.profileForm.patchValue({ email: this.profile.email,
+                                      userName: this.profile.userName,
+                                      type: this.profile.type
+                                    });
+      }
+    );
+  }
 
   private createFormGroup(profileType: string): FormGroup {
     if (profileType === 'CUSTOMER') {

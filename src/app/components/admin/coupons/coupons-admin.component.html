@@ -7,6 +7,7 @@
       <input type="text" name="search" placeholder="search coupons" [(ngModel)]="couponSearch">
     </div>
     <button
+      *ngIf="isCompanyUser"
       type="submit"
       class="btn btn-outline-primary btn-sm ml-2"
       (click)="openCouponForm(addCouponForm)">
