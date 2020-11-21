@@ -176,7 +176,7 @@ export class UsersService {
 
   public getUsersByCompanyId(id: number): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint + 'search', { params: { companyId: id+'' },
-                                                                                            responseType: 'json' })
+                                                                                            responseType: 'json' });
   }
 
   public lockUser(id: number): Observable<any> {

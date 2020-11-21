@@ -10,7 +10,7 @@ import { CouponsService } from 'src/app/services/coupons.service';
 })
 export class CouponListComponent implements OnInit {
 
-  public coupons: Coupon[];
+  public coupons: Coupon[] = [];
   public coupon: Coupon;
 
   constructor(private couponsService: CouponsService) { }
@@ -24,16 +24,20 @@ export class CouponListComponent implements OnInit {
       (response) => {
         console.log(response);
         for (let index = 0; index < response.length; index++) {
-          this.coupon = new Coupon();
-          this.coupon.id = response[index]?.id;
-          this.coupon.title = response[index]?.title;
-          this.coupon.description = response[index]?.description;
-          this.coupon.category = response[index]?.category;
-          this.coupon.price = response[index]?.price;
-          this.coupon.quantity = response[index]?.quantity;
-          this.coupon.startDate = response[index]?.startDate;
-          this.coupon.expirationDate = response[index]?.expirationDate;
-          this.coupons.push(this.coupon);
+          if (response[index]?.quantity > 0) {
+            this.coupon = new Coupon();
+            this.coupon.id = response[index]?.id;
+            this.coupon.title = response[index]?.title;
+            this.coupon.description = response[index]?.description;
+            this.coupon.category = response[index]?.category;
+            this.coupon.price = response[index]?.price;
+            this.coupon.quantity = response[index]?.quantity;
+            this.coupon.startDate = response[index]?.startDate;
+            this.coupon.expirationDate = response[index]?.expirationDate;
+            this.coupon.company = response[index]?.company;
+            // this.coupon.image = response[index]?.image;
+            this.coupons.push(this.coupon);
+          }
         }
       }, (error) => {
         console.error(error.error);

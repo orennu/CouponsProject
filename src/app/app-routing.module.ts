@@ -43,6 +43,8 @@ const appRoutes: Routes = [
     ] },
     { path: 'company', component: CompanyComponent, children: [
       { path: 'users',component: UsersComponent },
+      { path: 'coupons',component: CouponsAdminComponent },
+      { path: 'purchases',component: PurchasesComponent }
     ] },
     { path: 'customer', redirectTo: '/home' },
     { path: 'not-found', component: PageNotFoundComponent },

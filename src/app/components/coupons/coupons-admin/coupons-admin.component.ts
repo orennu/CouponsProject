@@ -27,14 +27,28 @@ export class CouponsAdminComponent implements OnInit {
   public isSubmitFailed: boolean = false;
   public formFailureReason: string;
   public isCompanyUser: boolean = false;
+  private userId: number;
+  private companyId: number;
 
   constructor(private couponsService: CouponsService, private modalService: ModalService,
               private validationService: ValidationService, private usersService: UsersService) { }
 
   ngOnInit(): void {
-    this.getAllCoupons();
-    if (this.usersService.getUserRole() == 'COMPANY') {
+    this.userId = this.usersService.getUserId();
+    const userRole = this.usersService.getUserRole();
+    if (userRole == 'ADMIN') {
+      this.getAllCoupons();
+    }
+    else if (userRole == 'COMPANY') {
       this.isCompanyUser = true;
+      this.usersService.getCompanyUserProfile(this.userId+'').subscribe(
+        () => {
+          this.companyId = this.usersService.getProfile().company.id;
+          this.getCompanyCoupons(this.companyId);
+        }, (error) => {
+          console.error(error.error);
+        }
+      );
     }
   }
 
@@ -116,6 +130,8 @@ export class CouponsAdminComponent implements OnInit {
           this.coupon.quantity = response[index]?.quantity;
           this.coupon.startDate = response[index]?.startDate;
           this.coupon.expirationDate = response[index]?.expirationDate;
+          this.coupon.company = response[index]?.company;
+          // this.coupon.image = response[index]?.image;
           this.coupons.push(this.coupon);
         }
         this.couponsCount = this.coupons.length;
@@ -123,6 +139,29 @@ export class CouponsAdminComponent implements OnInit {
         console.error(error.error);
       }
     );
+  }
+
+  private getCompanyCoupons(companyId: number): void {
+    this.couponsService.getCouponsByCompanyId(companyId).subscribe((response) => {
+      console.log(response);
+      for (let index = 0; index < response.length; index++) {
+        this.coupon = new Coupon();
+        this.coupon.id = response[index]?.id;
+        this.coupon.title = response[index]?.title;
+        this.coupon.description = response[index]?.description;
+        this.coupon.category = response[index]?.category;
+        this.coupon.price = response[index]?.price;
+        this.coupon.quantity = response[index]?.quantity;
+        this.coupon.startDate = response[index]?.startDate;
+        this.coupon.expirationDate = response[index]?.expirationDate;
+        // this.coupon.image = response[index]?.image;
+        this.coupons.push(this.coupon);
+      }
+      console.log(this.coupons);
+      this.couponsCount = this.coupons.length;
+    }, (error) => {
+      console.error(error.error);
+    });
   }
 
   private createCoupon(): Coupon {
@@ -138,7 +177,7 @@ export class CouponsAdminComponent implements OnInit {
     return coupon;
   }
 
-  public viewCuponDetails(couponRef: NgbModalRef): void {
+  public viewCouponDetails(couponRef: NgbModalRef): void {
     this.modalService.showModal(couponRef);
   }
 
@@ -181,6 +220,20 @@ export class CouponsAdminComponent implements OnInit {
 
   public updateCouponModal(coupon: Coupon, couponRef: NgbModalRef): void {}
 
-  public deleteCoupon(couponId: number, index: number): void {}
+  public deleteCoupon(couponId: number): void {
+    if (confirm("This action is irreversible, are you sure you want to delete the coupon?")) {
+      this.couponsService.deleteCoupon(couponId).subscribe(
+        response => {
+          for (let index = 0; index < this.coupons.length; index++) {
+            if (this.coupons[index]?.id == couponId) {
+              this.coupons[index].quantity = 0;
+            }
+          }
+        }, error => {
+          console.error(error.error);
+        }
+      );
+    }
+  }
 
 }

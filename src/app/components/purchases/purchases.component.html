@@ -1,5 +1,13 @@
 <div class="container mt-3">
   <h3 class="text-center">Purchases</h3>
+  <hr>
+  <div class="d-flex justify-content-between font-weight-bold mb-2">
+    <div>
+      <span>Search: </span>
+      <input type="text" name="search" placeholder="search purchases" [(ngModel)]="purchaseSearch">
+    </div>
+    <span class="ml-auto">Total purchases: {{ purchasesCount }}</span>
+  </div>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -10,6 +18,22 @@
           <th scope="col">Coupon Id</th>
           <th scope="col">Customer Id</th>
           <th scope="col">Actions</th>
+        </tr>
+        <tr *ngFor="let purchase of purchases | searchFilter:purchaseSearch; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ purchase?.quantity }}</td>
+          <td>{{ purchase?.purchaseDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ purchase?.couponId }}</td>
+          <td>{{ purchase?.customerId }}</td>
+          <td class="d-flex">
+            <button
+              class="btn btn-primary mr-2"
+              type="submit"
+              (click)="[(viewPurchaseDetails(purchaseDetails))]">
+              View
+            </button>
+            <ng-template #purchaseDetails let-modal></ng-template>
+          </td>
         </tr>
       </thead>
     </table>

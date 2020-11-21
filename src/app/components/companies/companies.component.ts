@@ -29,24 +29,6 @@ export class CompaniesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCompanies();
-    // this.companiesService.getAllCompanies().subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     for (let index = 0; index < response.length; index++) {
-    //       this.company = new Company();
-    //       this.company.id = response[index]?.id;
-    //       this.company.name = response[index]?.name;
-    //       this.company.email = response[index]?.email;
-    //       this.company.phoneNumber = response[index]?.phoneNumber;
-    //       this.company.address = response[index]?.address;
-    //       this.company.industry = response[index]?.industry;
-    //       this.companies.push(this.company);
-    //     }
-    //     this.companiesCount = this.companies.length;
-    //   }, (error) => {
-    //     console.error(error.error);
-    //   }
-    // );
   }
 
   private createFormGroup(): FormGroup {

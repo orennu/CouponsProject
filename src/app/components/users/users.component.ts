@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
     }
     else if (userRole == 'COMPANY') {
       console.log('company login');
-      const userProfile = this.usersService.getCompanyUserProfile(this.userId+'').subscribe(
+      this.usersService.getCompanyUserProfile(this.userId+'').subscribe(
         () => {
           this.companyId = this.usersService.getProfile().company.id;
           this.getCompanyUsers(this.companyId);
@@ -51,7 +51,6 @@ export class UsersComponent implements OnInit {
           console.error(error.error);
         }
       );
-
     }
   }
 

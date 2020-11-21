@@ -170,6 +170,7 @@
           <th scope="col">Price</th>
           <th scope="col">Quantity</th>
           <th scope="col">Expiration Date</th>
+          <th *ngIf="!isCompanyUser" scope="col">Company Name</th>
           <th scope="col">Actions</th>
         </tr>
         <tr *ngFor="let coupon of coupons | searchFilter:couponSearch; let i = index">
@@ -177,12 +178,13 @@
           <td>{{ coupon?.title }}</td>
           <td>{{ coupon?.price }}</td>
           <td>{{ coupon?.quantity }}</td>
-          <td>{{ coupon?.expirationDate }}</td>
+          <td>{{ coupon?.expirationDate | date: 'dd/MM/yyyy' }}</td>
+          <td *ngIf="!isCompanyUser">{{ coupon?.company.name }}</td>
           <td class="d-flex">
             <button
               class="btn btn-primary mr-2"
               type="submit"
-              (click)="[(viewCuponDetails(couponDetails))]">
+              (click)="[(viewCouponDetails(couponDetails))]">
               View
             </button>
             <ng-template #couponDetails let-modal>
@@ -207,9 +209,9 @@
                 <hr>
                 <div><strong>Quantity: </strong>{{ coupon.quantity }}</div>
                 <hr>
-                <div><strong>Start Date: </strong>{{ coupon.startDate }}</div>
+                <div><strong>Start Date: </strong>{{ coupon.startDate | date: 'dd/MM/yyyy' }}</div>
                 <hr>
-                <div><strong>Expiration Date: </strong>{{ coupon.expirationDate }}</div>
+                <div><strong>Expiration Date: </strong>{{ coupon.expirationDate | date: 'dd/MM/yyyy' }}</div>
                 <hr>
                 <div class="d-flex">
                   <button
@@ -222,15 +224,17 @@
               </div>
             </ng-template>
             <button
+              *ngIf="isCompanyUser"
               class="btn btn-success mr-2"
               type="submit"
               (click)="updateCouponModal(coupon, addCouponForm)">
               Update
             </button>
             <button
+              *ngIf="isCompanyUser"
               class="btn btn-danger"
               type="submit"
-              (click)="deleteCoupon(coupon?.id, i)">
+              (click)="deleteCoupon(coupon?.id)">
               Delete
             </button>
           </td>

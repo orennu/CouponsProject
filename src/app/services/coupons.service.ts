@@ -11,7 +11,7 @@ import { Coupon } from '../models/coupon.model';
 export class CouponsService {
 
   private endpoint: string = 'coupons/';
-  couponSelected = new EventEmitter<Coupon>();
+  public couponSelected = new EventEmitter<Coupon>();
   coupons: Coupon[] = [
       new Coupon(
           1,
@@ -72,16 +72,27 @@ export class CouponsService {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) {}
 
-  getCoupon(couponId: number): Observable<any> {
+  public getCoupon(couponId: number): Observable<any> {
       return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint + couponId, { responseType: 'json' });
   }
 
-  getAllCoupons(): Observable<any> {
+  public getAllCoupons(): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint, { responseType: 'json' });
+  }
+
+  public getCouponsByCompanyId(id: number): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint + 'search', { params: { companyId: id+'' },
+                                                                                        responseType: 'json' });
   }
 
   public addCoupon(coupon: Object): Observable<any> {
     return this.http.post(this.config.apiBaseEndpoint + this.endpoint, coupon, { responseType: 'json' });
+  }
+
+  // public updateCoupon(coupon: Object): Observable<any> {}
+
+  public deleteCoupon(id: number): Observable<any> {
+    return this.http.delete(this.config.apiBaseEndpoint + this.endpoint + id);
   }
 
 }

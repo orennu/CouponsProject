@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
   constructor(private usersService: UsersService, private router: Router,
               private title: Title) {
                 this.title.setTitle('login');
-                // this.userLoginDetails = new UserLoginDetails();
   }
 
   public ngOnInit(): void {
