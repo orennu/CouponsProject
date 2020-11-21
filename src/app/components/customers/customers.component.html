@@ -27,9 +27,9 @@
           <td>{{ customer?.lastName }}</td>
           <td>{{ customer?.phoneNumber }}</td>
           <td>{{ customer?.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-          <td class="d-flex justify-content-between">
+          <td class="d-flex">
             <button
-              class="btn btn-primary"
+              class="btn btn-primary mr-2"
               type="submit"
               (click)="[(viewCustomerDetails(customerDetails))]">
               View
@@ -72,20 +72,20 @@
             </ng-template>
             <button
               *ngIf="!customer?.isLocked"
-              class="btn btn-warning"
+              class="btn btn-warning mr-2"
               type="submit"
               (click)="lockUser(customer?.id)">
               Block
             </button>
             <button
               *ngIf="customer?.isLocked"
-              class="btn btn-success"
+              class="btn btn-success mr-2"
               type="submit"
               (click)="unlockUser(customer?.id)">
               Release
             </button>
             <button
-              class="btn btn-danger"
+              class="btn btn-danger mr-2"
               type="submit"
               (click)="deleteCustomer(customer?.id, i)">
               Delete

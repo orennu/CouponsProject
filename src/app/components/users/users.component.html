@@ -171,9 +171,9 @@
           <td>{{ user?.userName }}</td>
           <td>{{ user?.type }}</td>
           <td>{{ user?.isLocked }}</td>
-          <td class="d-flex justify-content-between">
+          <td class="d-flex">
             <button
-              class="btn btn-primary"
+              class="btn btn-primary mr-2"
               type="submit"
               (click)="[(viewUserDetails(userDetails))]">
               View
@@ -210,21 +210,21 @@
             </ng-template>
             <button
               *ngIf="(!user?.isLocked && user.userName != 'superadmin') && (!user?.isLocked && user.id != userId)"
-              class="btn btn-warning"
+              class="btn btn-warning mr-2"
               type="submit"
               (click)="lockUser(user?.id)">
               Block
             </button>
             <button
               *ngIf="(user?.isLocked  && user.userName != 'superadmin') && (user?.isLocked && user.id != userId)"
-              class="btn btn-success"
+              class="btn btn-success mr-2"
               type="submit"
               (click)="unlockUser(user?.id)">
               Release
             </button>
             <button
               *ngIf="user.userName != 'superadmin' && user.id != userId"
-              class="btn btn-danger"
+              class="btn btn-danger mr-2"
               type="submit"
               (click)="deleteUser(user?.id, i)">
               Delete
