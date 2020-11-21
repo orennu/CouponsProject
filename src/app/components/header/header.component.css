@@ -11,6 +11,7 @@
 
 .dropdown-item:hover {
     color: black !important;
+    background-color: #acbccc;
 }
 
 .dropdown-toggle {

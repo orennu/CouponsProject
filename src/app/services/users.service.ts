@@ -155,6 +155,7 @@ export class UsersService {
         this.userProfile.email = data.email;
         this.userProfile.userName = data.userName;
         this.userProfile.type = data.type;
+        this.userProfile.company = data.company;
       }, (error: any) => {
         return error;
       })
@@ -171,6 +172,11 @@ export class UsersService {
 
   public getAllUsers(): Observable<any> {
     return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint, { responseType: 'json' });
+  }
+
+  public getUsersByCompanyId(id: number): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint + 'search', { params: { companyId: id+'' },
+                                                                                            responseType: 'json' })
   }
 
   public lockUser(id: number): Observable<any> {

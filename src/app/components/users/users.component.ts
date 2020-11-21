@@ -22,7 +22,6 @@ export class UsersComponent implements OnInit {
   public userState: string;
   public usersCount: number;
   public userSearch = "";
-  // public isUserNew: boolean;
   public userForm: FormGroup;
   public isFormSubmitted: boolean = false;
   public isSubmitFailed: boolean = false;
@@ -31,13 +30,51 @@ export class UsersComponent implements OnInit {
   public company: Company;
   public companies: Company[] = [];
   public companiesMap: object = {};
+  private companyId: number;
 
   constructor(private usersService: UsersService, private companiesService: CompaniesService,
               private modalService: ModalService, private validationService: ValidationService) { }
 
   ngOnInit(): void {
     this.userId = this.usersService.getUserId();
+    const userRole = this.usersService.getUserRole();
+    if (userRole == 'ADMIN') {
+      this.getAllUsers();
+    }
+    else if (userRole == 'COMPANY') {
+      console.log('company login');
+      const userProfile = this.usersService.getCompanyUserProfile(this.userId+'').subscribe(
+        () => {
+          this.companyId = this.usersService.getProfile().company.id;
+          this.getCompanyUsers(this.companyId);
+        }, (error) => {
+          console.error(error.error);
+        }
+      );
+
+    }
+  }
+
+  private getAllUsers(): void {
     this.usersService.getAllUsers().subscribe((response) => {
+      console.log(response);
+      for (let index = 0; index < response.length; index++) {
+        this.user = new UserProfile();
+        this.user.id = response[index]?.id;
+        this.user.email = response[index]?.email;
+        this.user.userName = response[index]?.userName;
+        this.user.type = response[index]?.type;
+        this.user.isLocked = response[index]?.lockUser;
+        this.users.push(this.user);
+      }
+      this.usersCount = this.users.length;
+    }, (error) => {
+      console.error(error.error);
+    });
+  }
+
+  private getCompanyUsers(companyId: number): void {
+    this.usersService.getUsersByCompanyId(companyId).subscribe((response) => {
       console.log(response);
       for (let index = 0; index < response.length; index++) {
         this.user = new UserProfile();

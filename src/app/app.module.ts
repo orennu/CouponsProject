@@ -29,11 +29,11 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { ResetPasswordEditComponent } from './components/reset-password/reset-password-edit/reset-password-edit.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { AdminComponent } from './components/admin/admin.component';
-import { CustomersComponent } from './components/admin/customers/customers.component';
-import { CompaniesComponent } from './components/admin/companies/companies.component';
-import { PurchasesComponent } from './components/admin/purchases/purchases.component';
-import { UsersComponent } from './components/admin/users/users.component';
-import { CouponsAdminComponent } from './components/admin/coupons/coupons-admin.component';
+import { CustomersComponent } from './components/customers/customers.component';
+import { CompaniesComponent } from './components/companies/companies.component';
+import { PurchasesComponent } from './components/purchases/purchases.component';
+import { UsersComponent } from './components/users/users.component';
+import { CouponsAdminComponent } from './components/coupons/coupons-admin/coupons-admin.component';
 import { ForbiddenPageComponent } from './components/forbidden-page/forbidden-page.component';
 import { CompanyComponent } from './components/company/company.component';
 

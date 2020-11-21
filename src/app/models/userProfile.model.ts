@@ -1,3 +1,5 @@
+import { Company } from './company.model';
+
 export class UserProfile {
     public constructor(
         public id?: number,
@@ -11,7 +13,7 @@ export class UserProfile {
         public phoneNumber?: string,
         public dateOfBirth?: string,
         public isLocked?: boolean,
-        public company?: object,
+        public company?: Company,
     ) { }
 
 }

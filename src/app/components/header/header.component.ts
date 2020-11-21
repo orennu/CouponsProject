@@ -37,6 +37,9 @@ export class HeaderComponent implements OnInit {
     if (this.usersService.getUserRole() === 'ADMIN') {
       this.isAdmin = true;
     }
+    else if (this.usersService.getUserRole() === 'COMPANY') {
+      this.isCompany = true;
+    }
   }
 
   public getUrl(): string {

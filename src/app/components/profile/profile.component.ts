@@ -120,9 +120,11 @@ export class ProfileComponent implements OnInit {
         this.profile.email = this.userProfile.email;
         this.profile.userName = this.userProfile.userName;
         this.profile.type = this.userProfile.type;
+        this.profile.company = this.userProfile.company;
         this.profileForm.patchValue({ email: this.profile.email,
                                       userName: this.profile.userName,
-                                      type: this.profile.type
+                                      type: this.profile.type + ' ADMIN',
+                                      companyName: this.profile.company.name
                                     });
       }
     );
@@ -216,8 +218,8 @@ export class ProfileComponent implements OnInit {
             Validators.pattern('^[a-z][a-z0-9]*$')
           ]
         ),
-        type: new FormControl({ value: 'COMPANY', disabled: true }),
-        company: new FormControl({ value: '', disabled: true })
+        type: new FormControl({ value: '', disabled: true }),
+        companyName: new FormControl({ value: '', disabled: true })
       })
     }
   }

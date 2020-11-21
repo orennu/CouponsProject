@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { AdminComponent } from './components/admin/admin.component';
-import { CompaniesComponent } from './components/admin/companies/companies.component';
-import { CouponsAdminComponent } from './components/admin/coupons/coupons-admin.component';
-import { CustomersComponent } from './components/admin/customers/customers.component';
-import { PurchasesComponent } from './components/admin/purchases/purchases.component';
-import { UsersComponent } from './components/admin/users/users.component';
+import { CompaniesComponent } from './components/companies/companies.component';
+import { CouponsAdminComponent } from './components/coupons/coupons-admin/coupons-admin.component';
+import { CustomersComponent } from './components/customers/customers.component';
+import { PurchasesComponent } from './components/purchases/purchases.component';
+import { UsersComponent } from './components/users/users.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HomeComponent } from './components/home/home.component';
 
@@ -41,7 +41,9 @@ const appRoutes: Routes = [
       { path: 'coupons',component: CouponsAdminComponent },
       { path: 'purchases',component: PurchasesComponent }
     ] },
-    { path: 'company', component: CompanyComponent },
+    { path: 'company', component: CompanyComponent, children: [
+      { path: 'users',component: UsersComponent },
+    ] },
     { path: 'customer', redirectTo: '/home' },
     { path: 'not-found', component: PageNotFoundComponent },
     { path: 'forbidden', component:  ForbiddenPageComponent },
