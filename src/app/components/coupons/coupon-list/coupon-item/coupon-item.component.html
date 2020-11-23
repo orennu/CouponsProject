@@ -5,7 +5,7 @@
         <img [src]="coupon.image" class="img-fluid card-img-top" alt="...">
         <div class="card-body">
             <p class="card-text">
-                <span>Price: {{ coupon.price + "$" }}</span><br>
+                <span>Price: {{ coupon.price | currency }}</span><br>
                 <span>Quantity: {{ coupon.quantity }}</span>
             </p>
         </div>
@@ -21,43 +21,43 @@
         </button>
     </div>
     <div class="modal-body">
-        <img 
-            [src]="this.coupon?.image" 
-            alt="selected coupon image" 
+        <img
+            [src]="this.coupon?.image"
+            alt="selected coupon image"
             class="img-fluid card-img-top">
         <hr>
         <p>
             <span>
-                <span 
+                <span
                     class="font-weight-bold">
-                    Product Description
+                    Product Description:
                 </span>
-                {{ ": " + this.coupon?.description }}
+                {{ this.coupon?.description }}
             </span><br>
             <span>
-                <span 
+                <span
                     class="font-weight-bold">
-                    Price
+                    Price:
                 </span>
-                {{ ": " + this.coupon?.price + "$" }}
+                {{ this.coupon?.price | currency }}
             </span><br>
             <span>
-                <span 
+                <span
                     class="font-weight-bold">
-                    Product Category
-                </span>{{ ": " + this.coupon?.category }}
+                    Product Category:
+                </span>{{ this.coupon?.category }}
             </span><br>
             <span>
-                <span 
+                <span
                     class="font-weight-bold">
-                    Coupon will expire on
-                </span>{{ ": " + this.coupon?.expirationDate }}
+                    Coupon will expire on:
+                </span>{{ this.coupon?.expirationDate | date: 'MM/dd/yyyy' }}
             </span><br>
             <span>
-                <span 
+                <span
                     class="font-weight-bold">
-                    Items left
-                </span>{{ ": " + this.coupon?.quantity }}
+                    Items left:
+                </span>{{ this.coupon?.quantity }}
             </span>
         </p>
     </div>

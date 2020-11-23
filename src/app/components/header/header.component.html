@@ -204,6 +204,9 @@
                 <li>
                   <a class="dropdown-item" style="cursor: pointer;" routerLink="/profile">Profile</a>
                 </li>
+                <li *ngIf="!isAdmin && !isCompany">
+                  <a class="dropdown-item" style="cursor: pointer;" routerLink="/orders">My Orders</a>
+                </li>
                 <li>
                     <a class="dropdown-item" style="cursor: pointer;" (click)="onLogout()">Logout</a>
                 </li>

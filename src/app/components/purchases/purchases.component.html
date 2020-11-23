@@ -13,18 +13,22 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Quantity</th>
           <th scope="col">Purchase Date</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Amount</th>
           <th scope="col">Coupon Id</th>
-          <th scope="col">Customer Id</th>
+          <th scope="col">Coupon Title</th>
+          <th scope="col">Customer Name</th>
           <th scope="col">Actions</th>
         </tr>
         <tr *ngFor="let purchase of purchases | searchFilter:purchaseSearch; let i = index">
           <td>{{ i + 1 }}</td>
+          <td>{{ purchase?.purchaseDate | date: 'MM/dd/yyyy' }}</td>
           <td>{{ purchase?.quantity }}</td>
-          <td>{{ purchase?.purchaseDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ purchase?.amount }}</td>
           <td>{{ purchase?.couponId }}</td>
-          <td>{{ purchase?.customerId }}</td>
+          <td>{{ purchase?.couponTitle }}</td>
+          <td>{{ purchase?.customer.fullName }}</td>
           <td class="d-flex">
             <button
               class="btn btn-primary mr-2"
@@ -32,7 +36,38 @@
               (click)="[(viewPurchaseDetails(purchaseDetails))]">
               View
             </button>
-            <ng-template #purchaseDetails let-modal></ng-template>
+            <ng-template #purchaseDetails let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  Purchase Details
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div><strong>Id: </strong>{{ purchase.id }}</div>
+                <hr>
+                <div><strong>Purchase Date: </strong>{{ purchase.purchaseDate | date: 'dd/MM/yyyy' }}</div>
+                <hr>
+                <div><strong>Coupon Title: </strong>{{ purchase.couponTitle }}</div>
+                <hr>
+                <div><strong>Quantity: </strong>{{ purchase.quantity }}</div>
+                <hr>
+                <div><strong>Coupon Price: </strong>{{ purchase.couponPrice }}</div>
+                <hr>
+                <div><strong>Purchase Amount: </strong>{{ purchase.amount | currency }}</div>
+                <hr>
+                <div class="d-flex">
+                  <button
+                    type="submit"
+                    class="btn btn-primary ml-auto"
+                    (click)="modal.dismiss('Close button click')">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </ng-template>
           </td>
         </tr>
       </thead>

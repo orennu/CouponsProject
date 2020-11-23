@@ -70,7 +70,7 @@ export class CouponsService {
       )
   ];
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) {}
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) { }
 
   public getCoupon(couponId: number): Observable<any> {
       return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint + couponId, { responseType: 'json' });

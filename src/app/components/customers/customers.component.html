@@ -26,7 +26,7 @@
           <td>{{ customer?.firstName }}</td>
           <td>{{ customer?.lastName }}</td>
           <td>{{ customer?.phoneNumber }}</td>
-          <td>{{ customer?.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ customer?.dateOfBirth | date: 'MM/dd/yyyy' }}</td>
           <td class="d-flex">
             <button
               class="btn btn-primary mr-2"
@@ -56,7 +56,7 @@
                 <hr>
                 <div><strong>Address: </strong>{{ customer.address }}</div>
                 <hr>
-                <div><strong>Birth Date: </strong>{{ customer.dateOfBirth | date: 'dd/MM/yyyy' }}</div>
+                <div><strong>Birth Date: </strong>{{ customer.dateOfBirth | date: 'MM/dd/yyyy' }}</div>
                 <hr>
                 <div><strong>Is locked: </strong>{{ customer.isLocked }}</div>
                 <hr>

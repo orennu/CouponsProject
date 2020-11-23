@@ -221,7 +221,7 @@ export class CouponsAdminComponent implements OnInit {
   public updateCouponModal(coupon: Coupon, couponRef: NgbModalRef): void {}
 
   public deleteCoupon(couponId: number): void {
-    if (confirm("This action is irreversible, are you sure you want to delete the coupon?")) {
+    if (confirm("This action will clear coupon's quantity, are you sure you want to proceed?")) {
       this.couponsService.deleteCoupon(couponId).subscribe(
         response => {
           for (let index = 0; index < this.coupons.length; index++) {

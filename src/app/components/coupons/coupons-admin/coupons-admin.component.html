@@ -176,9 +176,9 @@
         <tr *ngFor="let coupon of coupons | searchFilter:couponSearch; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ coupon?.title }}</td>
-          <td>{{ coupon?.price }}</td>
+          <td>{{ coupon?.price | currency }}</td>
           <td>{{ coupon?.quantity }}</td>
-          <td>{{ coupon?.expirationDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ coupon?.expirationDate | date: 'MM/dd/yyyy' }}</td>
           <td *ngIf="!isCompanyUser">{{ coupon?.company.name }}</td>
           <td class="d-flex">
             <button
@@ -203,15 +203,15 @@
                 <hr>
                 <div><strong>Description: </strong>{{ coupon.description }}</div>
                 <hr>
-                <div><strong>Price: </strong>{{ coupon.price }}</div>
+                <div><strong>Price: </strong>{{ coupon.price | currency }}</div>
                 <hr>
                 <div><strong>Category: </strong>{{ coupon.category }}</div>
                 <hr>
                 <div><strong>Quantity: </strong>{{ coupon.quantity }}</div>
                 <hr>
-                <div><strong>Start Date: </strong>{{ coupon.startDate | date: 'dd/MM/yyyy' }}</div>
+                <div><strong>Start Date: </strong>{{ coupon.startDate | date: 'MM/dd/yyyy' }}</div>
                 <hr>
-                <div><strong>Expiration Date: </strong>{{ coupon.expirationDate | date: 'dd/MM/yyyy' }}</div>
+                <div><strong>Expiration Date: </strong>{{ coupon.expirationDate | date: 'MM/dd/yyyy' }}</div>
                 <hr>
                 <div class="d-flex">
                   <button
