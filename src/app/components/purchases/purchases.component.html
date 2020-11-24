@@ -16,8 +16,9 @@
           <th scope="col">Purchase Date</th>
           <th scope="col">Quantity</th>
           <th scope="col">Amount</th>
-          <th scope="col">Coupon Id</th>
+          <th *ngIf="isAdmin" scope="col">Coupon Id</th>
           <th scope="col">Coupon Title</th>
+          <th *ngIf="isCompanyUser" scope="col">Coupon Category</th>
           <th scope="col">Customer Name</th>
           <th scope="col">Actions</th>
         </tr>
@@ -26,9 +27,11 @@
           <td>{{ purchase?.purchaseDate | date: 'MM/dd/yyyy' }}</td>
           <td>{{ purchase?.quantity }}</td>
           <td>{{ purchase?.amount }}</td>
-          <td>{{ purchase?.couponId }}</td>
+          <td *ngIf="isAdmin">{{ purchase?.couponId }}</td>
           <td>{{ purchase?.couponTitle }}</td>
-          <td>{{ purchase?.customer.fullName }}</td>
+          <td *ngIf="isCompanyUser">{{ purchase?.couponCategory }}</td>
+          <td *ngIf="isAdmin">{{ purchase?.customer.fullName }}</td>
+          <td *ngIf="isCompanyUser">{{ purchase?.customerFullName }}</td>
           <td class="d-flex">
             <button
               class="btn btn-primary mr-2"

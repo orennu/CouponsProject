@@ -6,6 +6,7 @@ import { Purchase } from 'src/app/models/purchase.model';
 import { CouponsService } from 'src/app/services/coupons.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { PurchasesService } from 'src/app/services/purchases.service';
+import { UsersService } from 'src/app/services/users.service';
 
 
 @Component({
@@ -20,12 +21,52 @@ export class PurchasesComponent implements OnInit {
   public purchaseSearch: string = "";
   public purchasesCount: number;
   public coupon: Coupon;
+  public isAdmin: boolean = false;
+  public isCompanyUser: boolean = false;
 
   constructor(private purchasesService: PurchasesService, private modalService: ModalService,
-              private couponsService: CouponsService) { }
+              private couponsService: CouponsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
-    this.getAllPurchases();
+    const userRole = this.usersService.getUserRole();
+    if (userRole == 'ADMIN') {
+      this.isAdmin = true;
+      this.getAllPurchases();
+    }
+    else if (userRole == 'COMPANY') {
+      this.isCompanyUser = true;
+      this.getCompanyPurchases();
+    }
+  }
+
+  private getCompanyPurchases(): void {
+    const userId = this.usersService.getUserId();
+    this.usersService.getCompanyUserProfile(userId+'').subscribe(
+      () => {
+        const companyId = this.usersService.getProfile().company.id;
+        this.purchasesService.getPurchasesByCompany(companyId).subscribe(
+          (response) => {
+            for (let index = 0; index < response.length; index++) {
+              this.purchase = new Purchase();
+              this.purchase.id = response[index]?.purchaseId;
+              this.purchase.quantity = response[index]?.purchaseQuantity;
+              this.purchase.purchaseDate = response[index]?.purchaseDate;
+              this.purchase.couponTitle = response[index]?.couponTitle;
+              this.purchase.couponPrice = response[index]?.couponPrice;
+              this.purchase.couponCategory = response[index]?.couponCategory;
+              this.purchase.customerFullName = response[index]?.customerFirstName + " " + response[index]?.customerLastName;
+              this.purchase.amount = this.purchase.couponPrice * this.purchase.quantity;
+              this.purchases.push(this.purchase);
+            }
+            this.purchasesCount = this.purchases.length;
+          }, (error) => {
+            console.error(error.error);
+          }
+        );
+      }, (error) => {
+        console.error(error.error);
+      }
+    );
   }
 
   private getAllPurchases(): void {

@@ -32,4 +32,9 @@ export class PurchasesService {
     return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint, { responseType: 'json' });
   }
 
+  public getPurchasesByCompany(companyId: number): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint + 'search', { params: { companyId: companyId+'' },
+                                                                                        responseType: 'json' });
+  }
+
 }
