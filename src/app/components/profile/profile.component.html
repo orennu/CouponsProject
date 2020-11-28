@@ -211,13 +211,15 @@
                         name="dateOfBirth"
                         value="{{ profile?.dateOfBirth | date: 'dd/MM/yyyy' }}">
                 </div>
-                <div class="container pl-0">
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        [disabled]="!profileForm.valid || profileForm.pristine">
-                        Submit
-                    </button>
+                <div
+                  *ngIf="role === 'CUSTOMER'"
+                  class="container pl-0">
+                  <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="!profileForm.valid || profileForm.pristine">
+                      Submit
+                  </button>
                 </div>
                 <div
                     *ngIf="formSubmitted">

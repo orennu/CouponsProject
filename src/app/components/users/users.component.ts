@@ -194,6 +194,13 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  private removeValidators(formGroup: FormGroup): void {
+    for (const key in formGroup.controls) {
+      formGroup.get(key).clearValidators();
+      formGroup.get(key).updateValueAndValidity();
+    }
+  }
+
   private createAdminUser(): UserProfile {
     const user = new UserProfile();
     user.userName = this.userForm.get('username').value;
@@ -385,6 +392,13 @@ export class UsersComponent implements OnInit {
         }
       );
     }
+  }
+
+  public clearForm(): void {
+    this.removeValidators(this.userForm);
+    this.userForm.reset();
+    this.isSubmitFailed = false;
+    this.userForm = this.createFormGroup();
   }
 
 }

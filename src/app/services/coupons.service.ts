@@ -32,7 +32,9 @@ export class CouponsService {
     return this.http.post(this.config.apiBaseEndpoint + this.endpoint, coupon, { responseType: 'json' });
   }
 
-  // public updateCoupon(coupon: Object): Observable<any> {}
+  public updateCoupon(coupon: Object): Observable<any> {
+    return this.http.put(this.config.apiBaseEndpoint + this.endpoint, coupon, { responseType: 'json'});
+  }
 
   public deleteCoupon(id: number): Observable<any> {
     return this.http.delete(this.config.apiBaseEndpoint + this.endpoint + id);

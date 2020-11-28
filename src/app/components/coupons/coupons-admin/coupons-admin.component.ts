@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -36,7 +37,7 @@ export class CouponsAdminComponent implements OnInit {
 
   constructor(private couponsService: CouponsService, private modalService: ModalService,
               private validationService: ValidationService, private usersService: UsersService,
-              private filesService: FilesService) { }
+              private filesService: FilesService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.userId = this.usersService.getUserId();
@@ -142,7 +143,6 @@ export class CouponsAdminComponent implements OnInit {
           this.coupon.startDate = response[index]?.startDate;
           this.coupon.expirationDate = response[index]?.expirationDate;
           this.coupon.company = response[index]?.company;
-          // this.coupon.image = response[index]?.image;
           this.coupons.push(this.coupon);
         }
         this.couponsCount = this.coupons.length;
@@ -165,7 +165,6 @@ export class CouponsAdminComponent implements OnInit {
         this.coupon.quantity = response[index]?.quantity;
         this.coupon.startDate = response[index]?.startDate;
         this.coupon.expirationDate = response[index]?.expirationDate;
-        // this.coupon.image = response[index]?.image;
         this.coupons.push(this.coupon);
       }
       console.log(this.coupons);
@@ -235,10 +234,42 @@ export class CouponsAdminComponent implements OnInit {
   }
 
   public saveExistingCoupon(couponIndex: number, modalRef: NgbActiveModal): void {
-
+    const coupon = this.createCoupon();
+    coupon.id = this.coupons[couponIndex].id;
+    this.uploadImage().subscribe(
+      (data) => {
+        const imageUuid = data.message.split('/').pop();
+        coupon.imageUuid = imageUuid;
+        this.couponsService.updateCoupon(coupon).subscribe(
+          (response) => {
+            this.coupons[couponIndex] = coupon;
+            this.isFormSubmitted = true;
+            this.couponState = 'updated';
+            modalRef.dismiss('save clicked');
+          }, (error) => {
+            console.error(error.error);
+            this.isSubmitFailed = true;
+            this.formFailureReason = error.error.errorDescription;
+          }
+        );
+      }, (error) => {
+        console.error(error.error);
+      }
+    );
   }
 
-  public updateCouponModal(coupon: Coupon, couponRef: NgbModalRef): void {}
+  public updateCouponModal(coupon: Coupon, couponRef: NgbModalRef): void {
+    this.isFormSubmitted = false;
+    this.couponIndex = this.coupons.indexOf(coupon);
+    this.isCouponNew = false;
+    this.couponForm = this.createFormGroup();
+    this.couponForm.setValue({'title': coupon.title, 'description': coupon.description,
+                              'price': coupon.price, 'quantity': coupon.quantity,
+                              'startDate': this.convertDateFormat(coupon.startDate),
+                              'expirationDate': this.convertDateFormat(coupon.expirationDate),
+                              'category': coupon.category, 'image': null});
+    this.modalService.showModal(couponRef);
+  }
 
   public deleteCoupon(couponId: number): void {
     if (confirm("This action will clear coupon's quantity, are you sure you want to proceed?")) {
@@ -262,6 +293,13 @@ export class CouponsAdminComponent implements OnInit {
 
   private uploadImage(): Observable<any> {
     return this.filesService.uploadFile(this.selectedImage);
+  }
+
+  private convertDateFormat(date: string): string {
+    let strDate = new Date(date);
+    const convertedDate = this.datePipe.transform(strDate, 'yyyy-MM-dd');
+
+    return convertedDate;
   }
 
 }

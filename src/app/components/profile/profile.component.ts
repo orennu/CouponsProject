@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { error } from 'protractor';
-import { Observable } from 'rxjs';
 import { UserProfile } from 'src/app/models/userProfile.model';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -35,25 +33,6 @@ export class ProfileComponent implements OnInit {
     }
     const role = this.usersService.getUserRole();
     this.getUserProfile(id, role);
-    // this.usersService.getUserProfile(id).subscribe(
-    //   () => {
-    //     this.userProfile = this.usersService.getProfile();
-    //     this.profile.firstName = this.userProfile.firstName;
-    //     this.profile.lastName = this.userProfile.lastName;
-    //     this.profile.address = this.userProfile.address;
-    //     this.profile.phoneNumber = this.userProfile.phoneNumber;
-    //     this.profile.dateOfBirth = this.userProfile.dateOfBirth;
-    //     this.profileForm.patchValue({ firstName: this.profile.firstName,
-    //                                   lastName: this.profile.lastName,
-    //                                   address: this.profile.address,
-    //                                   phoneNumber: this.profile.phoneNumber
-    //                                 });
-    //     console.log(this.profileForm.value);
-    //     this.profile.userName = this.userProfile.userName;
-    //     this.profile.email = this.userProfile.email;
-    //   }
-    // )
-    // this.profileForm = this.createFormGroup()
   }
 
   private getUserProfile(id: string, role: string): void {
@@ -94,7 +73,6 @@ export class ProfileComponent implements OnInit {
         this.profile.email = this.userProfile.email;
       }
     );
-    // this.profileForm = this.createFormGroup()
   }
 
   private getAdminUserProfile(id: string): void {
