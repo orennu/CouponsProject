@@ -35,7 +35,7 @@ export class CouponListComponent implements OnInit {
             this.coupon.startDate = response[index]?.startDate;
             this.coupon.expirationDate = response[index]?.expirationDate;
             this.coupon.company = response[index]?.company;
-            // this.coupon.image = response[index]?.image;
+            this.coupon.imageUrl = this.coupon.imageUrl + response[index]?.imageUuid;
             this.coupons.push(this.coupon);
           }
         }

@@ -26,7 +26,9 @@ export class UsersComponent implements OnInit {
   public isFormSubmitted: boolean = false;
   public isSubmitFailed: boolean = false;
   public formFailureReason: string;
+  public isAdminUser: boolean;
   public isCompany: boolean;
+  public isCompanyUser: boolean;
   public company: Company;
   public companies: Company[] = [];
   public companiesMap: object = {};
@@ -39,15 +41,17 @@ export class UsersComponent implements OnInit {
     this.userId = this.usersService.getUserId();
     const userRole = this.usersService.getUserRole();
     if (userRole == 'ADMIN') {
+      this.isAdminUser = true;
       this.getAllUsers();
     }
     else if (userRole == 'COMPANY') {
       console.log('company login');
-      this.usersService.getCompanyUserProfile(this.userId+'').subscribe(
-        () => {
-          this.companyId = this.usersService.getProfile().company.id;
+      this.isCompanyUser = true;
+      this.usersService.getUserCompanyId(this.userId+'').subscribe(
+        data => {
+          this.companyId = data;
           this.getCompanyUsers(this.companyId);
-        }, (error) => {
+        }, error => {
           console.error(error.error);
         }
       );
@@ -91,59 +95,103 @@ export class UsersComponent implements OnInit {
   }
 
   private createFormGroup(): FormGroup {
-    return new FormGroup({
-      username: new FormControl(
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          Validators.pattern('^[a-z][a-z0-9]*$')
-        ]
-      ),
-      email: new FormControl(
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ),
-      passwords: new FormGroup({
-        password: new FormControl(
+    if (this.isAdminUser) {
+      return new FormGroup({
+        username: new FormControl(
           '',
           [
             Validators.required,
-            Validators.minLength(10),
-            Validators.maxLength(16),
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,16}$'),
+            Validators.minLength(2),
+            Validators.maxLength(20),
+            Validators.pattern('^[a-z][a-z0-9]*$')
           ]
         ),
-        confirmPassword: new FormControl(
+        email: new FormControl(
+          '',
+          [
+            Validators.required,
+            Validators.email
+          ]
+        ),
+        passwords: new FormGroup({
+          password: new FormControl(
+            '',
+            [
+              Validators.required,
+              Validators.minLength(10),
+              Validators.maxLength(16),
+              Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,16}$'),
+            ]
+          ),
+          confirmPassword: new FormControl(
+            '',
+            [
+              Validators.required
+            ]
+          )
+        },
+        {
+          validators: [
+            this.validationService.isPasswordsMatch,
+          ]
+        }
+        ),
+        type: new FormControl(
           '',
           [
             Validators.required
           ]
+        ),
+        companyName: new FormControl(
+          '',
+          [
+            Validators.pattern(/^\S*$/)
+          ]
         )
-      },
-      {
-        validators: [
-          this.validationService.isPasswordsMatch,
-        ]
-      }
-      ),
-      type: new FormControl(
-        '',
-        [
-          Validators.required
-        ]
-      ),
-      companyName: new FormControl(
-        '',
-        [
-          Validators.pattern(/^\S*$/)
-        ]
-      )
-    })
+      })
+    }
+    if (this.isCompanyUser) {
+      return new FormGroup({
+        username: new FormControl(
+          '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(20),
+            Validators.pattern('^[a-z][a-z0-9]*$')
+          ]
+        ),
+        email: new FormControl(
+          '',
+          [
+            Validators.required,
+            Validators.email
+          ]
+        ),
+        passwords: new FormGroup({
+          password: new FormControl(
+            '',
+            [
+              Validators.required,
+              Validators.minLength(10),
+              Validators.maxLength(16),
+              Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,16}$'),
+            ]
+          ),
+          confirmPassword: new FormControl(
+            '',
+            [
+              Validators.required
+            ]
+          )
+        },
+        {
+          validators: [
+            this.validationService.isPasswordsMatch,
+          ]
+        })
+      })
+    }
   }
 
   private createAdminUser(): UserProfile {
@@ -169,8 +217,14 @@ export class UsersComponent implements OnInit {
     user.userName = this.userForm.get('username').value;
     user.password = this.userForm.get('passwords').get('password').value;
     user.email = this.userForm.get('email').value;
-    user.type = this.userForm.get('type').value;
-    user.company = { id: this.companiesMap[this.userForm.get('companyName').value] };
+    if (this.isCompanyUser) {
+      user.type = 'COMPANY';
+      user.company = { id: this.companyId };
+    }
+    if (this.isAdminUser) {
+      user.type = this.userForm.get('type').value;
+      user.company = { id: this.companiesMap[this.userForm.get('companyName').value] };
+    }
     delete user.id;
     delete user.firstName;
     delete user.lastName;
@@ -191,7 +245,6 @@ export class UsersComponent implements OnInit {
   }
 
   public openUserForm(userRef: NgbModalRef): void {
-    // this.isUserNew = true;
     this.userForm = this.createFormGroup();
     this.isFormSubmitted = false;
     this.isSubmitFailed = false;
@@ -275,26 +328,46 @@ export class UsersComponent implements OnInit {
   }
 
   public saveNewUser(modalRef: NgbActiveModal): void {
-    const userType = this.userForm.get('type').value;
-    if (userType == 'ADMIN') {
-      const user = this.createAdminUser();
-      this.usersService.addUser(user).subscribe(
-        (response) => {
-          user.id = response;
-          user.isLocked = false;
-          this.users.push(user);
-          this.isFormSubmitted = true;
-          this.usersCount = this.users.length;
-          this.userState = 'created';
-          modalRef.dismiss('save clicked');
-        }, (error) => {
-          console.error(error.error);
-          this.isSubmitFailed = true;
-          this.formFailureReason = error.error.errorDescription;
-        }
-      );
+    if (this.isAdminUser) {
+      const userType = this.userForm.get('type').value;
+      if (userType == 'ADMIN') {
+        const user = this.createAdminUser();
+        this.usersService.addUser(user).subscribe(
+          (response) => {
+            user.id = response;
+            user.isLocked = false;
+            this.users.push(user);
+            this.isFormSubmitted = true;
+            this.usersCount = this.users.length;
+            this.userState = 'created';
+            modalRef.dismiss('save clicked');
+          }, (error) => {
+            console.error(error.error);
+            this.isSubmitFailed = true;
+            this.formFailureReason = error.error.errorDescription;
+          }
+        );
+      }
+      if (userType == 'COMPANY') {
+        const user = this.createCompanyUser();
+        this.usersService.addUser(user).subscribe(
+          (response) => {
+            user.id = response;
+            user.isLocked = false;
+            this.users.push(user);
+            this.isFormSubmitted = true;
+            this.usersCount = this.users.length;
+            this.userState = 'created';
+            modalRef.dismiss('save clicked');
+          }, (error) => {
+            console.error(error.error);
+            this.isSubmitFailed = true;
+            this.formFailureReason = error.error.errorDescription;
+          }
+        );
+      }
     }
-    if (userType == 'COMPANY') {
+    if (this.isCompanyUser) {
       const user = this.createCompanyUser();
       this.usersService.addUser(user).subscribe(
         (response) => {

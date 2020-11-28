@@ -1,28 +1,17 @@
+import { Company } from './company.model';
+
 export class Coupon {
-    public id?: number;
-    public title?: string;
-    public description?: string;
-    public image?: string;
-    public price?: number;
-    public category?: string;
-    public quantity?: number;
-    public startDate?: string;
-    public expirationDate?: string;
-    public company?: object;
-
-    constructor(id?: number, title?: string, description?: string, image?: string, price?: number,
-                category?: string, quantity?: number, startDate?: string, expirationDate?: string,
-                company?: object) {
-            this.id = id;
-            this.title = title;
-            this.description = description;
-            this.image = image;
-            this.price = price;
-            this.category = category;
-            this.quantity = quantity;
-            this.startDate = startDate;
-            this.expirationDate = expirationDate;
-            this.company = company;
-    }
-
+  public constructor(
+    public id?: number,
+    public title?: string,
+    public description?: string,
+    public imageUuid?: string,
+    public imageUrl: string = 'http://localhost:8080/files/',
+    public price?: number,
+    public category?: string,
+    public quantity?: number,
+    public startDate?: string,
+    public expirationDate?: string,
+    public company?: object,
+  ) { }
 }

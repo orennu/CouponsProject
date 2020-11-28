@@ -1,7 +1,7 @@
 import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserLoginDetails } from '../models/userLoginDetails.model';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SuccessfulLoginServerResponse } from '../models/successfulLoginServerResponse.model'
 import { APP_CONFIG, IAppConfig } from '../app.config';
@@ -160,6 +160,10 @@ export class UsersService {
         return error;
       })
     );
+  }
+
+  public getUserCompanyId(userId: string): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.usersEndpoint + userId + '/companyId');
   }
 
   public getAllCustomers(): Observable<any> {
