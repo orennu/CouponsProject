@@ -1,9 +1,46 @@
 .modal-header {
-    background: #343a40;
-    color: white;
+  background: #343a40;
+  color: white;
 }
 
 .close {
-    outline: none;
-    color: white;
+  outline: none;
+  color: white;
+}
+
+.btn-amount {
+  outline: none;
+  color: white;
+  background: #343a40;
+  font-weight: bolder;
+  border-radius: 0% !important;
+}
+
+.items-quantity {
+  width: 5rem;
+  text-align: center;
+  border: 0px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input:focus{
+  outline: none;
+}
+
+.toggle-amount {
+  border: 2px solid #343a40;
+}
+
+.warn {
+  font-size: 1.5em;
+  color: red;
+  content: "*";
+  font-weight: bolder;
+  /* position: absolute; */
+  /* margin-left: -15px; */
 }

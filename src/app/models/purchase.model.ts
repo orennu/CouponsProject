@@ -2,7 +2,7 @@ export class Purchase {
   public constructor(
     public id?: number,
     public quantity?: number,
-    public purchaseDate?: Date,
+    public purchaseDate?: string,
     public couponId?: number,
     public couponTitle?: string,
     public couponPrice?: number,

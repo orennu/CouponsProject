@@ -295,9 +295,9 @@ export class CouponsAdminComponent implements OnInit {
     return this.filesService.uploadFile(this.selectedImage);
   }
 
-  private convertDateFormat(date: string): string {
-    let strDate = new Date(date);
-    const convertedDate = this.datePipe.transform(strDate, 'yyyy-MM-dd');
+  private convertDateFormat(strDate: string): string {
+    let date = new Date(strDate);
+    const convertedDate = this.datePipe.transform(date, 'yyyy-MM-dd');
 
     return convertedDate;
   }

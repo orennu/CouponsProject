@@ -8,7 +8,6 @@ import { Coupon } from '../models/coupon.model';
 })
 export class ShoppingService {
 
-  // coupons: Coupon[] = [];
   shoppingCartItems: CartItem[] = [];
   cartItem: CartItem;
 
@@ -18,11 +17,6 @@ export class ShoppingService {
       this.shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCartItems'));
     }
   }
-
-  // public addCoupon(coupon: Coupon): void {
-  //   this.coupons.push(coupon);
-  //   console.log(this.coupons);
-  // }
 
   public getCartItemsCount(): number {
     return +localStorage.getItem('itemsInCart');
@@ -42,9 +36,9 @@ export class ShoppingService {
     localStorage.removeItem('shoppingCartItems');
   }
 
-  public addCartItem(coupon: Coupon): void {
+  public addCartItem(coupon: Coupon, quantity: number): void {
     // this.cartItem = this.buildCartItem(coupon);
-    let cartItem = new CartItem(coupon.title, coupon.price, coupon.id, 1);
+    let cartItem = new CartItem(coupon.title, coupon.price, coupon.id, quantity);
     for (let index = 0; index < this.shoppingCartItems.length; index++) {
       if (this.shoppingCartItems[index].couponId === coupon.id) {
         cartItem.quantity = cartItem.quantity + this.shoppingCartItems[index].quantity;

@@ -37,4 +37,8 @@ export class PurchasesService {
                                                                                         responseType: 'json' });
   }
 
+  public addPurchases(purchases: Purchase[]): Observable<any> {
+    return this.http.post(this.config.apiBaseEndpoint + this.endpoint, purchases, { responseType: 'json' });
+  }
+
 }

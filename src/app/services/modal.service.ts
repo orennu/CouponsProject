@@ -11,8 +11,8 @@ export class ModalService {
 
   constructor(private modalService: NgbModal) { }
 
-  public showModal(modal: NgbModalRef): void {
-    this.modalService.open(modal, { centered: false }).result.then((result) => {
+  public showModal(modal: NgbModalRef | any, isCenter: boolean = false, size: string = 'md'): void {
+    this.modalService.open(modal, { centered: isCenter, size: size }).result.then((result) => {
       this.closeResult = `closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -30,6 +30,10 @@ export class ModalService {
       console.log(`with: ${reason}`);
       return  `with: ${reason}`;
     }
+  }
+
+  public closeModals(reason: string): void {
+    this.modalService.dismissAll(reason);
   }
 
 }

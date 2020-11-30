@@ -32,7 +32,9 @@
     </button>
     <button
       type="submit"
-      class="btn btn-primary ml-2">
+      class="btn btn-primary ml-2"
+      [disabled]="cartItems?.length == 0"
+      (click)="checkoutCart()">
       Buy
     </button>
   </div>
