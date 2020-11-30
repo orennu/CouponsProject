@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { CartItem } from 'src/app/models/cartItem.model';
 import { Purchase } from 'src/app/models/purchase.model';
+import { AlertsService } from 'src/app/services/alerts.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { PurchasesService } from 'src/app/services/purchases.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
@@ -20,7 +21,7 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(private shoppingService: ShoppingService, private datePipe: DatePipe,
               private purchasesService: PurchasesService, private usersService: UsersService,
-              private modalService: ModalService) { }
+              private modalService: ModalService, private alertsService: AlertsService) { }
 
   ngOnInit(): void {
     this.cartItems = this.shoppingService.getCartItems();
@@ -72,6 +73,7 @@ export class ShoppingCartComponent implements OnInit {
         this.shoppingService.removeCoupons();
         this.cartItems = [];
         this.modalService.closeModals('checkout completed');
+        this.alertsService.success('Your purchase was processed successfully', { autoClose: true, keepAfterRouteChange: false });
       }, (error) => {
         console.error(error.error);
       }

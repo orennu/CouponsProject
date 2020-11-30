@@ -2,6 +2,7 @@ import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core'
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Coupon } from 'src/app/models/coupon.model';
+import { AlertsService } from 'src/app/services/alerts.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { PurchasesService } from 'src/app/services/purchases.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
@@ -24,7 +25,8 @@ export class CouponItemComponent implements OnInit {
               private purchasesService: PurchasesService,
               private usersService: UsersService,
               private shoppingService: ShoppingService,
-              private router: Router) { }
+              private router: Router,
+              private alertsService: AlertsService) { }
 
   ngOnInit(): void {
   }
@@ -59,12 +61,8 @@ export class CouponItemComponent implements OnInit {
       }
     }
     else {
-      this.showWarning();
+      this.alertsService.warn('Valid range is between 1 to 10', { autoClose: true, keepAfterRouteChange: false });
     }
-  }
-
-  private showWarning(): void {
-    this.modalService.showModal(this.warning, true, 'lg');
   }
 
 }

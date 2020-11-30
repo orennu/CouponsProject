@@ -37,6 +37,7 @@ import { UsersComponent } from './components/users/users.component';
 import { CouponsAdminComponent } from './components/coupons/coupons-admin/coupons-admin.component';
 import { ForbiddenPageComponent } from './components/forbidden-page/forbidden-page.component';
 import { CompanyComponent } from './components/company/company.component';
+import { AlertModule } from './modules/alert.module';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { CompanyComponent } from './components/company/company.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    AlertModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
