@@ -54,4 +54,6 @@ export class OrdersComponent implements OnInit {
     );
   }
 
+  public viewOrderDetails(foo) {}
+
 }
