@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { filter, map } from 'rxjs/operators';
 import { Coupon } from 'src/app/models/coupon.model';
 import { Purchase } from 'src/app/models/purchase.model';
 import { CouponsService } from 'src/app/services/coupons.service';

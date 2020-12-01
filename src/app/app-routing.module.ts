@@ -20,6 +20,7 @@ import { ResetPasswordEditComponent } from './components/reset-password/reset-pa
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CompanyComponent } from './components/company/company.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 const appRoutes: Routes = [
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
     { path: 'reset-password/:code', component: ResetPasswordEditComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
+    { path: 'orders', component: OrdersComponent },
     { path: 'shopping-cart', component: ShoppingCartComponent },
     { path: 'admin', component: AdminComponent, children: [
       { path: 'customers',component: CustomersComponent },

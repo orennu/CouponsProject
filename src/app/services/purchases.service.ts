@@ -37,6 +37,10 @@ export class PurchasesService {
                                                                                         responseType: 'json' });
   }
 
+  public getPurchasesByCustomer(customerId: number): Observable<any> {
+    return this.http.get<any>(this.config.apiBaseEndpoint + this.endpoint + 'search', { params: { customerId: customerId+'' } });
+  }
+
   public addPurchases(purchases: Purchase[]): Observable<any> {
     return this.http.post(this.config.apiBaseEndpoint + this.endpoint, purchases, { responseType: 'json' });
   }

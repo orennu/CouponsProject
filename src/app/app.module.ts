@@ -38,6 +38,7 @@ import { CouponsAdminComponent } from './components/coupons/coupons-admin/coupon
 import { ForbiddenPageComponent } from './components/forbidden-page/forbidden-page.component';
 import { CompanyComponent } from './components/company/company.component';
 import { AlertModule } from './modules/alert.module';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { AlertModule } from './modules/alert.module';
     CouponsAdminComponent,
     SearchPipe,
     ForbiddenPageComponent,
-    CompanyComponent
+    CompanyComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

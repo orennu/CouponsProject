@@ -1,0 +1,70 @@
+<div class="container mt-3">
+  <h3 class="text-center">Orders</h3>
+  <hr>
+  <div class="d-flex justify-content-between font-weight-bold mb-2">
+    <div>
+      <span>Search: </span>
+      <input type="text" name="search" placeholder="search purchases" [(ngModel)]="orderSearch">
+    </div>
+    <span class="ml-auto">Total orders: {{ ordersCount }}</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Purchase Date</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Coupon Title</th>
+          <th scope="col">Coupon Category</th>
+          <th scope="col">Actions</th>
+        </tr>
+        <tr *ngFor="let order of orders | searchFilter:orderSearch; let i = index">
+          <td>{{ order?.purchaseDate | date: 'MM/dd/yyyy' }}</td>
+          <td>{{ order?.quantity }}</td>
+          <td>{{ order?.amount }}</td>
+          <td>{{ order?.couponTitle }}</td>
+          <td>{{ order?.couponCategory }}</td>
+          <td class="d-flex">
+            <button
+              class="btn btn-primary mr-2"
+              type="submit"
+              (click)="[(viewOrderDetails(orderDetails))]">
+              View
+            </button>
+            <ng-template #orderDetails let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  Order Details
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div><strong>Order Date: </strong>{{ order.purchaseDate | date: 'dd/MM/yyyy' }}</div>
+                <hr>
+                <div><strong>Coupon Title: </strong>{{ order.couponTitle }}</div>
+                <hr>
+                <div><strong>Quantity: </strong>{{ order.quantity }}</div>
+                <hr>
+                <div><strong>Coupon Price: </strong>{{ order.couponPrice }}</div>
+                <hr>
+                <div><strong>Order Amount: </strong>{{ order.amount | currency }}</div>
+                <hr>
+                <div class="d-flex">
+                  <button
+                    type="submit"
+                    class="btn btn-primary ml-auto"
+                    (click)="modal.dismiss('Close button click')">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
