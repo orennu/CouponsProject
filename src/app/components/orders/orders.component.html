@@ -4,7 +4,7 @@
   <div class="d-flex justify-content-between font-weight-bold mb-2">
     <div>
       <span>Search: </span>
-      <input type="text" name="search" placeholder="search purchases" [(ngModel)]="orderSearch">
+      <input type="text" name="search" placeholder="search orders" [(ngModel)]="orderSearch">
     </div>
     <span class="ml-auto">Total orders: {{ ordersCount }}</span>
   </div>
@@ -22,7 +22,7 @@
         <tr *ngFor="let order of orders | searchFilter:orderSearch; let i = index">
           <td>{{ order?.purchaseDate | date: 'MM/dd/yyyy' }}</td>
           <td>{{ order?.quantity }}</td>
-          <td>{{ order?.amount }}</td>
+          <td>{{ order?.amount | currency }}</td>
           <td>{{ order?.couponTitle }}</td>
           <td>{{ order?.couponCategory }}</td>
           <td class="d-flex">
@@ -42,15 +42,26 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div><strong>Order Date: </strong>{{ order.purchaseDate | date: 'dd/MM/yyyy' }}</div>
-                <hr>
-                <div><strong>Coupon Title: </strong>{{ order.couponTitle }}</div>
-                <hr>
-                <div><strong>Quantity: </strong>{{ order.quantity }}</div>
-                <hr>
-                <div><strong>Coupon Price: </strong>{{ order.couponPrice }}</div>
-                <hr>
-                <div><strong>Order Amount: </strong>{{ order.amount | currency }}</div>
+                <div class="d-flex">
+                  <div class="col">
+                    <div><strong>Order Date: </strong>{{ order.purchaseDate | date: 'dd/MM/yyyy' }}</div>
+                    <hr>
+                    <div><strong>Coupon Title: </strong>{{ order.couponTitle }}</div>
+                    <hr>
+                    <div><strong>Quantity: </strong>{{ order.quantity }}</div>
+                    <hr>
+                    <div><strong>Coupon Price: </strong>{{ order.couponPrice }}</div>
+                    <hr>
+                    <div><strong>Order Amount: </strong>{{ order.amount | currency }}</div>
+                  </div>
+                  <div class="col ml-auto">
+                    <img
+                      [src]="order.imageUrl"
+                      alt="selected coupon image"
+                      class="img-fluid card-img-top">
+                  </div>
+
+                </div>
                 <hr>
                 <div class="d-flex">
                   <button

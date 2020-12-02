@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
 export class ContactComponent implements OnInit {
 
   constructor(private title: Title) {
-    this.title.setTitle('contact us');
+    this.title.setTitle('Contact us');
   }
 
   public ngOnInit(): void {

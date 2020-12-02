@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
               private usersService: UsersService,
               private router: Router,
               private title: Title) {
-                this.title.setTitle('registration');
+                this.title.setTitle('Registration');
   }
 
   public ngOnInit(): void {

@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private usersService: UsersService, private router: Router,
               private title: Title) {
-                this.title.setTitle('profile');
+                this.title.setTitle('Profile');
   }
 
   public ngOnInit(): void {

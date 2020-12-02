@@ -65,7 +65,7 @@
     <div class="modal-footer">
       <div class="toggle-amount mr-auto">
         <button type="button" class="btn btn-amount" (click)="decrementQuantity()">-</button>
-        <input type="number" class="items-quantity" [(ngModel)]="quantity" value="{{ quantity }}" min="{{ 0 }}" max="{{ 100 }}">
+        <input type="number" class="items-quantity" [(ngModel)]="quantity" value="{{ quantity }}" min="{{ 0 }}" max="{{ 10 }}">
         <button type="button" class="btn btn-amount" (click)="incrementQuantity()">+</button>
       </div>
       <div>

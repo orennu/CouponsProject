@@ -41,6 +41,4 @@ input:focus{
   color: red;
   content: "*";
   font-weight: bolder;
-  /* position: absolute; */
-  /* margin-left: -15px; */
 }

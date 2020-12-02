@@ -29,7 +29,8 @@ export class SearchPipe implements PipeTransform {
         val.couponTitle?.toLocaleLowerCase().includes(args) || val.couponTitle?.includes(args) ||
         val.price <= args ||
         val.amount >= args ||
-        new Date(val.purchaseDate) >= new Date(args)
+        new Date(val.purchaseDate) >= new Date(args) ||
+        val.couponCategory?.toLocaleLowerCase().includes(args) || val.couponCategory?.includes(args)
       );
 
       return rVal;

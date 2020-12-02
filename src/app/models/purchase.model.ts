@@ -10,5 +10,6 @@ export class Purchase {
     public amount?: number,
     public customer?: object,
     public customerFullName?: string,
+    public imageUrl: string = 'http://localhost:8080/files/',
   ) { }
 }

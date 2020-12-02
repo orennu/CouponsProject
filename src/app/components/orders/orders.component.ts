@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Purchase } from 'src/app/models/purchase.model';
 import { CouponsService } from 'src/app/services/coupons.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -21,7 +23,9 @@ export class OrdersComponent implements OnInit {
 
   constructor(private purchasesService: PurchasesService, private modalService: ModalService,
               private couponsService: CouponsService, private usersService: UsersService,
-              private router: Router) { }
+              private router: Router, private title: Title) {
+                this.title.setTitle('Orders')
+              }
 
   ngOnInit(): void {
     const userRole = this.usersService.getUserRole();
@@ -45,6 +49,7 @@ export class OrdersComponent implements OnInit {
           this.order.couponPrice = response[index]?.couponPrice;
           this.order.couponCategory = response[index]?.couponCategory;
           this.order.amount = this.order.couponPrice * this.order.quantity;
+          this.order.imageUrl = this.order.imageUrl + response[index]?.couponImageUuid;
           this.orders.push(this.order);
         }
         this.ordersCount = this.orders.length;
@@ -54,6 +59,8 @@ export class OrdersComponent implements OnInit {
     );
   }
 
-  public viewOrderDetails(foo) {}
+  public viewOrderDetails(orderRef: NgbModalRef) {
+    this.modalService.showModal(orderRef, true, 'lg');
+  }
 
 }
