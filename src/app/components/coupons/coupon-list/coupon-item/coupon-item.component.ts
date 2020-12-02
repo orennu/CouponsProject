@@ -53,9 +53,18 @@ export class CouponItemComponent implements OnInit {
       couponModal.close();
       if (this.usersService.getLoginState()) {
         console.log('add to cart: ' + this.coupon.title);
+        const cartItems = this.shoppingService.getCartItems();
+        let itemsCountFlag = true;
+        for (let index = 0; index < cartItems.length; index++) {
+          if (this.coupon.id == cartItems[index].couponId) {
+              itemsCountFlag = false;
+          }
+        }
+        if (itemsCountFlag) {
+          this.purchasesService.setItemNum(1);
+        }
         this.coupon.quantity = this.coupon.quantity - this.quantity;
         this.shoppingService.addCartItem(this.coupon, this.quantity);
-        this.purchasesService.setItemNum(1);
       } else {
         this.router.navigate(['/login']);
       }

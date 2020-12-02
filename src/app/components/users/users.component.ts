@@ -103,7 +103,7 @@ export class UsersComponent implements OnInit {
             Validators.required,
             Validators.minLength(2),
             Validators.maxLength(20),
-            Validators.pattern('^[a-z][a-z0-9]*$')
+            Validators.pattern('^[a-z][a-z0-9_]*$')
           ]
         ),
         email: new FormControl(
