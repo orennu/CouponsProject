@@ -145,7 +145,7 @@ export class UsersComponent implements OnInit {
         companyName: new FormControl(
           '',
           [
-            Validators.pattern(/^\S*$/)
+            Validators.pattern(/^[a-zA-Z0-9]+[ \'\-]?[a-zA-Z0-9]+$/)
           ]
         )
       })
