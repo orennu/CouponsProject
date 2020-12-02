@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Coupon } from 'src/app/models/coupon.model';
+import { AlertsService } from 'src/app/services/alerts.service';
 import { CouponsService } from 'src/app/services/coupons.service';
 import { FilesService } from 'src/app/services/files.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -37,7 +38,8 @@ export class CouponsAdminComponent implements OnInit {
 
   constructor(private couponsService: CouponsService, private modalService: ModalService,
               private validationService: ValidationService, private usersService: UsersService,
-              private filesService: FilesService, private datePipe: DatePipe) { }
+              private filesService: FilesService, private datePipe: DatePipe,
+              private alertsService: AlertsService) { }
 
   ngOnInit(): void {
     this.userId = this.usersService.getUserId();
@@ -229,6 +231,8 @@ export class CouponsAdminComponent implements OnInit {
         );
       }, (error) => {
         console.error(error.error);
+        this.isSubmitFailed = true;
+        this.formFailureReason = error;
       }
     );
   }
@@ -253,7 +257,9 @@ export class CouponsAdminComponent implements OnInit {
           }
         );
       }, (error) => {
-        console.error(error.error);
+        console.error(error);
+        this.isSubmitFailed = true;
+        this.formFailureReason = error;
       }
     );
   }

@@ -1,8 +1,8 @@
-<div class="card col" style="width: 18rem; cursor: pointer;"
+<div class="card" style="width: 18rem; cursor: pointer;"
     (click)=[(showCoupon(selectedCoupon))]>
     <div>
         <div class="card-header rounded">{{ coupon.title }}</div>
-        <img [src]="coupon.imageUrl" class="img-fluid card-img-top" alt="...">
+        <img [src]="coupon.imageUrl" class="img-fluid card-img-top" style="height: 256px; width: 256px" alt="...">
         <div class="card-body">
             <p class="card-text">
                 <span>Price: {{ coupon.price | currency }}</span><br>
@@ -24,7 +24,8 @@
         <img
             [src]="this.coupon?.imageUrl"
             alt="selected coupon image"
-            class="img-fluid card-img-top">
+            class="img-fluid card-img-top"
+            style="height: 256px; width: 256px">
         <hr>
         <p>
             <span>
